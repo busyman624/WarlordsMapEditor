@@ -26,6 +26,7 @@ namespace WarlordsMapEditor
             InitializeComponent();
 
             this.DataContext = new Board(10, 10);
+            Console.WriteLine("dupadupa");
         }
     }
 
@@ -33,7 +34,10 @@ namespace WarlordsMapEditor
     {
         int _rows;
         int _columns;
+        int _menuRows=2;
+        int _menuColumns=1;
         List<Tile> _tiles = new List<Tile>();
+        List<MenuTile> _menu = new List<MenuTile>();
 
         public Board(int rows, int columns)
         {
@@ -45,10 +49,24 @@ namespace WarlordsMapEditor
             {
                 for (int c = 0; c < columns; c++)
                 {
-                    _tiles.Add(new Tile()
+                    Tile tile =new Tile(string.Format("Row {0}, Column {1}", r, c));
+                    ImageBrush brush1 = new ImageBrush();
+                    BitmapImage image = new BitmapImage(new Uri("C:\\Users\\krysz\\rico.gif"));
+                    brush1.ImageSource = image;
+                    tile.Background = brush1;
+
+                    _tiles.Add(tile);
+                }
+            }
+
+            for (int r = 0; r < _menuRows; r++)
+            {
+                for (int c = 0; c < _menuColumns; c++)
+                {
+                    _menu.Add(new MenuTile()
                     {
                         Data = string.Format("Row {0}, Column {1}", r, c),
-                        Background = new SolidColorBrush(Color.FromArgb(255, (byte)random.Next(256), (byte)random.Next(256), (byte)random.Next(256)))
+                        MyBackground = new SolidColorBrush(Color.FromArgb(255, (byte)random.Next(256), (byte)random.Next(256), (byte)random.Next(256)))
                     });
                 }
             }
@@ -71,12 +89,53 @@ namespace WarlordsMapEditor
             get { return _tiles; }
             set { _tiles = value; }
         }
+
+        public int MenuRows
+        {
+            get { return _menuRows; }
+            set { _menuRows = value; }
+        }
+
+        public int MenuColumns
+        {
+            get { return _menuColumns; }
+            set { _menuColumns = value; }
+        }
+
+        public List<MenuTile> Menu
+        {
+            get { return _menu; }
+            set { _menu = value; }
+        }
     }
 
-    public class Tile
+    public class Tile : Button
     {
         public string Data { get; set; }
-        public SolidColorBrush Background { get; set; }
+        public Tile(string Data)
+        {
+            this.Data = Data;
+            // auto-register any "click" will call our own custom "click" handler
+            // which will change the status...  This could also be done to simplify
+            // by only changing visibility, but shows how you could apply via other
+            // custom properties too.
+            Click += MyCustomClick;
+        }
+        public SolidColorBrush MyBackground { get; set; }
+
+        public void MyCustomClick(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine(Data);
+        }
+
+    }
+
+    public class MenuTile : Button
+    {
+        public string Data { get; set; }
+        public SolidColorBrush MyBackground { get; set; }
+
+       
     }
 
 }

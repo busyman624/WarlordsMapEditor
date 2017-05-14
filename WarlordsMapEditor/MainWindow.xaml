@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WarlordsMapEditor"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="800"
-        ResizeMode="NoResize">
+        >
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -16,9 +16,7 @@
         <ItemsControl ItemsSource="{Binding Tiles}">
             <ItemsControl.Resources>
                 <DataTemplate DataType="{x:Type local:Tile}">
-                    <Grid Background="{Binding Background}">
-                        <TextBlock Text="{Binding Data}"></TextBlock>
-                    </Grid>
+
                 </DataTemplate>
             </ItemsControl.Resources>
             <ItemsControl.ItemsPanel>
@@ -27,8 +25,17 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
-        <StackPanel Grid.Column="1">
-            <Button>Buttona1</Button>
-        </StackPanel>
+        <ItemsControl Grid.Column="1" ItemsSource="{Binding Menu}">
+            <ItemsControl.Resources>
+                <DataTemplate DataType="{x:Type local:MenuTile}">
+
+                </DataTemplate>
+            </ItemsControl.Resources>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid  Rows="{Binding MenuRows}" Columns="{Binding MenuColumns}"></UniformGrid>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
     </Grid>
 </Window>
