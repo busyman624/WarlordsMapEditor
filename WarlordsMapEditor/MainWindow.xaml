@@ -5,8 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WarlordsMapEditor"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="600" Width="800"
+        ResizeMode="NoResize">
+
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Name="mapa" Width="2*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <ItemsControl ItemsSource="{Binding Tiles}">
+            <ItemsControl.Resources>
+                <DataTemplate DataType="{x:Type local:Tile}">
+                    <Grid Background="{Binding Background}">
+                        <TextBlock Text="{Binding Data}"></TextBlock>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.Resources>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid  Rows="{Binding Rows}" Columns="{Binding Columns}"></UniformGrid>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+        <StackPanel Grid.Column="1">
+            <Button>Buttona1</Button>
+        </StackPanel>
     </Grid>
 </Window>
