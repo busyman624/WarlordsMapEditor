@@ -10,7 +10,7 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Name="mapa" Width="2*" />
+            <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
         <ItemsControl ItemsSource="{Binding Tiles}">
@@ -25,17 +25,40 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
-        <ItemsControl Grid.Column="1" ItemsSource="{Binding Menu}">
-            <ItemsControl.Resources>
-                <DataTemplate DataType="{x:Type local:MenuTile}">
-
-                </DataTemplate>
-            </ItemsControl.Resources>
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <UniformGrid  Rows="{Binding MenuRows}" Columns="{Binding MenuColumns}"></UniformGrid>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-        </ItemsControl>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="2*" />
+            </Grid.RowDefinitions>
+            <StackPanel>
+                <!-- Place holder for GUI buttons -->
+            </StackPanel>
+            <ListView Grid.Row="1" ItemsSource="{Binding Menu}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button FontFamily="Marlett" FontSize="20" Content="3"/>
+                                        <Button >
+                                            <Image Source="{Binding ButtonTiles[0]}"></Image>
+                                        </Button>
+                                        <Button >
+                                            <Image Source="{Binding ButtonTiles[1]}"></Image>
+                                        </Button>
+                                        <Button >
+                                            <Image Source="{Binding ButtonTiles[2]}"></Image>
+                                        </Button>
+                                        <Button FontFamily="Marlett" FontSize="20" Content="4"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn  DisplayMemberBinding="{Binding setName}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
     </Grid>
 </Window>
