@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WarlordsMapEditor.Properties;
 
 namespace WarlordsMapEditor
 {
@@ -26,7 +27,6 @@ namespace WarlordsMapEditor
             InitializeComponent();
 
             this.DataContext = new Board(10, 10);
-            Console.WriteLine("dupadupa");
         }
     }
 
@@ -38,6 +38,7 @@ namespace WarlordsMapEditor
         int _menuColumns=1;
         List<Tile> _tiles = new List<Tile>();
         List<MenuTile> _menu = new List<MenuTile>();
+        List<Sprite> _sprites = new List<Sprite>();
 
         public Board(int rows, int columns)
         {
@@ -58,6 +59,13 @@ namespace WarlordsMapEditor
                     _tiles.Add(tile);
                 }
             }
+
+            _sprites.Add(new Sprite("forest.png"));
+            _sprites.Add(new Sprite("grass.png"));
+            _sprites.Add(new Sprite("hills.png"));
+            _sprites.Add(new Sprite("mountains.png"));
+            _sprites.Add(new Sprite("swamp.png"));
+            _sprites.Add(new Sprite("water.png"));
 
             for (int r = 0; r < _menuRows; r++)
             {
