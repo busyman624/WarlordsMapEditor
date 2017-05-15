@@ -37,7 +37,6 @@ namespace WarlordsMapEditor
         int _menuRows=2;
         int _menuColumns=1;
         List<Tile> _tiles = new List<Tile>();
-        List<MenuTile> _menu = new List<MenuTile>();
         List<Sprite> _sprites = new List<Sprite>();
 
         public Board(int rows, int columns)
@@ -45,6 +44,13 @@ namespace WarlordsMapEditor
             _rows = rows;
             _columns = columns;
             Random random = new Random();
+
+            _sprites.Add(new Sprite(Resources.forest, "Forest"));
+            _sprites.Add(new Sprite(Resources.grass, "Grass"));
+            _sprites.Add(new Sprite(Resources.hills, "Hills"));
+            _sprites.Add(new Sprite(Resources.mountains, "Mountains"));
+            _sprites.Add(new Sprite(Resources.swamp, "Swamp"));
+            _sprites.Add(new Sprite(Resources.water, "Water"));
 
             for (int r = 0; r < rows; r++)
             {
@@ -57,25 +63,6 @@ namespace WarlordsMapEditor
                     tile.Background = brush1;
 
                     _tiles.Add(tile);
-                }
-            }
-
-            _sprites.Add(new Sprite(Properties.Resources.forest,"Forest"));
-            _sprites.Add(new Sprite(Properties.Resources.grass, "Grass"));
-            _sprites.Add(new Sprite(Properties.Resources.hills, "Hills"));
-            _sprites.Add(new Sprite(Properties.Resources.mountains, "Mountains"));
-            _sprites.Add(new Sprite(Properties.Resources.swamp, "Swamp"));
-            _sprites.Add(new Sprite(Properties.Resources.water, "Water"));
-
-            for (int r = 0; r < _menuRows; r++)
-            {
-                for (int c = 0; c < _menuColumns; c++)
-                {
-                    _menu.Add(new MenuTile()
-                    {
-                        Data = string.Format("Row {0}, Column {1}", r, c),
-                        MyBackground = new SolidColorBrush(Color.FromArgb(255, (byte)random.Next(256), (byte)random.Next(256), (byte)random.Next(256)))
-                    });
                 }
             }
         }
@@ -110,10 +97,10 @@ namespace WarlordsMapEditor
             set { _menuColumns = value; }
         }
 
-        public List<MenuTile> Menu
+        public List<Sprite> Menu
         {
-            get { return _menu; }
-            set { _menu = value; }
+            get { return _sprites; }
+            set { _sprites = value; }
         }
     }
 
@@ -137,14 +124,5 @@ namespace WarlordsMapEditor
         }
 
     }
-
-    public class MenuTile : Button
-    {
-        public string Data { get; set; }
-        public SolidColorBrush MyBackground { get; set; }
-
-       
-    }
-
 }
 
