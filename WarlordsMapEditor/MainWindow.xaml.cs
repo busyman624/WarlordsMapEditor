@@ -60,12 +60,12 @@ namespace WarlordsMapEditor
                 }
             }
 
-            _sprites.Add(new Sprite("forest.png"));
-            _sprites.Add(new Sprite("grass.png"));
-            _sprites.Add(new Sprite("hills.png"));
-            _sprites.Add(new Sprite("mountains.png"));
-            _sprites.Add(new Sprite("swamp.png"));
-            _sprites.Add(new Sprite("water.png"));
+            _sprites.Add(new Sprite(Properties.Resources.forest,"Forest"));
+            _sprites.Add(new Sprite(Properties.Resources.grass, "Grass"));
+            _sprites.Add(new Sprite(Properties.Resources.hills, "Hills"));
+            _sprites.Add(new Sprite(Properties.Resources.mountains, "Mountains"));
+            _sprites.Add(new Sprite(Properties.Resources.swamp, "Swamp"));
+            _sprites.Add(new Sprite(Properties.Resources.water, "Water"));
 
             for (int r = 0; r < _menuRows; r++)
             {

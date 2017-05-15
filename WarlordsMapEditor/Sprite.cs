@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WarlordsMapEditor.Properties;
 
 namespace WarlordsMapEditor
 {
@@ -13,16 +15,15 @@ namespace WarlordsMapEditor
         private Bitmap thumbnail;
         private string setName;
 
-        public Sprite(string imageName)
+        public Sprite(Bitmap bmp, string setName)
         {
-            var bmp = new Bitmap(System.Reflection.Assembly.GetEntryAssembly().GetManifestResourceStream("WarlordsMapEditor.Resources"+imageName));
             Tiles = new List<Bitmap>();
             for(int i = 0; i < bmp.Width / bmp.Height; i++)
             {
-                Tiles.Add(bmp.Clone(new Rectangle(i*bmp.Height, 0, bmp.Width, bmp.Height), bmp.PixelFormat));
+                Tiles.Add(bmp.Clone(new Rectangle(i*bmp.Height, 0, bmp.Height, bmp.Height), bmp.PixelFormat));
             }
             thumbnail = Tiles[0];
-            setName = imageName.Split('.')[0];
+            this.setName = setName;
         }
 
         public Bitmap getTile(int index)
