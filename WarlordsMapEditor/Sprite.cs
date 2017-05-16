@@ -16,14 +16,14 @@ namespace WarlordsMapEditor
 {
     public class Sprite
     {
-        public List<BitmapImage> image;
+        public List<BitmapImage> imagesList;
 
         public int setIndex;
         public string setName { get; set; }
 
         public Sprite(Bitmap bmp, string setName, int setIndex)
         {
-            image = new List<BitmapImage>();
+            imagesList = new List<BitmapImage>();
             for (int i = 0; i < bmp.Width / bmp.Height; i++)
             {
                 Bitmap temp_bmp = bmp.Clone(new Rectangle(i * bmp.Height, 0, bmp.Height, bmp.Height), bmp.PixelFormat);
@@ -37,7 +37,7 @@ namespace WarlordsMapEditor
                     temp_img.StreamSource = memory;
                     temp_img.CacheOption = BitmapCacheOption.OnLoad;
                     temp_img.EndInit();
-                    image.Add(temp_img);
+                    imagesList.Add(temp_img);
                 }
             }
             this.setName = setName;

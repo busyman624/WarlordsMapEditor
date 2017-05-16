@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,7 +38,7 @@ namespace WarlordsMapEditor
         int _columns;
         List<Tile> _tiles = new List<Tile>();
         List<Sprite> _sprites = new List<Sprite>();
-        List<Carousel> _carouselList = new List<Carousel>();
+        ObservableCollection<Carousel> _carouselList = new ObservableCollection<Carousel>();
 
         public Board(int rows, int columns)
         {
@@ -91,7 +92,7 @@ namespace WarlordsMapEditor
             set { _tiles = value; }
         }
 
-        public List<Carousel> Carousels
+        public ObservableCollection<Carousel> Carousels
         {
             get { return _carouselList; }
             set { _carouselList = value; }
