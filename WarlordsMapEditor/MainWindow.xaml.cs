@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WarlordsMapEditor.ItemsList;
 using WarlordsMapEditor.Properties;
 
 namespace WarlordsMapEditor
@@ -34,23 +35,28 @@ namespace WarlordsMapEditor
     {
         int _rows;
         int _columns;
-        int _menuRows=2;
-        int _menuColumns=1;
         List<Tile> _tiles = new List<Tile>();
         List<Sprite> _sprites = new List<Sprite>();
+        List<Carousel> _carouselList = new List<Carousel>();
 
         public Board(int rows, int columns)
         {
             _rows = rows;
             _columns = columns;
             Random random = new Random();
+            
+            
+            _sprites.Add(new Sprite(Resources.forest, "Forest", 0));
+            _sprites.Add(new Sprite(Resources.grass, "Grass", 1));
+            _sprites.Add(new Sprite(Resources.hills, "Hills", 2));
+            _sprites.Add(new Sprite(Resources.mountains, "Mountains", 3));
+            _sprites.Add(new Sprite(Resources.swamp, "Swamp", 4));
+            _sprites.Add(new Sprite(Resources.water, "Water", 5));
 
-            _sprites.Add(new Sprite(Resources.forest, "Forest"));
-            _sprites.Add(new Sprite(Resources.grass, "Grass"));
-            _sprites.Add(new Sprite(Resources.hills, "Hills"));
-            _sprites.Add(new Sprite(Resources.mountains, "Mountains"));
-            _sprites.Add(new Sprite(Resources.swamp, "Swamp"));
-            _sprites.Add(new Sprite(Resources.water, "Water"));
+            foreach(Sprite sprite in _sprites)
+            {
+                _carouselList.Add(new Carousel(sprite));
+            }
 
             for (int r = 0; r < rows; r++)
             {
@@ -85,22 +91,10 @@ namespace WarlordsMapEditor
             set { _tiles = value; }
         }
 
-        public int MenuRows
+        public List<Carousel> Carousels
         {
-            get { return _menuRows; }
-            set { _menuRows = value; }
-        }
-
-        public int MenuColumns
-        {
-            get { return _menuColumns; }
-            set { _menuColumns = value; }
-        }
-
-        public List<Sprite> Menu
-        {
-            get { return _sprites; }
-            set { _sprites = value; }
+            get { return _carouselList; }
+            set { _carouselList = value; }
         }
     }
 

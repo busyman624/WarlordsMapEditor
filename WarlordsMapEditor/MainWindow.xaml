@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WarlordsMapEditor"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800"
+        Title="MainWindow" Height="600" Width="1000"
         >
     <Window.Resources>
         <Style TargetType="{x:Type local:Tile}" BasedOn="{StaticResource {x:Type Button}}" >
@@ -51,24 +51,29 @@
             <StackPanel>
                 <!-- Place holder for GUI buttons -->
             </StackPanel>
-            <ListView Grid.Row="1" ItemsSource="{Binding Menu}">
+            <ListView Grid.Row="1" x:Name="carousels" ItemsSource="{Binding Carousels}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn>
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <Button FontFamily="Marlett" FontSize="20" Content="3"/>
-                                        <Button >
-                                            <Image Source="{Binding ButtonTiles[0]}"></Image>
-                                        </Button>
-                                        <Button >
-                                            <Image Source="{Binding ButtonTiles[1]}"></Image>
-                                        </Button>
-                                        <Button >
-                                            <Image Source="{Binding ButtonTiles[2]}"></Image>
-                                        </Button>
-                                        <Button FontFamily="Marlett" FontSize="20" Content="4"/>
+                                        <Button Command="{Binding CarouselLeftArrowClick}" FontFamily="Marlett" FontSize="20" Content="3"/>
+                                        <ItemsControl ItemsSource="{Binding selectableItemList}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Button Command="{Binding SelectableItemClick}">
+                                                        <Image Source="{Binding image}"></Image>
+                                                    </Button>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Horizontal" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                        </ItemsControl>
+                                        <Button Command="{Binding CarouselRightArrowClick}" FontFamily="Marlett" FontSize="20" Content="4"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>

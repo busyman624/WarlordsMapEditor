@@ -56,6 +56,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ItemsList\Carousel.cs" />
+    <Compile Include="RelayCommand.cs" />
+    <Compile Include="ItemsList\SelectableItem.cs" />
     <Compile Include="Sprite.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
