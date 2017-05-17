@@ -9,47 +9,20 @@ using System.Windows.Media.Imaging;
 
 namespace WarlordsMapEditor.ItemsList
 {
-    public class SelectableItem : INotifyPropertyChanged
+    public class SelectableItem : Item
     {
-        private BitmapImage _image;
-        public BitmapImage image
+        public SelectableItem(int itemIndex, int setIndex, BitmapImage image)
         {
-            get;
-            set;
-        }
-        public int index;
-        private int setIndex;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public SelectableItem(int index, int setIndex, BitmapImage image)
-        {
-            this.index = index;
+            this.itemIndex = itemIndex;
             this.setIndex = setIndex;
             this.image = image;
         }
 
-        public void onClick()
+        public override void onItemClick()
         {
-            Console.WriteLine("Hi I'm Item no "+index.ToString()+" of set "+setIndex.ToString());
-        }
-        public bool CanPerform() { return true; }
-
-        private ICommand _selectableItemClick;
-
-        public ICommand SelectableItemClick
-        {
-            get
-            {
-                if (_selectableItemClick == null)
-                {
-                    _selectableItemClick = new RelayCommand(
-                        param => this.onClick(),
-                        param => this.CanPerform()
-                    );
-                }
-                return _selectableItemClick;
-            }
+            Console.WriteLine("Hi I'm Item no " + itemIndex.ToString() + " of set " + setIndex.ToString());
+            Board.selectedItemIndex = itemIndex;
+            Board.selectedSetIndex = setIndex;
         }
     }
 }

@@ -56,7 +56,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Board.cs" />
+    <Compile Include="Item.cs" />
     <Compile Include="ItemsList\Carousel.cs" />
+    <Compile Include="MapItem.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ItemsList\SelectableItem.cs" />
     <Compile Include="Sprite.cs" />
