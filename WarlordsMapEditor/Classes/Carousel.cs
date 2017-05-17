@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
 
-namespace WarlordsMapEditor.ItemsList
+namespace WarlordsMapEditor
 {
     public class Carousel
     {
@@ -32,7 +28,6 @@ namespace WarlordsMapEditor.ItemsList
 
         public void SelectableItemsGoLeft()
         {
-            Console.WriteLine("Hi I'm left arrow of set " + itemSet.setIndex.ToString());
             _selectableItems[2] = _selectableItems[1];
             _selectableItems[1] = _selectableItems[0];
             _selectableItems[0] = new SelectableItem(_selectableItems[1].itemIndex - 1, itemSet.setIndex, itemSet.imagesList[_selectableItems[1].itemIndex - 1]);
@@ -62,7 +57,6 @@ namespace WarlordsMapEditor.ItemsList
 
         public void SelectableItemsGoRight()
         {
-            Console.WriteLine("Hi I'm right arrow of set " + itemSet.setIndex.ToString());
             _selectableItems[0] = _selectableItems[1];
             _selectableItems[1] = _selectableItems[2];
             _selectableItems[2] = new SelectableItem(_selectableItems[1].itemIndex + 1, itemSet.setIndex, itemSet.imagesList[_selectableItems[1].itemIndex + 1]);

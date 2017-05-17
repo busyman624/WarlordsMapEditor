@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
 
 namespace WarlordsMapEditor
 {
@@ -20,7 +16,6 @@ namespace WarlordsMapEditor
 
         public override void onItemClick()
         {
-            Console.WriteLine("Hi I'm Item no " + itemIndex.ToString() + " of set " + setIndex.ToString());
             if(Board.selectedItemIndex!=null && Board.selectedSetIndex != null)
             {
                 itemIndex = (int)Board.selectedItemIndex;

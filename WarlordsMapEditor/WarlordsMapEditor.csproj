@@ -56,13 +56,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Board.cs" />
-    <Compile Include="Item.cs" />
-    <Compile Include="ItemsList\Carousel.cs" />
-    <Compile Include="MapItem.cs" />
-    <Compile Include="RelayCommand.cs" />
-    <Compile Include="ItemsList\SelectableItem.cs" />
-    <Compile Include="Sprite.cs" />
+    <Compile Include="Classes\Board.cs" />
+    <Compile Include="Classes\Item.cs" />
+    <Compile Include="Classes\Carousel.cs" />
+    <Compile Include="Classes\MapItem.cs" />
+    <Compile Include="Classes\RelayCommand.cs" />
+    <Compile Include="Classes\SelectableItem.cs" />
+    <Compile Include="Classes\Sprite.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WarlordsMapEditor.ItemsList;
 using WarlordsMapEditor.Properties;
 
 namespace WarlordsMapEditor
@@ -14,11 +10,11 @@ namespace WarlordsMapEditor
         public static int? selectedItemIndex=null;
         public static int? selectedSetIndex=null;
 
-        int _rows;
-        int _columns;
-        ObservableCollection<MapItem> _mapItems = new ObservableCollection<MapItem>();
-        List<Sprite> _sprites = new List<Sprite>();
-        ObservableCollection<Carousel> _carouselList = new ObservableCollection<Carousel>();
+        private int _rows;
+        private int _columns;
+        private List<Sprite> _sprites = new List<Sprite>();
+        private ObservableCollection<MapItem> _mapItems = new ObservableCollection<MapItem>();
+        private ObservableCollection<Carousel> _carouselList = new ObservableCollection<Carousel>();
 
         public Board(int rows, int columns)
         {
@@ -43,7 +39,7 @@ namespace WarlordsMapEditor
             {
                 for (int c = 0; c < columns; c++)
                 {
-                    _mapItems.Add(new MapItem(r, (int)c/2, _sprites)); //filling map with some data
+                    _mapItems.Add(new MapItem(0, 0, _sprites)); //filling map with some data
                 }
             }
         }
