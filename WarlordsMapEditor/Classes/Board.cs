@@ -49,7 +49,7 @@ namespace WarlordsMapEditor
             {
                 for (int c = 0; c < mapColumns; c++)
                 {
-                    int randomItemSet = random.Next(_sprites.Count);
+                    int randomItemSet = random.Next(_sprites.Count-2);  //roads and bridges excluded, TBD: support for non-terrain objects
                     _mapItems.Add(new MapItem(random.Next(_sprites[randomItemSet].imagesList.Count) , randomItemSet , _sprites, c, r)); //filling map with some data
                 }
             }
