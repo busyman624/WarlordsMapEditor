@@ -67,8 +67,8 @@
                             <ItemsControl ItemsSource="{Binding selectableItemList}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <Button Command="{Binding ItemClick}">
-                                            <Image Source="{Binding image}"></Image>
+                                        <Button Command="{Binding ItemClick}" Height="60" Width="60" >
+                                            <Image Source="{Binding image}" Stretch="Fill"></Image>
                                         </Button>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>

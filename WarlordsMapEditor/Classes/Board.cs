@@ -37,6 +37,8 @@ namespace WarlordsMapEditor
             _sprites.Add(new Sprite(Resources.mountains, "Mountains", 3));
             _sprites.Add(new Sprite(Resources.swamp, "Swamp", 4));
             _sprites.Add(new Sprite(Resources.water, "Water", 5));
+            _sprites.Add(new Sprite(Resources.roads, "Roads", 6));
+            _sprites.Add(new Sprite(Resources.bridges, "Bridges", 5));
 
             foreach (Sprite sprite in _sprites)
             {

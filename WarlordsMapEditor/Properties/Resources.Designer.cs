@@ -63,6 +63,16 @@ namespace WarlordsMapEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap bridges {
+            get {
+                object obj = ResourceManager.GetObject("bridges", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap forest {
             get {
                 object obj = ResourceManager.GetObject("forest", resourceCulture);
@@ -96,6 +106,16 @@ namespace WarlordsMapEditor.Properties {
         internal static System.Drawing.Bitmap mountains {
             get {
                 object obj = ResourceManager.GetObject("mountains", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap roads {
+            get {
+                object obj = ResourceManager.GetObject("roads", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
