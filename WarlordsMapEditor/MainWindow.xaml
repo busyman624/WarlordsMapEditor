@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WarlordsMapEditor"
+        xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="1000"
         >
@@ -49,7 +50,7 @@
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
-                <RowDefinition Height="2*" />
+                <RowDefinition Height="3*" />
             </Grid.RowDefinitions>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button VerticalAlignment="Center" Command="{Binding MapNavigateLeft}" FontFamily="Marlett" FontSize="20" Content="3"/>
@@ -59,30 +60,45 @@
                 </StackPanel>
                 <Button VerticalAlignment="Center" Command="{Binding MapNavigateRight}" FontFamily="Marlett" FontSize="20" Content="4"/>
             </StackPanel>
-            <ListView Grid.Row="1" x:Name="carousels" ItemsSource="{Binding Carousels}" HorizontalAlignment="Center" Background="Transparent" BorderBrush="Transparent" BorderThickness="0">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button Command="{Binding CarouselLeftArrowClick}" FontFamily="Marlett" FontSize="20" Content="3"/>
-                            <ItemsControl ItemsSource="{Binding selectableItemList}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Button Command="{Binding ItemClick}" Height="60" Width="60" >
-                                            <Image Source="{Binding image}" Stretch="Fill"></Image>
-                                        </Button>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Horizontal" />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                            </ItemsControl>
-                            <Button Command="{Binding CarouselRightArrowClick}" FontFamily="Marlett" FontSize="20" Content="4"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="4*" />
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Command="{Binding brushCategories.terrainCategory}" Height="80" Width="80" >
+                        <Image Source="{Binding brushCategories.brushCategoryImages[0]}" Stretch="Fill"></Image>
+                    </Button>
+                    <Button Command="{Binding brushCategories.roadCategory}" Height="80" Width="80" >
+                        <Image Source="{Binding brushCategories.brushCategoryImages[1]}" Stretch="Fill"></Image>
+                    </Button>
+                </StackPanel>
+
+                <ListView Grid.Row="1" ItemsSource="{Binding brushCategories.visibleCarousels}" HorizontalAlignment="Center" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button Command="{Binding CarouselLeftArrowClick}" FontFamily="Marlett" FontSize="20" Content="3"/>
+                                <ItemsControl ItemsSource="{Binding brushList}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Button Command="{Binding ItemClick}" Height="60" Width="60" >
+                                                <Image Source="{Binding image}" Stretch="Fill"></Image>
+                                            </Button>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                                <Button Command="{Binding CarouselRightArrowClick}" FontFamily="Marlett" FontSize="20" Content="4"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

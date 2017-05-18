@@ -3,9 +3,9 @@ using System.Windows.Media.Imaging;
 
 namespace WarlordsMapEditor
 {
-    public class SelectableItem : Item
+    public class Brush : Item
     {
-        public SelectableItem(int itemIndex, int setIndex, BitmapImage image)
+        public Brush(int itemIndex, int setIndex, BitmapImage image)
         {
             this.itemIndex = itemIndex;
             this.setIndex = setIndex;

@@ -13,7 +13,9 @@ namespace WarlordsMapEditor
         public int setIndex;
         public string setName { get; set; }
 
-        public Sprite(Bitmap bmp, string setName, int setIndex)
+        public string category;
+
+        public Sprite(Bitmap bmp, string setName, int setIndex, string category)
         {
             imagesList = new List<BitmapImage>();
             for (int i = 0; i < bmp.Width / bmp.Height; i++)
@@ -34,6 +36,7 @@ namespace WarlordsMapEditor
             }
             this.setName = setName;
             this.setIndex = setIndex;
+            this.category = category;
         }
     }
 }

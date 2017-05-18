@@ -11,7 +11,6 @@ namespace WarlordsMapEditor
         public static int? selectedItemIndex=null;
         public static int? selectedSetIndex=null;
 
-        
 
         private int _boardRows;
         private int _boardColumns;
@@ -20,7 +19,13 @@ namespace WarlordsMapEditor
         private List<Sprite> _sprites = new List<Sprite>();
         private List<MapItem> _mapItems = new List<MapItem>();
         private ObservableCollection<MapItem> _boardItems = new ObservableCollection<MapItem>();
-        private ObservableCollection<Carousel> _carouselList = new ObservableCollection<Carousel>();
+        private BrushCategories _brushCategories;
+
+        public BrushCategories brushCategories
+        {
+            get { return _brushCategories; }
+            set { _brushCategories = value; }
+        }
 
         public Board(int rows, int columns)
         {
@@ -31,19 +36,18 @@ namespace WarlordsMapEditor
             Random random = new Random();
 
 
-            _sprites.Add(new Sprite(Resources.forest, "Forest", 0));
-            _sprites.Add(new Sprite(Resources.grass, "Grass", 1));
-            _sprites.Add(new Sprite(Resources.hills, "Hills", 2));
-            _sprites.Add(new Sprite(Resources.mountains, "Mountains", 3));
-            _sprites.Add(new Sprite(Resources.swamp, "Swamp", 4));
-            _sprites.Add(new Sprite(Resources.water, "Water", 5));
-            _sprites.Add(new Sprite(Resources.roads, "Roads", 6));
-            _sprites.Add(new Sprite(Resources.bridges, "Bridges", 5));
+            _sprites.Add(new Sprite(Resources.forest, "Forest", 0, "Terrain"));
+            _sprites.Add(new Sprite(Resources.grass, "Grass", 1, "Terrain"));
+            _sprites.Add(new Sprite(Resources.hills, "Hills", 2, "Terrain"));
+            _sprites.Add(new Sprite(Resources.mountains, "Mountains", 3, "Terrain"));
+            _sprites.Add(new Sprite(Resources.swamp, "Swamp", 4, "Terrain"));
+            _sprites.Add(new Sprite(Resources.water, "Water", 5, "Terrain"));
+            _sprites.Add(new Sprite(Resources.roads, "Roads", 6, "Road"));
+            _sprites.Add(new Sprite(Resources.bridges, "Bridges", 7, "Road"));
 
-            foreach (Sprite sprite in _sprites)
-            {
-                _carouselList.Add(new Carousel(sprite));
-            }
+            brushCategories = new BrushCategories(_sprites);
+
+
 
             for (int r = 0; r < mapRows; r++)
             {
@@ -80,13 +84,6 @@ namespace WarlordsMapEditor
             get { return _boardItems; }
             set { _boardItems = value; }
         }
-
-        public ObservableCollection<Carousel> Carousels
-        {
-            get { return _carouselList; }
-            set { _carouselList = value; }
-        }
-
 
         //Map Navigation
         public void NavigateLeft()
