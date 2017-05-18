@@ -9,6 +9,7 @@ namespace WarlordsMapEditor
     public class Sprite
     {
         public List<BitmapImage> imagesList;
+        public List<Bitmap> bitmapList;
 
         public int setIndex;
         public string setName { get; set; }
@@ -17,7 +18,13 @@ namespace WarlordsMapEditor
 
         public Sprite(Bitmap bmp, string setName, int setIndex, string category)
         {
+            this.setName = setName;
+            this.setIndex = setIndex;
+            this.category = category;
+
             imagesList = new List<BitmapImage>();
+            if (category == "Road") bitmapList = new List<Bitmap>();
+
             for (int i = 0; i < bmp.Width / bmp.Height; i++)
             {
                 Bitmap temp_bmp = bmp.Clone(new Rectangle(i * bmp.Height, 0, bmp.Height, bmp.Height), bmp.PixelFormat);
@@ -33,10 +40,8 @@ namespace WarlordsMapEditor
                     temp_img.EndInit();
                     imagesList.Add(temp_img);
                 }
+                if (category == "Road") bitmapList.Add(temp_bmp);
             }
-            this.setName = setName;
-            this.setIndex = setIndex;
-            this.category = category;
         }
     }
 }
