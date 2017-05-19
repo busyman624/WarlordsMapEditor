@@ -8,6 +8,12 @@ namespace WarlordsMapEditor
     public class Carousel
     {
         private Sprite itemSet;
+        private string _setName;
+        public string setName
+        {
+            get { return _setName; }
+            set { _setName = value; }
+        }
         private ObservableCollection<Brush> _brushList;
         public ObservableCollection<Brush> brushList
         {
@@ -23,6 +29,7 @@ namespace WarlordsMapEditor
                 _brushList.Add(new Brush(i, itemSet.setIndex, itemSet.imagesList[i]));
             }
             this.itemSet = itemSet;
+            this._setName = itemSet.setName;
 
         }
 
