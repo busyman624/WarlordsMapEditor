@@ -23,7 +23,7 @@ namespace WarlordsMapEditor
             this.category = category;
 
             imagesList = new List<BitmapImage>();
-            if (category == "Road") bitmapList = new List<Bitmap>();
+            bitmapList = new List<Bitmap>();
 
             for (int i = 0; i < bmp.Width / bmp.Height; i++)
             {
@@ -40,7 +40,7 @@ namespace WarlordsMapEditor
                     temp_img.EndInit();
                     imagesList.Add(temp_img);
                 }
-                if (category == "Road") bitmapList.Add(temp_bmp);
+                bitmapList.Add(temp_bmp);
             }
         }
     }

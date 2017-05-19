@@ -79,7 +79,6 @@
                         </Button>
                     </StackPanel>
                 </StackPanel>
-
                 <ListView Grid.Row="1" ItemsSource="{Binding brushCategories.visibleCarousels}" HorizontalAlignment="Center" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
