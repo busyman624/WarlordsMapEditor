@@ -78,7 +78,7 @@ namespace WarlordsMapEditor
                     if (_sprites[setIndex].setName == "Water") isWater = true;
                     else isWater = false;
                 }
-                else if (!isWater || setIndex == 7)
+                else if (!isWater || Board.selectedSetIndex == 7)
                 {
                     objectIndex = Board.selectedItemIndex;
                     objectSet = Board.selectedSetIndex;

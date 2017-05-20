@@ -31,8 +31,8 @@ namespace WarlordsMapEditor
         {
             _boardRows = rows;
             _boardColumns = columns;
-            mapRows = 2 * Rows;
-            mapColumns = 2 * Columns;
+            mapRows = 1000;
+            mapColumns = 1000;
             Random random = new Random();
 
 

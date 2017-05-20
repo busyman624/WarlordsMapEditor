@@ -90,6 +90,11 @@
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
                                                 <Button Command="{Binding ItemClick}" Height="60" Width="60" >
+                                                    <Button.Style>
+                                                        <Style>
+                                                            
+                                                        </Style>
+                                                    </Button.Style>
                                                     <Image Source="{Binding image}" Stretch="Fill"></Image>
                                                 </Button>
                                             </DataTemplate>

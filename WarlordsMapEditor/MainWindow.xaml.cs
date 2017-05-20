@@ -11,7 +11,7 @@ namespace WarlordsMapEditor
         {
             InitializeComponent();
 
-            this.DataContext = new Board(10, 10);
+            this.DataContext = new Board(20, 20);
         }
     }
 }
