@@ -16,6 +16,7 @@ namespace WarlordsMapEditor
         private int _boardColumns;
         private int mapRows;
         private int mapColumns;
+        private Map map;
         private List<Sprite> _sprites = new List<Sprite>();
         private List<MapItem> _mapItems = new List<MapItem>();
         private ObservableCollection<MapItem> _boardItems = new ObservableCollection<MapItem>();
@@ -47,22 +48,26 @@ namespace WarlordsMapEditor
 
             brushCategories = new BrushCategories(_sprites);
 
+            FileMapProvider dupa = new FileMapProvider();
+            map=dupa.LoadMapFromBytes(_sprites, @"C:\Users\krysz\Repos\K\Warlors\src\Warlords\Assets\Resources\Maps\duel.bytes");
+            mapRows = map.rows;
+            mapColumns = map.columns;
 
 
-            for (int r = 0; r < mapRows; r++)
-            {
-                for (int c = 0; c < mapColumns; c++)
-                {
-                    int randomItemSet = random.Next(_sprites.Count-2);  //roads and bridges excluded, TBD: support for non-terrain objects
-                    _mapItems.Add(new MapItem(random.Next(_sprites[randomItemSet].imagesList.Count) , randomItemSet , _sprites, c, r)); //filling map with some data
-                }
-            }
+            //for (int r = 0; r < mapRows; r++)
+            //{
+            //    for (int c = 0; c < mapColumns; c++)
+            //    {
+            //        int randomItemSet = random.Next(_sprites.Count-2);  //roads and bridges excluded, TBD: support for non-terrain objects
+            //        _mapItems.Add(new MapItem(random.Next(_sprites[randomItemSet].imagesList.Count) , randomItemSet , _sprites, c, r)); //filling map with some data
+            //    }
+            //}
 
             for (int r = 0; r < rows; r++)
             {
                 for (int c = 0; c < columns; c++)
                 {
-                    _boardItems.Add(_mapItems[c+r*mapColumns]);
+                    _boardItems.Add(map.tiles[c+r*mapColumns]);
                 }
             }
         }
@@ -92,7 +97,7 @@ namespace WarlordsMapEditor
             {
                 for (int c = 0; c < Columns; c++)
                 {
-                    boardItemList[c + r * Columns] = _mapItems[boardItemList[c + r * Columns].Xcoordinate - 1 + boardItemList[c + r * Columns].Ycoordinate * mapColumns];
+                    boardItemList[c + r * Columns] = map.tiles[boardItemList[c + r * Columns].Xcoordinate - 1 + boardItemList[c + r * Columns].Ycoordinate * mapColumns];
                 }
             }
 
@@ -105,7 +110,7 @@ namespace WarlordsMapEditor
             {
                 for (int c = 0; c < Columns; c++)
                 {
-                    boardItemList[c + r * Columns] = _mapItems[boardItemList[c + r * Columns].Xcoordinate + 1 + boardItemList[c + r * Columns].Ycoordinate * mapColumns];
+                    boardItemList[c + r * Columns] = map.tiles[boardItemList[c + r * Columns].Xcoordinate + 1 + boardItemList[c + r * Columns].Ycoordinate * mapColumns];
                 }
             }
 
@@ -118,7 +123,7 @@ namespace WarlordsMapEditor
             {
                 for (int c = 0; c < Columns; c++)
                 {
-                    boardItemList[c + r * Columns] = _mapItems[boardItemList[c + r * Columns].Xcoordinate + (boardItemList[c + r * Columns].Ycoordinate-1) * mapColumns];
+                    boardItemList[c + r * Columns] = map.tiles[boardItemList[c + r * Columns].Xcoordinate + (boardItemList[c + r * Columns].Ycoordinate-1) * mapColumns];
                 }
             }
         }
@@ -130,7 +135,7 @@ namespace WarlordsMapEditor
             {
                 for (int c = 0; c < Columns; c++)
                 {
-                    boardItemList[c + r * Columns] = _mapItems[boardItemList[c + r * Columns].Xcoordinate + (boardItemList[c + r * Columns].Ycoordinate + 1) * mapColumns];
+                    boardItemList[c + r * Columns] = map.tiles[boardItemList[c + r * Columns].Xcoordinate + (boardItemList[c + r * Columns].Ycoordinate + 1) * mapColumns];
                 }
             }
         }
