@@ -182,8 +182,7 @@ namespace WarlordsMapEditor
 
         private void RaisePropertyChaged(string info)
         {
-            if (this.PropertyChanged != null)
-                this.PropertyChanged(this, new PropertyChangedEventArgs(info));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(info));
         }
 
 
