@@ -16,9 +16,11 @@ namespace WarlordsMapEditor
         public bool isWater;
         public int? objectIndex;
         public int? objectSet;
+        public int palleteId;
 
-        public MapItem(int itemIndex, int setIndex, List<Sprite> _sprites, int Xcoordinate, int Ycoordinate)
+        public MapItem(int itemIndex, int setIndex, List<Sprite> _sprites, int Xcoordinate, int Ycoordinate, int palleteId)
         {
+            this.palleteId = palleteId;
             this.itemIndex = itemIndex;
             this.setIndex = setIndex;
             objectIndex = null;
