@@ -96,6 +96,12 @@ namespace WarlordsMapEditor
             }
         }
 
+        public void MapLoad() { }
+        public bool CanMapLoad() { return true; }
+
+        public void MapSave() { }
+        public virtual bool CanMapSave() { return true; }
+
         //Map Navigation
         public void NavigateLeft()
         {
@@ -149,34 +155,38 @@ namespace WarlordsMapEditor
 
         public void ZoomIn()
         {
-            _boardRows--;
-            _boardColumns--;
+            rows--;
+            columns--;
+            int Xcoordinate = _boardItems[0].Xcoordinate;
+            int Ycoordinate = _boardItems[0].Ycoordinate;
             _boardItems.Clear();
-            for (int r = 0; r < _boardRows; r++)
+            for (int r = Ycoordinate; r < rows + Ycoordinate; r++)
             {
-                for (int c = 0; c < _boardColumns; c++)
+                for (int c = Xcoordinate; c < columns + Xcoordinate; c++)
                 {
                     _boardItems.Add(map.tiles[c + r * mapColumns]);
                 }
             }
         }
-        public bool CanZoomIn() { return true; }
+        public bool CanZoomIn() { return rows>5; }
 
         public void ZoomOut()
         {
-            _boardRows++;
-            _boardColumns++;
+            rows++;
+            columns++;
+            int Xcoordinate = _boardItems[0].Xcoordinate;
+            int Ycoordinate = _boardItems[0].Ycoordinate;
             _boardItems.Clear();
-            for (int r = 0; r < _boardRows; r++)
+            for (int r = Ycoordinate; r < rows + Ycoordinate; r++)
             {
-                for (int c = 0; c < _boardColumns; c++)
+                for (int c = Xcoordinate; c < columns+ Xcoordinate; c++)
                 {
                     _boardItems.Add(map.tiles[c + r * mapColumns]);
                 }
             }
 
         }
-        public bool CanZoomOut() { return true; }
+        public bool CanZoomOut() { return rows<20 && _boardItems[columns * rows - 1].Xcoordinate<map.columns-1 && _boardItems[columns * rows - 1].Ycoordinate<map.rows-1; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -185,7 +195,8 @@ namespace WarlordsMapEditor
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(info));
         }
 
-
+        private ICommand _mapLoad;
+        private ICommand _mapSave;
 
         private ICommand _mapNavigateLeft;
         private ICommand _mapNavigateRight;
@@ -194,6 +205,36 @@ namespace WarlordsMapEditor
 
         private ICommand _mapZoomIn;
         private ICommand _mapZoomOut;
+
+        public ICommand mapLoad
+        {
+            get
+            {
+                if (_mapLoad == null)
+                {
+                    _mapLoad = new RelayCommand(
+                        param => this.MapLoad(),
+                        param => this.CanMapLoad()
+                    );
+                }
+                return _mapLoad;
+            }
+        }
+
+        public ICommand mapSave
+        {
+            get
+            {
+                if (_mapSave == null)
+                {
+                    _mapSave = new RelayCommand(
+                        param => this.MapSave(),
+                        param => this.CanMapSave()
+                    );
+                }
+                return _mapSave;
+            }
+        }
 
         public ICommand MapNavigateLeft
         {

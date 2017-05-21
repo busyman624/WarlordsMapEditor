@@ -52,16 +52,22 @@
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="3*" />
             </Grid.RowDefinitions>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button VerticalAlignment="Center" Command="{Binding MapNavigateLeft}" FontFamily="Marlett" FontSize="20" Content="3"/>
-                <StackPanel VerticalAlignment="Center">
-                    <Button DockPanel.Dock="Top" Command="{Binding MapNavigateUp}" FontFamily="Marlett" FontSize="20" Content="5"/>
-                    <Button DockPanel.Dock="Bottom" Command="{Binding MapNavigateDown}" FontFamily="Marlett" FontSize="20" Content="6"/>
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button VerticalAlignment="Center" Command="{Binding MapNavigateLeft}" FontFamily="Marlett" FontSize="20" Content="3"/>
+                    <StackPanel VerticalAlignment="Center">
+                        <Button DockPanel.Dock="Top" Command="{Binding MapNavigateUp}" FontFamily="Marlett" FontSize="20" Content="5"/>
+                        <Button DockPanel.Dock="Bottom" Command="{Binding MapNavigateDown}" FontFamily="Marlett" FontSize="20" Content="6"/>
+                    </StackPanel>
+                    <Button VerticalAlignment="Center" Command="{Binding MapNavigateRight}" FontFamily="Marlett" FontSize="20" Content="4"/>
+                    <StackPanel VerticalAlignment="Center">
+                        <Button DockPanel.Dock="Top" Command="{Binding MapZoomIn}"  Content="Zoom In"/>
+                        <Button DockPanel.Dock="Bottom" Command="{Binding MapZoomOut}" Content="Zoom Out"/>
+                    </StackPanel>
                 </StackPanel>
-                <Button VerticalAlignment="Center" Command="{Binding MapNavigateRight}" FontFamily="Marlett" FontSize="20" Content="4"/>
-                <StackPanel VerticalAlignment="Center">
-                    <Button DockPanel.Dock="Top" Command="{Binding MapZoomIn}"  Content="Zoom In"/>
-                    <Button DockPanel.Dock="Bottom" Command="{Binding MapZoomOut}" Content="Zoom Out"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button VerticalAlignment="Center" Command="{Binding mapLoad}" Content="Load"/>
+                    <Button VerticalAlignment="Center" Command="{Binding mapSave}" Content="Save"/>
                 </StackPanel>
             </StackPanel>
             <Grid Grid.Row="1">
