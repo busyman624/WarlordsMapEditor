@@ -53,6 +53,14 @@
                 <RowDefinition Height="3*" />
             </Grid.RowDefinitions>
             <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Map Name: "/>
+                    <TextBox Grid.Column="1" Text="{Binding mapName}"/>
+                </Grid>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button VerticalAlignment="Center" Command="{Binding MapNavigateLeft}" FontFamily="Marlett" FontSize="20" Content="3"/>
                     <StackPanel VerticalAlignment="Center">
@@ -69,6 +77,14 @@
                     <Button VerticalAlignment="Center" Command="{Binding mapLoad}" Content="Load"/>
                     <Button VerticalAlignment="Center" Command="{Binding mapSave}" Content="Save"/>
                 </StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Map Description: "/>
+                    <TextBox Grid.Column="1" Text="{Binding mapDescription}" />
+                </Grid>
             </StackPanel>
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>

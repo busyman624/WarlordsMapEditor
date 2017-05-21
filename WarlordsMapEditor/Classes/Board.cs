@@ -14,11 +14,41 @@ namespace WarlordsMapEditor
         
         private int _boardRows=10;
         private int _boardColumns=10;
+        private string _mapName;
+        private string _mapDescription;
         private ObservableCollection<MapItem> _boardItems = new ObservableCollection<MapItem>();
         private Map map;
         private List<Sprite> _sprites = new List<Sprite>();
         private BrushCategories _brushCategories;
         FileMapProvider mapProvider = new FileMapProvider();
+
+        public string mapName
+        {
+            get { return _mapName; }
+            set
+            {
+                if (_mapName != value)
+                {
+
+                    _mapName = value;
+                    RaisePropertyChaged("mapName");
+                }
+            }
+        }
+
+        public string mapDescription
+        {
+            get { return _mapDescription; }
+            set
+            {
+                if (_mapDescription != value)
+                {
+
+                    _mapDescription = value;
+                    RaisePropertyChaged("mapDescription");
+                }
+            }
+        }
 
         public int rows
         {
@@ -89,6 +119,8 @@ namespace WarlordsMapEditor
             {
                 string filename = dlg.FileName;
                 map = mapProvider.LoadMapFromBytes(_sprites, filename);
+                mapName = map.name.Split('\\')[map.name.Split('\\').Length-1];
+                mapDescription = map.description;
                 refresh();
             }
         }
@@ -96,7 +128,7 @@ namespace WarlordsMapEditor
         public void MapSave()
         {
             Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
-            dlg.FileName = "Map"; // Default file name
+            dlg.FileName = mapName; // Default file name
             dlg.DefaultExt = ".bytes"; // Default file extension
             dlg.Filter = "(.bytes)|*.bytes"; // Filter files by extension
 
@@ -122,7 +154,7 @@ namespace WarlordsMapEditor
         }
 
         public bool CanMapLoad() { return true; }
-        public virtual bool CanMapSave() { return true; }
+        public virtual bool CanMapSave() { return map!=null; }
 
         //Map Navigation
         public void NavigateLeft()
