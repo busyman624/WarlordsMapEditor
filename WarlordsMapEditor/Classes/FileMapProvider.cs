@@ -428,16 +428,16 @@ namespace WarlordsMapEditor
                         map.overlayTilesX.Add(tile.Xcoordinate);
                         map.overlayTilesY.Add(tile.Ycoordinate);
                         string tilePalleteName = "";
-                        switch (tile.setIndex)
+                        switch (tile.objectSet)
                         {
                             case 6:
                                 {
-                                    tilePalleteName += "roads_" + tile.itemIndex.ToString();
+                                    tilePalleteName += "roads_" + tile.objectIndex.ToString();
                                     break;
                                 }
                             case 7:
                                 {
-                                    tilePalleteName += "bridges_" + tile.itemIndex.ToString();
+                                    tilePalleteName += "bridges_" + tile.objectIndex.ToString();
                                     break;
                                 }
                         }
