@@ -11,7 +11,6 @@ namespace WarlordsMapEditor
         public static int? selectedItemIndex=null;
         public static int? selectedSetIndex=null;
 
-
         private int _boardRows;
         private int _boardColumns;
         private int mapRows;
@@ -21,6 +20,7 @@ namespace WarlordsMapEditor
         private List<MapItem> _mapItems = new List<MapItem>();
         private ObservableCollection<MapItem> _boardItems = new ObservableCollection<MapItem>();
         private BrushCategories _brushCategories;
+        FileMapProvider dupa;
 
         public BrushCategories brushCategories
         {
@@ -48,11 +48,10 @@ namespace WarlordsMapEditor
 
             brushCategories = new BrushCategories(_sprites);
 
-            FileMapProvider dupa = new FileMapProvider();
-            map=dupa.LoadMapFromBytes(_sprites, @"C:\Users\krysz\Repos\K\Warlors\src\Warlords\Assets\Resources\Maps\duel.bytes");
+            dupa = new FileMapProvider();
+            map=dupa.LoadMapFromBytes(_sprites, @"C:\Users\Maciej\Desktop\Warlords\grupowy_21\src\Warlords\Assets\Resources\Maps\map.bytes");
             mapRows = map.rows;
             mapColumns = map.columns;
-
 
             //for (int r = 0; r < mapRows; r++)
             //{
@@ -113,7 +112,7 @@ namespace WarlordsMapEditor
                     boardItemList[c + r * Columns] = map.tiles[boardItemList[c + r * Columns].Xcoordinate + 1 + boardItemList[c + r * Columns].Ycoordinate * mapColumns];
                 }
             }
-
+            dupa.SaveMapToFile(@"C:\Users\Maciej\Desktop\map.bytes", map);
         }
         public bool CanNavigateRight() { return boardItemList[Columns-1].Xcoordinate<mapColumns-1; }
 

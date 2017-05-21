@@ -64,7 +64,11 @@
     <Compile Include="Classes\MapItem.cs" />
     <Compile Include="Classes\RelayCommand.cs" />
     <Compile Include="Classes\Brush.cs" />
+    <Compile Include="Classes\ShitClasses\CastleInfo.cs" />
     <Compile Include="Classes\ShitClasses\Resource.cs" />
+    <Compile Include="Classes\ShitClasses\RuinsInfo.cs" />
+    <Compile Include="Classes\ShitClasses\Statistics.cs" />
+    <Compile Include="Classes\ShitClasses\UnitInfo.cs" />
     <Compile Include="Classes\Sprite.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
