@@ -11,14 +11,14 @@ namespace WarlordsMapEditor
     {
         public static int? selectedItemIndex=null;
         public static int? selectedSetIndex=null;
-
-
+        
         private int _boardRows=10;
         private int _boardColumns=10;
         private ObservableCollection<MapItem> _boardItems = new ObservableCollection<MapItem>();
         private Map map;
         private List<Sprite> _sprites = new List<Sprite>();
         private BrushCategories _brushCategories;
+        FileMapProvider mapProvider;
 
         public int rows
         {
@@ -62,7 +62,6 @@ namespace WarlordsMapEditor
 
         public Board() 
         {
-
             _sprites.Add(new Sprite(Resources.forest, "Forest", 0, "Terrain"));
             _sprites.Add(new Sprite(Resources.grass, "Grass", 1, "Terrain"));
             _sprites.Add(new Sprite(Resources.hills, "Hills", 2, "Terrain"));
@@ -74,22 +73,59 @@ namespace WarlordsMapEditor
 
             brushCategories = new BrushCategories(_sprites);
 
-            FileMapProvider mapProvider = new FileMapProvider();
-            map=mapProvider.LoadMapFromBytes(_sprites, @"C:\Users\krysz\Repos\K\Warlors\src\Warlords\Assets\Resources\Maps\duel.bytes");
+            mapProvider = new FileMapProvider();
+            map=mapProvider.LoadMapFromBytes(_sprites, @"C:\Users\Maciej\Desktop\Warlords\grupowy_21\src\Warlords\Assets\Resources\Maps\duel.bytes");
+            refresh();
+        }
 
+        public void MapLoad()
+        {
+            // Create OpenFileDialog 
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+
+            // Set filter for file extension and default file extension 
+            dlg.DefaultExt = ".byte";
+            dlg.Filter = "(*.bytes)|*.bytes";
+
+            // Display OpenFileDialog by calling ShowDialog method 
+            Nullable<bool> result = dlg.ShowDialog(); 
+            if (result == true)
+            {
+                string filename = dlg.FileName;
+                map = mapProvider.LoadMapFromBytes(_sprites, filename);
+                refresh();
+            }
+        }
+
+        public void MapSave()
+        {
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.FileName = "Map"; // Default file name
+            dlg.DefaultExt = ".bytes"; // Default file extension
+            dlg.Filter = "(.bytes)|*.bytes"; // Filter files by extension
+
+            // Show save file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+            if (result == true)
+            {
+                string filename = dlg.FileName;
+                mapProvider.SaveMapToFile(filename, map);
+            }
+        }
+
+        public void refresh()
+        {
+            _boardItems.Clear();
             for (int r = 0; r < _boardRows; r++)
             {
                 for (int c = 0; c < _boardColumns; c++)
                 {
-                    _boardItems.Add(map.tiles[c+r*map.columns]);
+                    _boardItems.Add(map.tiles[c + r * map.columns]);
                 }
             }
         }
 
-        public void MapLoad() { }
         public bool CanMapLoad() { return true; }
-
-        public void MapSave() { }
         public virtual bool CanMapSave() { return true; }
 
         //Map Navigation
