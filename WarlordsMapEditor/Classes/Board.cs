@@ -13,11 +13,11 @@ namespace WarlordsMapEditor
         public static int? selectedSetIndex=null;
 
 
-        private int _boardRows;
-        private int _boardColumns;
+        private int _boardRows=10;
+        private int _boardColumns=10;
+        private ObservableCollection<MapItem> _boardItems = new ObservableCollection<MapItem>();
         private Map map;
         private List<Sprite> _sprites = new List<Sprite>();
-        private ObservableCollection<MapItem> _boardItems = new ObservableCollection<MapItem>();
         private BrushCategories _brushCategories;
 
         public int rows
@@ -62,10 +62,6 @@ namespace WarlordsMapEditor
 
         public Board() 
         {
-            _boardRows = 20;
-            _boardColumns = 20;
-            Random random = new Random();
-
 
             _sprites.Add(new Sprite(Resources.forest, "Forest", 0, "Terrain"));
             _sprites.Add(new Sprite(Resources.grass, "Grass", 1, "Terrain"));
