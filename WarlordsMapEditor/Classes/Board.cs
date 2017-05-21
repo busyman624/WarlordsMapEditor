@@ -15,8 +15,6 @@ namespace WarlordsMapEditor
 
         private int _boardRows;
         private int _boardColumns;
-        private int mapRows;
-        private int mapColumns;
         private Map map;
         private List<Sprite> _sprites = new List<Sprite>();
         private ObservableCollection<MapItem> _boardItems = new ObservableCollection<MapItem>();
@@ -66,8 +64,6 @@ namespace WarlordsMapEditor
         {
             _boardRows = 20;
             _boardColumns = 20;
-            mapRows = 1000;
-            mapColumns = 1000;
             Random random = new Random();
 
 
@@ -84,14 +80,12 @@ namespace WarlordsMapEditor
 
             FileMapProvider mapProvider = new FileMapProvider();
             map=mapProvider.LoadMapFromBytes(_sprites, @"C:\Users\krysz\Repos\K\Warlors\src\Warlords\Assets\Resources\Maps\duel.bytes");
-            mapRows = map.rows;
-            mapColumns = map.columns;
 
             for (int r = 0; r < _boardRows; r++)
             {
                 for (int c = 0; c < _boardColumns; c++)
                 {
-                    _boardItems.Add(map.tiles[c+r*mapColumns]);
+                    _boardItems.Add(map.tiles[c+r*map.columns]);
                 }
             }
         }
@@ -109,7 +103,7 @@ namespace WarlordsMapEditor
             {
                 for (int c = 0; c < columns; c++)
                 {
-                    boardItemList[c + r * columns] = map.tiles[boardItemList[c + r * columns].Xcoordinate - 1 + boardItemList[c + r * columns].Ycoordinate * mapColumns];
+                    boardItemList[c + r * columns] = map.tiles[boardItemList[c + r * columns].Xcoordinate - 1 + boardItemList[c + r * columns].Ycoordinate * map.columns];
                 }
             }
 
@@ -122,12 +116,12 @@ namespace WarlordsMapEditor
             {
                 for (int c = 0; c < columns; c++)
                 {
-                    boardItemList[c + r * columns] = map.tiles[boardItemList[c + r * columns].Xcoordinate + 1 + boardItemList[c + r * columns].Ycoordinate * mapColumns];
+                    boardItemList[c + r * columns] = map.tiles[boardItemList[c + r * columns].Xcoordinate + 1 + boardItemList[c + r * columns].Ycoordinate * map.columns];
                 }
             }
 
         }
-        public bool CanNavigateRight() { return boardItemList[columns-1].Xcoordinate<mapColumns-1; }
+        public bool CanNavigateRight() { return boardItemList[columns-1].Xcoordinate<map.columns-1; }
 
         public void NavigateUp()
         {
@@ -135,7 +129,7 @@ namespace WarlordsMapEditor
             {
                 for (int c = 0; c < columns; c++)
                 {
-                    boardItemList[c + r * columns] = map.tiles[boardItemList[c + r * columns].Xcoordinate + (boardItemList[c + r * columns].Ycoordinate-1) * mapColumns];
+                    boardItemList[c + r * columns] = map.tiles[boardItemList[c + r * columns].Xcoordinate + (boardItemList[c + r * columns].Ycoordinate-1) * map.columns];
                 }
             }
         }
@@ -147,11 +141,11 @@ namespace WarlordsMapEditor
             {
                 for (int c = 0; c < columns; c++)
                 {
-                    boardItemList[c + r * columns] = map.tiles[boardItemList[c + r * columns].Xcoordinate + (boardItemList[c + r * columns].Ycoordinate + 1) * mapColumns];
+                    boardItemList[c + r * columns] = map.tiles[boardItemList[c + r * columns].Xcoordinate + (boardItemList[c + r * columns].Ycoordinate + 1) * map.columns];
                 }
             }
         }
-        public bool CanNavigateDown() { return boardItemList[columns*rows - 1].Ycoordinate < mapRows - 1; ; }
+        public bool CanNavigateDown() { return boardItemList[columns*rows - 1].Ycoordinate < map.rows - 1; ; }
 
         public void ZoomIn()
         {
@@ -164,7 +158,7 @@ namespace WarlordsMapEditor
             {
                 for (int c = Xcoordinate; c < columns + Xcoordinate; c++)
                 {
-                    _boardItems.Add(map.tiles[c + r * mapColumns]);
+                    _boardItems.Add(map.tiles[c + r * map.columns]);
                 }
             }
         }
@@ -181,7 +175,7 @@ namespace WarlordsMapEditor
             {
                 for (int c = Xcoordinate; c < columns+ Xcoordinate; c++)
                 {
-                    _boardItems.Add(map.tiles[c + r * mapColumns]);
+                    _boardItems.Add(map.tiles[c + r * map.columns]);
                 }
             }
 
