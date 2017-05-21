@@ -34,9 +34,9 @@ namespace WarlordsMapEditor
             bitmap = _sprites[setIndex].bitmapList[itemIndex];
         }
 
-        private BitmapImage combineImages(int setIndex, int itemIndex)
+        public void combineImages()
         {
-            Bitmap topbmp = _sprites[setIndex].bitmapList[itemIndex];
+            Bitmap topbmp = _sprites[(int)objectSet].bitmapList[(int)objectIndex];
             Bitmap combined;
             BitmapImage combinedBitmapImage = new BitmapImage();
 
@@ -61,7 +61,7 @@ namespace WarlordsMapEditor
                 combinedBitmapImage.EndInit();
             }
 
-            return combinedBitmapImage;
+            image= combinedBitmapImage;
         }
 
         public override void onItemClick()
@@ -85,7 +85,7 @@ namespace WarlordsMapEditor
                 {
                     objectIndex = Board.selectedItemIndex;
                     objectSet = Board.selectedSetIndex;
-                    image = combineImages((int)objectSet, (int)objectIndex);
+                    combineImages();
                 }
             }
         }

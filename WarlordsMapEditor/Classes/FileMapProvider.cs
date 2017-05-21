@@ -160,12 +160,31 @@ namespace WarlordsMapEditor
                 }
 
                 // Overlay tiles
-                map.overlayTilesCount = reader.ReadInt32();  //TODO: osobna lista z drogami, mostami itp
+                map.overlayTilesCount = reader.ReadInt32();  
                 for (int i = 0; i < map.overlayTilesCount; i++)
                 {
-                    map.overlayTilesX.Add(reader.ReadInt32());  
-                    map.overlayTilesY.Add(reader.ReadInt32());  
-                    map.overlayTilesPrefabId.Add(reader.ReadInt32());  
+                    map.overlayTilesX.Add(reader.ReadInt32());
+                    map.overlayTilesY.Add(reader.ReadInt32());
+                    map.overlayTilesPrefabId.Add(reader.ReadInt32());
+
+                    int tileID = map.tiles.FindIndex(t => (t.Xcoordinate == map.overlayTilesX[i]) && (t.Ycoordinate == map.overlayTilesY[i]));
+                    switch (palette[map.overlayTilesPrefabId[i]].Split('_')[0])
+                    {
+                        case "roads":
+                            {
+                                map.tiles[tileID].objectSet = 6;
+                                map.tiles[tileID].objectIndex = Int16.Parse(palette[map.overlayTilesPrefabId[i]].Split('_')[1]);
+                                map.tiles[tileID].combineImages();
+                                break;
+                            }
+                        case "bridges":
+                            {
+                                map.tiles[tileID].objectSet = 7;
+                                map.tiles[tileID].objectIndex = Int16.Parse(palette[map.overlayTilesPrefabId[i]].Split('_')[1]);
+                                map.tiles[tileID].combineImages();
+                                break;
+                            }
+                    }
                 }
 
                 // Castles
@@ -394,6 +413,37 @@ namespace WarlordsMapEditor
                                 break;
                             }
                         }
+                    }
+
+                    List<MapItem> overlayedTiles = map.tiles.FindAll(t => (t.objectSet != null) && (t.objectIndex != null));
+
+                    map.overlayTilesCount = 0;
+                    map.overlayTilesX.Clear();
+                    map.overlayTilesY.Clear();
+                    map.overlayTilesPrefabId.Clear();
+
+                    foreach (MapItem tile in overlayedTiles)
+                    {
+                        map.overlayTilesCount++;
+                        map.overlayTilesX.Add(tile.Xcoordinate);
+                        map.overlayTilesY.Add(tile.Ycoordinate);
+                        string tilePalleteName = "";
+                        switch (tile.setIndex)
+                        {
+                            case 6:
+                                {
+                                    tilePalleteName += "roads_" + tile.itemIndex.ToString();
+                                    break;
+                                }
+                            case 7:
+                                {
+                                    tilePalleteName += "bridges_" + tile.itemIndex.ToString();
+                                    break;
+                                }
+                        }
+
+                        
+                        map.overlayTilesPrefabId.Add(map.prefabPath.FindIndex(p => p == tilePalleteName));
                     }
 
                     // Overlay tiles
