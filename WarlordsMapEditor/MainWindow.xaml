@@ -43,7 +43,7 @@
             </ItemsControl.ItemTemplate>
                 <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid  Rows="{Binding Rows}" Columns="{Binding Columns}"></UniformGrid>
+                    <UniformGrid  Rows="{Binding rows}" Columns="{Binding columns}"></UniformGrid>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>
@@ -59,6 +59,10 @@
                     <Button DockPanel.Dock="Bottom" Command="{Binding MapNavigateDown}" FontFamily="Marlett" FontSize="20" Content="6"/>
                 </StackPanel>
                 <Button VerticalAlignment="Center" Command="{Binding MapNavigateRight}" FontFamily="Marlett" FontSize="20" Content="4"/>
+                <StackPanel VerticalAlignment="Center">
+                    <Button DockPanel.Dock="Top" Command="{Binding MapZoomIn}"  Content="Zoom In"/>
+                    <Button DockPanel.Dock="Bottom" Command="{Binding MapZoomOut}" Content="Zoom Out"/>
+                </StackPanel>
             </StackPanel>
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>

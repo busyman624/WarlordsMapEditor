@@ -64,6 +64,7 @@ namespace WarlordsMapEditor
 
         public override void onItemClick()
         {
+            Console.WriteLine("Hi I'm button X:" + Xcoordinate.ToString() + " Y: " + Ycoordinate.ToString());
             if(Board.selectedItemIndex!=null && Board.selectedSetIndex != null)
             {
                 if (_sprites[(int)Board.selectedSetIndex].category == "Terrain")
