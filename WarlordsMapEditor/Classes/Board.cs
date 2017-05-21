@@ -18,7 +18,7 @@ namespace WarlordsMapEditor
         private Map map;
         private List<Sprite> _sprites = new List<Sprite>();
         private BrushCategories _brushCategories;
-        FileMapProvider mapProvider;
+        FileMapProvider mapProvider = new FileMapProvider();
 
         public int rows
         {
@@ -72,10 +72,6 @@ namespace WarlordsMapEditor
             _sprites.Add(new Sprite(Resources.bridges, "Bridges", 7, "Road"));
 
             brushCategories = new BrushCategories(_sprites);
-
-            mapProvider = new FileMapProvider();
-            map=mapProvider.LoadMapFromBytes(_sprites, @"C:\Users\Maciej\Desktop\Warlords\grupowy_21\src\Warlords\Assets\Resources\Maps\duel.bytes");
-            refresh();
         }
 
         public void MapLoad()
@@ -140,7 +136,11 @@ namespace WarlordsMapEditor
             }
 
         }
-        public bool CanNavigateLeft() { return boardItemList[0].Xcoordinate>0; }
+        public bool CanNavigateLeft()
+        {
+            if (boardItemList.Count != 0) return boardItemList[0].Xcoordinate > 0;
+            else return false;
+        }
 
         public void NavigateRight()
         {
@@ -153,7 +153,11 @@ namespace WarlordsMapEditor
             }
 
         }
-        public bool CanNavigateRight() { return boardItemList[columns-1].Xcoordinate<map.columns-1; }
+        public bool CanNavigateRight()
+        {
+            if (boardItemList.Count != 0)  return boardItemList[columns-1].Xcoordinate<map.columns-1;
+            else return false;
+        }
 
         public void NavigateUp()
         {
@@ -165,7 +169,11 @@ namespace WarlordsMapEditor
                 }
             }
         }
-        public bool CanNavigateUp() { return boardItemList[0].Ycoordinate > 0; }
+        public bool CanNavigateUp()
+        {
+            if (boardItemList.Count != 0) return boardItemList[0].Ycoordinate > 0;
+            else return false;
+        }
 
         public void NavigateDown()
         {
@@ -177,7 +185,11 @@ namespace WarlordsMapEditor
                 }
             }
         }
-        public bool CanNavigateDown() { return boardItemList[columns*rows - 1].Ycoordinate < map.rows - 1; ; }
+        public bool CanNavigateDown()
+        {
+            if (boardItemList.Count != 0) return boardItemList[columns*rows - 1].Ycoordinate < map.rows - 1;
+            else return false;
+        }
 
         public void ZoomIn()
         {
@@ -194,7 +206,11 @@ namespace WarlordsMapEditor
                 }
             }
         }
-        public bool CanZoomIn() { return rows>5; }
+        public bool CanZoomIn()
+        {
+            if (boardItemList.Count != 0) return rows >5;
+            else return false;
+        }
 
         public void ZoomOut()
         {
@@ -212,7 +228,11 @@ namespace WarlordsMapEditor
             }
 
         }
-        public bool CanZoomOut() { return rows<20 && _boardItems[columns * rows - 1].Xcoordinate<map.columns-1 && _boardItems[columns * rows - 1].Ycoordinate<map.rows-1; }
+        public bool CanZoomOut()
+        {
+            if (boardItemList.Count != 0) return rows <20 && _boardItems[columns * rows - 1].Xcoordinate<map.columns-1 && _boardItems[columns * rows - 1].Ycoordinate<map.rows-1;
+            else return false;
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
