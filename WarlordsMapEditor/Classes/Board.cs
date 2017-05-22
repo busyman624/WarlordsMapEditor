@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows.Forms;
 using System.Windows.Input;
 using WarlordsMapEditor.Properties;
 
@@ -11,13 +12,15 @@ namespace WarlordsMapEditor
     {
         public static int? selectedItemIndex=null;
         public static int? selectedSetIndex=null;
-        
+
+        private Timer timer;
         private int _boardRows=10;
         private int _boardColumns=10;
         private string _mapName;
         private string _mapDescription;
         private ObservableCollection<MapItem> _boardItems = new ObservableCollection<MapItem>();
         private Map map;
+        private MiniMap _miniMap;
         private List<Sprite> _sprites = new List<Sprite>();
         private BrushCategories _brushCategories;
         FileMapProvider mapProvider = new FileMapProvider();
@@ -78,6 +81,12 @@ namespace WarlordsMapEditor
             }
         }
 
+        public MiniMap miniMap
+        {
+            get { return _miniMap; }
+            set { _miniMap = value; }
+        }
+
         public ObservableCollection<MapItem> boardItemList
         {
             get { return _boardItems; }
@@ -102,6 +111,7 @@ namespace WarlordsMapEditor
             _sprites.Add(new Sprite(Resources.bridges, "Bridges", 7, "Road"));
 
             brushCategories = new BrushCategories(_sprites);
+            miniMap = new MiniMap();
         }
 
         public void MapLoad()
@@ -122,6 +132,9 @@ namespace WarlordsMapEditor
                 mapName = map.name.Split('\\')[map.name.Split('\\').Length-1];
                 mapDescription = map.description;
                 refresh();
+                miniMap.calculate(map.columns, map.rows);
+                miniMap.refresh(map.tiles);
+                InitTimer();
             }
         }
 
@@ -158,9 +171,23 @@ namespace WarlordsMapEditor
         public bool CanMapLoad() { return true; }
         public virtual bool CanMapSave() { return map!=null; }
 
+        public void InitTimer()
+        {
+            timer = new Timer();
+            timer.Tick += new EventHandler(timerTick);
+            timer.Interval = 2000; // in miliseconds
+            timer.Start();
+        }
+
+        private void timerTick(object sender, EventArgs e)
+        {
+            //miniMap.refresh(map.tiles);       minimap refresh on timer
+        }
+
         //Map Navigation
         public void NavigateLeft()
         {
+            miniMap.currentX--;
             for (int r = 0; r < rows; r++)
             {
                 for (int c = 0; c < columns; c++)
@@ -178,6 +205,7 @@ namespace WarlordsMapEditor
 
         public void NavigateRight()
         {
+            miniMap.currentX++;
             for (int r = 0; r < rows; r++)
             {
                 for (int c = 0; c < columns; c++)
@@ -195,6 +223,7 @@ namespace WarlordsMapEditor
 
         public void NavigateUp()
         {
+            miniMap.currentY--;
             for (int r = 0; r < rows; r++)
             {
                 for (int c = 0; c < columns; c++)
@@ -211,6 +240,7 @@ namespace WarlordsMapEditor
 
         public void NavigateDown()
         {
+            miniMap.currentY++;
             for (int r = 0; r < rows; r++)
             {
                 for (int c = 0; c < columns; c++)

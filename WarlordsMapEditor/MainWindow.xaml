@@ -67,8 +67,8 @@
                         <TextBlock Grid.Column="1" Text="{Binding mapName}" FontSize="20" FontWeight="Bold"/>
                     </StackPanel>
                     <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <Button VerticalAlignment="Center" Command="{Binding mapLoad}" Content="Load" FontSize="20"/>
-                        <Button VerticalAlignment="Center" Command="{Binding mapSave}" Content="Save" FontSize="20"/>
+                        <Button VerticalAlignment="Center" Command="{Binding mapLoad}" Content="Load" FontSize="20" Margin="5,5,5,5"/>
+                        <Button VerticalAlignment="Center" Command="{Binding mapSave}" Content="Save" FontSize="20" Margin="5,5,5,5"/>
                     </StackPanel>
                 </Grid>
                 <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center">
@@ -80,20 +80,28 @@
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
-                <RowDefinition Height="3*" />
+                <RowDefinition Height="2*" />
             </Grid.RowDefinitions>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button VerticalAlignment="Center" Command="{Binding MapNavigateLeft}" FontFamily="Marlett" FontSize="20" Content="3"/>
+            <DockPanel>
+                <DockPanel DockPanel.Dock="Bottom" LastChildFill="False" >
+                    <Button DockPanel.Dock="Left" Command="{Binding MapZoomIn}"  Content="Zoom In" Margin="5,5,5,5"/>
+                    <Button DockPanel.Dock="Right" Command="{Binding MapZoomOut}" Content="Zoom Out" Margin="5,5,5,5"/>
+                </DockPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Button VerticalAlignment="Center" Command="{Binding MapNavigateLeft}" FontFamily="Marlett" FontSize="20" Content="3" Margin="5,5,5,5"/>
                     <StackPanel VerticalAlignment="Center">
-                        <Button DockPanel.Dock="Top" Command="{Binding MapNavigateUp}" FontFamily="Marlett" FontSize="20" Content="5"/>
-                        <Button DockPanel.Dock="Bottom" Command="{Binding MapNavigateDown}" FontFamily="Marlett" FontSize="20" Content="6"/>
+                        <Button Command="{Binding MapNavigateUp}" HorizontalAlignment="Center" FontFamily="Marlett" FontSize="20" Content="5" Margin="5,5,5,5"/>
+                        <Border Height="{Binding miniMap.miniMapHeight}" Width="{Binding miniMap.miniMapWidth}" BorderThickness="2" BorderBrush="Black">
+                            <Canvas>
+                                <Image Source="{Binding miniMap.miniMapImage , TargetNullValue={x:Null}}" />
+                                <Border Canvas.Left="{Binding miniMap.currentX}" Canvas.Top="{Binding miniMap.currentY}" Width="{Binding columns}" Height="{Binding rows}" BorderThickness="1" BorderBrush="Red" />
+                            </Canvas>
+                        </Border>
+                        <Button Command="{Binding MapNavigateDown}" HorizontalAlignment="Center" FontFamily="Marlett" FontSize="20" Content="6" Margin="5,5,5,5"/>
                     </StackPanel>
-                    <Button VerticalAlignment="Center" Command="{Binding MapNavigateRight}" FontFamily="Marlett" FontSize="20" Content="4"/>
-                    <StackPanel VerticalAlignment="Center">
-                        <Button DockPanel.Dock="Top" Command="{Binding MapZoomIn}"  Content="Zoom In"/>
-                        <Button DockPanel.Dock="Bottom" Command="{Binding MapZoomOut}" Content="Zoom Out"/>
-                    </StackPanel>
+                    <Button VerticalAlignment="Center" Command="{Binding MapNavigateRight}" FontFamily="Marlett" FontSize="20" Content="4" Margin="5,5,5,5"/>
                 </StackPanel>
+            </DockPanel>
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*" />
@@ -124,11 +132,6 @@
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
                                                 <Button Command="{Binding ItemClick}" Height="60" Width="60" >
-                                                    <Button.Style>
-                                                        <Style>
-                                                            
-                                                        </Style>
-                                                    </Button.Style>
                                                     <Image Source="{Binding image}" Stretch="Fill"></Image>
                                                 </Button>
                                             </DataTemplate>
