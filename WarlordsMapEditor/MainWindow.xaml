@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WarlordsMapEditor"
         xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1000"
+        Title="Warlords Map Editor" Height="800" Width="1000"
         >
     <!--
     <Window.Resources>
@@ -33,34 +33,55 @@
             <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
-        <ItemsControl ItemsSource="{Binding boardItemList}" Padding="10">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Button Command="{Binding ItemClick}" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Padding="-4">
-                        <Image Source="{Binding image}" Stretch="Fill"></Image>
-                    </Button>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-                <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <UniformGrid  Rows="{Binding rows}" Columns="{Binding columns}"></UniformGrid>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-        </ItemsControl>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="33*"/>
+                <RowDefinition Height="7*" />
+            </Grid.RowDefinitions>
+            <ItemsControl ItemsSource="{Binding boardItemList}" Padding="10">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Command="{Binding ItemClick}" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Padding="-4">
+                            <Image Source="{Binding image}" Stretch="Fill"></Image>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid  Rows="{Binding rows}" Columns="{Binding columns}"></UniformGrid>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="Map Name: " FontSize="20" FontWeight="Bold"/>
+                        <TextBlock Grid.Column="1" Text="{Binding mapName}" FontSize="20" FontWeight="Bold"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Button VerticalAlignment="Center" Command="{Binding mapLoad}" Content="Load" FontSize="20"/>
+                        <Button VerticalAlignment="Center" Command="{Binding mapSave}" Content="Save" FontSize="20"/>
+                    </StackPanel>
+                </Grid>
+                <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="Map Description: "/>
+                    <TextBlock Grid.Column="1" Text="{Binding mapDescription}" />
+                </StackPanel>
+            </Grid>
+        </Grid>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="3*" />
             </Grid.RowDefinitions>
-            <StackPanel Orientation="Vertical" VerticalAlignment="Center">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="2*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="Map Name: "/>
-                    <TextBox Grid.Column="1" Text="{Binding mapName}"/>
-                </Grid>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button VerticalAlignment="Center" Command="{Binding MapNavigateLeft}" FontFamily="Marlett" FontSize="20" Content="3"/>
                     <StackPanel VerticalAlignment="Center">
@@ -73,19 +94,6 @@
                         <Button DockPanel.Dock="Bottom" Command="{Binding MapZoomOut}" Content="Zoom Out"/>
                     </StackPanel>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button VerticalAlignment="Center" Command="{Binding mapLoad}" Content="Load"/>
-                    <Button VerticalAlignment="Center" Command="{Binding mapSave}" Content="Save"/>
-                </StackPanel>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="2*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="Map Description: "/>
-                    <TextBox Grid.Column="1" Text="{Binding mapDescription}" />
-                </Grid>
-            </StackPanel>
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*" />

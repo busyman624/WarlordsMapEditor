@@ -137,6 +137,8 @@ namespace WarlordsMapEditor
             if (result == true)
             {
                 string filename = dlg.FileName;
+                map.name = map.name.Substring(0, map.name.LastIndexOf('\\') + 1) + filename.Substring(filename.LastIndexOf('\\')+1).Split('.')[0];
+                mapName = map.name.Split('\\')[map.name.Split('\\').Length - 1];
                 mapProvider.SaveMapToFile(filename, map);
             }
         }
