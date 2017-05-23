@@ -94,7 +94,7 @@
                         <Border Height="{Binding miniMap.miniMapHeight}" Width="{Binding miniMap.miniMapWidth}" BorderThickness="2" BorderBrush="Black">
                             <Canvas>
                                 <Image Source="{Binding miniMap.miniMapImage , TargetNullValue={x:Null}}" />
-                                <Border Canvas.Left="{Binding miniMap.currentX}" Canvas.Top="{Binding miniMap.currentY}" Width="{Binding columns}" Height="{Binding rows}" BorderThickness="1" BorderBrush="Red" />
+                                <Border Canvas.Left="{Binding miniMap.currentX}" Canvas.Top="{Binding miniMap.currentY}" Width="{Binding miniMap.viewWidth}" Height="{Binding miniMap.viewHeight}" BorderThickness="1" BorderBrush="Red" />
                             </Canvas>
                         </Border>
                         <Button Command="{Binding MapNavigateDown}" HorizontalAlignment="Center" FontFamily="Marlett" FontSize="20" Content="6" Margin="5,5,5,5"/>

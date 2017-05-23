@@ -12,8 +12,8 @@ namespace WarlordsMapEditor
         public static int? selectedItemIndex=null;
         public static int? selectedSetIndex=null;
 
-        private int _boardRows=10;
-        private int _boardColumns=10;
+        private int _boardRows;
+        private int _boardColumns;
         private string _mapName;
         private string _mapDescription;
         private ObservableCollection<MapItem> _boardItems = new ObservableCollection<MapItem>();
@@ -108,6 +108,9 @@ namespace WarlordsMapEditor
             _sprites.Add(new Sprite(Resources.roads, "Roads", 6, "Road"));
             _sprites.Add(new Sprite(Resources.bridges, "Bridges", 7, "Road"));
 
+            columns = 10;
+            rows = 10;
+
             brushCategories = new BrushCategories(_sprites);
             miniMap = new MiniMap();
         }
@@ -130,7 +133,7 @@ namespace WarlordsMapEditor
                 mapName = map.name.Split('\\')[map.name.Split('\\').Length-1];
                 mapDescription = map.description;
                 refresh();
-                miniMap.calculate(map.tiles, map.columns, map.rows);
+                miniMap.calculate(map.tiles, map.columns, map.rows, columns, rows);
             }
         }
 
@@ -170,7 +173,7 @@ namespace WarlordsMapEditor
         //Map Navigation
         public void NavigateLeft()
         {
-            miniMap.currentX--;
+            miniMap.moveLeft();
             for (int r = 0; r < rows; r++)
             {
                 for (int c = 0; c < columns; c++)
@@ -188,7 +191,7 @@ namespace WarlordsMapEditor
 
         public void NavigateRight()
         {
-            miniMap.currentX++;
+            miniMap.moveRight();
             for (int r = 0; r < rows; r++)
             {
                 for (int c = 0; c < columns; c++)
@@ -206,7 +209,7 @@ namespace WarlordsMapEditor
 
         public void NavigateUp()
         {
-            miniMap.currentY--;
+            miniMap.moveUp();
             for (int r = 0; r < rows; r++)
             {
                 for (int c = 0; c < columns; c++)
@@ -223,7 +226,7 @@ namespace WarlordsMapEditor
 
         public void NavigateDown()
         {
-            miniMap.currentY++;
+            miniMap.moveDown();
             for (int r = 0; r < rows; r++)
             {
                 for (int c = 0; c < columns; c++)
@@ -242,6 +245,8 @@ namespace WarlordsMapEditor
         {
             rows--;
             columns--;
+            miniMap.zoomIn(columns, rows);
+
             int Xcoordinate = _boardItems[0].Xcoordinate;
             int Ycoordinate = _boardItems[0].Ycoordinate;
             _boardItems.Clear();
@@ -263,6 +268,8 @@ namespace WarlordsMapEditor
         {
             rows++;
             columns++;
+            miniMap.zoomOut(columns, rows);
+
             int Xcoordinate = _boardItems[0].Xcoordinate;
             int Ycoordinate = _boardItems[0].Ycoordinate;
             _boardItems.Clear();

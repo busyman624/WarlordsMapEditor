@@ -14,13 +14,21 @@ namespace WarlordsMapEditor
 {
     public class MiniMap : INotifyPropertyChanged
     {
+        private double areaWidth = 1000 / 3 - 80;    //window size / 3 - 2* (navigate buttons + margins(buttons + border))
+        private double areaHeight = 800 * 2 / 3 - 80;     //window height * 2/3 - 2* (navigate buttons + margins(buttons + border))
+        private int multiplier;
+
         private int mapColumns;
         private int mapRows;
+        public int boardColumns;
+        public int boardRows;
 
         private int _currentX = 0;
         private int _currentY = 0;
         private int _miniMapWidth = 0;
         private int _miniMapHeight = 0;
+        private int _viewWidth = 0;
+        private int _viewHeight = 0;
         private BitmapImage _miniMapImage;
         private Bitmap miniMap;
         List<MapItem> mapItems;
@@ -81,6 +89,34 @@ namespace WarlordsMapEditor
             }
         }
 
+        public int viewWidth
+        {
+            get { return _viewWidth; }
+            set
+            {
+                if (_viewWidth != value)
+                {
+
+                    _viewWidth = value;
+                    RaisePropertyChaged("viewWidth");
+                }
+            }
+        }
+
+        public int viewHeight
+        {
+            get { return _viewHeight; }
+            set
+            {
+                if (_viewHeight != value)
+                {
+
+                    _viewHeight = value;
+                    RaisePropertyChaged("viewHeight");
+                }
+            }
+        }
+
         public BitmapImage miniMapImage
         {
             get { return _miniMapImage; }
@@ -95,19 +131,27 @@ namespace WarlordsMapEditor
             }
         }
 
-        public void calculate(List<MapItem> mapItems, int mapColumns, int mapRows)
+        public void calculate(List<MapItem> mapItems, int mapColumns, int mapRows, int boardColumns, int boardRows)
         {
             this.mapItems = mapItems;
             this.mapColumns = mapColumns;
             this.mapRows = mapRows;
+            this.boardColumns = boardColumns;
+            this.boardRows = boardRows;
+
+            if (areaWidth / mapColumns < areaHeight / mapRows) multiplier = (int)areaWidth / mapColumns;
+            else multiplier = (int)areaHeight / mapRows;
 
             currentX = 0;
             currentY = 0;
 
-            miniMapWidth =  mapColumns + 3;
-            miniMapHeight =  mapRows + 3;
+            miniMapWidth =  multiplier*mapColumns + 3;
+            miniMapHeight = multiplier*mapRows + 3;
 
-            miniMap = new Bitmap(mapColumns, mapRows);
+            viewWidth = multiplier * boardColumns;
+            viewHeight = multiplier * boardRows;
+
+            miniMap = new Bitmap(multiplier * mapColumns, multiplier * mapRows);
             BitmapImage temp = new BitmapImage();
             Graphics g = Graphics.FromImage(miniMap);
 
@@ -115,8 +159,8 @@ namespace WarlordsMapEditor
             {
                 for (int c = 0; c < mapColumns; c++)
                 {
-                    Bitmap temp_bmp = new Bitmap(mapItems[c + r * mapColumns].bitmap, new Size(1, 1));
-                    g.DrawImage(temp_bmp, new Point(c, r));
+                    Bitmap temp_bmp = new Bitmap(mapItems[c + r * mapColumns].bitmap, new Size(multiplier, multiplier));
+                    g.DrawImage(temp_bmp, new Point(c* multiplier, r* multiplier));
                 }
             }
 
@@ -137,8 +181,8 @@ namespace WarlordsMapEditor
         {
             BitmapImage temp = new BitmapImage();
             Graphics g = Graphics.FromImage(miniMap);
-            Bitmap temp_bmp = new Bitmap(mapItems[Xcoordinate + Ycoordinate * mapColumns].bitmap, new Size(1, 1));
-            g.DrawImage(temp_bmp, new Point(Xcoordinate, Ycoordinate));
+            Bitmap temp_bmp = new Bitmap(mapItems[Xcoordinate + Ycoordinate * mapColumns].bitmap, new Size(multiplier, multiplier));
+            g.DrawImage(temp_bmp, new Point(Xcoordinate* multiplier, Ycoordinate* multiplier));
 
             using (var memory = new MemoryStream())
             {
@@ -151,6 +195,38 @@ namespace WarlordsMapEditor
                 temp.EndInit();
             }
             miniMapImage = temp;
+        }
+
+        public void moveLeft()
+        {
+            currentX -= multiplier;
+        }
+
+        public void moveRight()
+        {
+            currentX += multiplier;
+        }
+
+        public void moveUp()
+        {
+            currentY -= multiplier;
+        }
+
+        public void moveDown()
+        {
+            currentY += multiplier;
+        }
+
+        public void zoomIn(int boardColumns, int boardRows)
+        {
+            viewWidth = multiplier * boardColumns;
+            viewHeight = multiplier * boardRows;
+        }
+
+        public void zoomOut(int boardColumns, int boardRows)
+        {
+            viewWidth = multiplier * boardColumns;
+            viewHeight = multiplier * boardRows;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
