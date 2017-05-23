@@ -22,6 +22,8 @@ namespace WarlordsMapEditor
         private int _miniMapWidth = 0;
         private int _miniMapHeight = 0;
         private BitmapImage _miniMapImage;
+        private Bitmap miniMap;
+        List<MapItem> mapItems;
 
         public int currentX
         {
@@ -93,8 +95,9 @@ namespace WarlordsMapEditor
             }
         }
 
-        public void calculate(int mapColumns, int mapRows)
+        public void calculate(List<MapItem> mapItems, int mapColumns, int mapRows)
         {
+            this.mapItems = mapItems;
             this.mapColumns = mapColumns;
             this.mapRows = mapRows;
 
@@ -104,11 +107,7 @@ namespace WarlordsMapEditor
             miniMapWidth =  mapColumns + 3;
             miniMapHeight =  mapRows + 3;
 
-        }
-
-        public void refresh(List<MapItem> mapItems)
-        {
-            Bitmap miniMap= new Bitmap(mapColumns, mapRows);
+            miniMap = new Bitmap(mapColumns, mapRows);
             BitmapImage temp = new BitmapImage();
             Graphics g = Graphics.FromImage(miniMap);
 
@@ -120,6 +119,26 @@ namespace WarlordsMapEditor
                     g.DrawImage(temp_bmp, new Point(c, r));
                 }
             }
+
+            using (var memory = new MemoryStream())
+            {
+                miniMap.Save(memory, ImageFormat.Png);
+                memory.Position = 0;
+
+                temp.BeginInit();
+                temp.StreamSource = memory;
+                temp.CacheOption = BitmapCacheOption.OnLoad;
+                temp.EndInit();
+            }
+            miniMapImage = temp;
+        }
+
+        public void refresh(int Xcoordinate, int Ycoordinate)
+        {
+            BitmapImage temp = new BitmapImage();
+            Graphics g = Graphics.FromImage(miniMap);
+            Bitmap temp_bmp = new Bitmap(mapItems[Xcoordinate + Ycoordinate * mapColumns].bitmap, new Size(1, 1));
+            g.DrawImage(temp_bmp, new Point(Xcoordinate, Ycoordinate));
 
             using (var memory = new MemoryStream())
             {

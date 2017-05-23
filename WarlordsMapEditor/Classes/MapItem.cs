@@ -17,12 +17,14 @@ namespace WarlordsMapEditor
         public int? objectIndex;
         public int? objectSet;
         public int palleteId;
+        public MiniMap miniMap;
 
-        public MapItem(int itemIndex, int setIndex, List<Sprite> _sprites, int Xcoordinate, int Ycoordinate, int palleteId)
+        public MapItem(int itemIndex, int setIndex, List<Sprite> _sprites, int Xcoordinate, int Ycoordinate, int palleteId, MiniMap miniMap)
         {
             this.palleteId = palleteId;
             this.itemIndex = itemIndex;
             this.setIndex = setIndex;
+            this.miniMap = miniMap;
             objectIndex = null;
             objectSet = null;
             this._sprites = _sprites;
@@ -86,6 +88,7 @@ namespace WarlordsMapEditor
                     objectSet = Board.selectedSetIndex;
                     combineImages();
                 }
+                miniMap.refresh(Xcoordinate, Ycoordinate);
             }
         }
     }

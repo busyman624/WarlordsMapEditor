@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows.Forms;
 using System.Windows.Input;
 using WarlordsMapEditor.Properties;
 
@@ -13,7 +12,6 @@ namespace WarlordsMapEditor
         public static int? selectedItemIndex=null;
         public static int? selectedSetIndex=null;
 
-        private Timer timer;
         private int _boardRows=10;
         private int _boardColumns=10;
         private string _mapName;
@@ -128,13 +126,11 @@ namespace WarlordsMapEditor
             if (result == true)
             {
                 string filename = dlg.FileName;
-                map = mapProvider.LoadMapFromBytes(_sprites, filename);
+                map = mapProvider.LoadMapFromBytes(_sprites, filename, miniMap);
                 mapName = map.name.Split('\\')[map.name.Split('\\').Length-1];
                 mapDescription = map.description;
                 refresh();
-                miniMap.calculate(map.columns, map.rows);
-                miniMap.refresh(map.tiles);
-                InitTimer();
+                miniMap.calculate(map.tiles, map.columns, map.rows);
             }
         }
 
@@ -170,19 +166,6 @@ namespace WarlordsMapEditor
 
         public bool CanMapLoad() { return true; }
         public virtual bool CanMapSave() { return map!=null; }
-
-        public void InitTimer()
-        {
-            timer = new Timer();
-            timer.Tick += new EventHandler(timerTick);
-            timer.Interval = 2000; // in miliseconds
-            timer.Start();
-        }
-
-        private void timerTick(object sender, EventArgs e)
-        {
-            //miniMap.refresh(map.tiles);       minimap refresh on timer
-        }
 
         //Map Navigation
         public void NavigateLeft()

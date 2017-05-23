@@ -20,7 +20,7 @@ namespace WarlordsMapEditor
 
         public const UInt32 headerMagic = 0x50414d58; // "XMAP"
 
-        public Map LoadMapFromBytes(List<Sprite> sprites, string path, MapLoadMode mode = MapLoadMode.All)
+        public Map LoadMapFromBytes(List<Sprite> sprites, string path, MiniMap miniMap, MapLoadMode mode = MapLoadMode.All)
         {
             byte[] serializedMap = File.ReadAllBytes(path);
 
@@ -92,8 +92,8 @@ namespace WarlordsMapEditor
                     for (int j = 0; j < map.columns; j++)
                     {
                         int prefabId = reader.ReadInt16();  
-                        int setIndex;
-                        int itemIndex;
+                        int setIndex=0;
+                        int itemIndex=0;
                         if (prefabId < 0 || prefabId >= map.paletteSize)
                             throw new IOException("Invalid prefab ID");
                         switch (palette[prefabId].Split('_')[0])
@@ -102,7 +102,6 @@ namespace WarlordsMapEditor
                                 {
                                     setIndex = 0;
                                     itemIndex = Int16.Parse(palette[prefabId].Split('_')[1]);
-                                    map.tiles.Add(new MapItem(itemIndex, setIndex, sprites, j, i, prefabId));
                                     break;
                                 }
                             case "grass":
@@ -110,52 +109,46 @@ namespace WarlordsMapEditor
                                     setIndex=1;
                                     String sss = palette[prefabId].Split('_')[1];
                                     itemIndex = Int16.Parse(sss);
-                                    map.tiles.Add(new MapItem(itemIndex, setIndex, sprites, j, i, prefabId)); 
                                     break;
                                 }
                             case "hills":
                                 {
                                     setIndex = 2;
                                     itemIndex = Int16.Parse(palette[prefabId].Split('_')[1]);
-                                    map.tiles.Add(new MapItem(itemIndex, setIndex, sprites, j, i, prefabId));
                                     break;
                                 }
                             case "mountains":
                                 {
                                     setIndex = 3;
                                     itemIndex = Int16.Parse(palette[prefabId].Split('_')[1]);
-                                    map.tiles.Add(new MapItem(itemIndex, setIndex, sprites, j, i, prefabId));
                                     break;
                                 }
                             case "swamp":
                                 {
                                     setIndex = 4;
                                     itemIndex = Int16.Parse(palette[prefabId].Split('_')[1]);
-                                    map.tiles.Add(new MapItem(itemIndex, setIndex, sprites, j, i, prefabId));
                                     break;
                                 }
                             case "water":
                                 {
                                     setIndex = 5;
                                     itemIndex = Int16.Parse(palette[prefabId].Split('_')[1]);
-                                    map.tiles.Add(new MapItem(itemIndex, setIndex, sprites, j, i, prefabId));
                                     break;
                                 }
                             case "roads":
                                 {
                                     setIndex = 6;
                                     itemIndex = Int16.Parse(palette[prefabId].Split('_')[1]);
-                                    map.tiles.Add(new MapItem(itemIndex, setIndex, sprites, j, i, prefabId));
                                     break;
                                 }
                             case "bridges":
                                 {
                                     setIndex = 7;
                                     itemIndex = Int16.Parse(palette[prefabId].Split('_')[1]);
-                                    map.tiles.Add(new MapItem(itemIndex, setIndex, sprites, j, i, prefabId));
                                     break;
                                 }
                         }
+                        map.tiles.Add(new MapItem(itemIndex, setIndex, sprites, j, i, prefabId, miniMap));
                     }
                 }
 
