@@ -67,8 +67,8 @@
                         <TextBlock Grid.Column="1" Text="{Binding mapName}" FontSize="20" FontWeight="Bold"/>
                     </StackPanel>
                     <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <Button VerticalAlignment="Center" Command="{Binding mapLoad}" Content="Load" FontSize="20" Margin="5,5,5,5"/>
-                        <Button VerticalAlignment="Center" Command="{Binding mapSave}" Content="Save" FontSize="20" Margin="5,5,5,5"/>
+                        <Button VerticalAlignment="Center" Command="{Binding mapLoad}" Content="Load" FontSize="10" Margin="5,5,5,5"/>
+                        <Button VerticalAlignment="Center" Command="{Binding mapSave}" Content="Save" FontSize="10" Margin="5,5,5,5"/>
                     </StackPanel>
                 </Grid>
                 <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center">
@@ -79,8 +79,8 @@
         </Grid>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*" />
                 <RowDefinition Height="2*" />
+                <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
             <DockPanel>
                 <DockPanel DockPanel.Dock="Bottom" LastChildFill="False" >
@@ -105,33 +105,33 @@
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*" />
-                    <RowDefinition Height="4*" />
+                    <RowDefinition Height="3*" />
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
                     <StackPanel Margin="0,0,50,0">
-                        <TextBlock Text="Terrain" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
-                        <Button Command="{Binding brushCategories.terrainCategory}" Height="60" Width="60" >
+                        <TextBlock Text="Terrain" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        <Button Command="{Binding brushCategories.terrainCategory}" Height="40" Width="40" >
                             <Image Source="{Binding brushCategories.brushCategoryImages[0]}" Stretch="Fill"></Image>
                         </Button>
                     </StackPanel>
                     <StackPanel Margin="50,0,0,0">
-                        <TextBlock Text="Road" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
-                        <Button Command="{Binding brushCategories.roadCategory}" Height="60" Width="60" >
+                        <TextBlock Text="Road" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        <Button Command="{Binding brushCategories.roadCategory}" Height="40" Width="40" >
                             <Image Source="{Binding brushCategories.brushCategoryImages[1]}" Stretch="Fill"></Image>
                         </Button>
                     </StackPanel>
                 </StackPanel>
-                <ListView Grid.Row="1" ItemsSource="{Binding brushCategories.visibleCarousels}" HorizontalAlignment="Center" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" >
+                <ListView Grid.Row="1" ItemsSource="{Binding brushCategories.visibleCarousels}" ScrollViewer.CanContentScroll="False" HorizontalAlignment="Center" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <TextBlock Text="{Binding setName}" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                <TextBlock Text="{Binding setName}" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"/>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <Button Command="{Binding CarouselLeftArrowClick}" FontFamily="Marlett" FontSize="20" Content="3"/>
+                                    <Button Command="{Binding CarouselLeftArrowClick}" FontFamily="Marlett" FontSize="20" Content="3" VerticalAlignment="Center"/>
                                     <ItemsControl ItemsSource="{Binding brushList}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <Button Command="{Binding ItemClick}" Height="60" Width="60" >
+                                                <Button Command="{Binding ItemClick}" Height="40" Width="40" >
                                                     <Image Source="{Binding image}" Stretch="Fill"></Image>
                                                 </Button>
                                             </DataTemplate>
@@ -142,7 +142,7 @@
                                             </ItemsPanelTemplate>
                                         </ItemsControl.ItemsPanel>
                                     </ItemsControl>
-                                    <Button Command="{Binding CarouselRightArrowClick}" FontFamily="Marlett" FontSize="20" Content="4"/>
+                                    <Button Command="{Binding CarouselRightArrowClick}" FontFamily="Marlett" FontSize="20" Content="4" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </StackPanel>
                         </DataTemplate>
