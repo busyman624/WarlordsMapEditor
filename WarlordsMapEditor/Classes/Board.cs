@@ -162,7 +162,7 @@ namespace WarlordsMapEditor
             {
                 for (int c = 0; c < _boardColumns; c++)
                 {
-                    _boardItems.Add(map.tiles[c + r * map.columns]);
+                    _boardItems.Add(map.tiles[c + map.columns*(map.rows-1-r)]);
                 }
             }
         }
@@ -214,13 +214,13 @@ namespace WarlordsMapEditor
             {
                 for (int c = 0; c < columns; c++)
                 {
-                    boardItemList[c + r * columns] = map.tiles[boardItemList[c + r * columns].Xcoordinate + (boardItemList[c + r * columns].Ycoordinate-1) * map.columns];
+                    boardItemList[c + r * columns] = map.tiles[boardItemList[c + r * columns].Xcoordinate + (boardItemList[c + r * columns].Ycoordinate + 1) * map.columns];
                 }
             }
         }
         public bool CanNavigateUp()
         {
-            if (boardItemList.Count != 0) return boardItemList[0].Ycoordinate > 0;
+            if (boardItemList.Count != 0) return boardItemList[0].Ycoordinate < map.rows - 1;
             else return false;
         }
 
@@ -231,13 +231,13 @@ namespace WarlordsMapEditor
             {
                 for (int c = 0; c < columns; c++)
                 {
-                    boardItemList[c + r * columns] = map.tiles[boardItemList[c + r * columns].Xcoordinate + (boardItemList[c + r * columns].Ycoordinate + 1) * map.columns];
+                    boardItemList[c + r * columns] = map.tiles[boardItemList[c + r * columns].Xcoordinate + (boardItemList[c + r * columns].Ycoordinate - 1) * map.columns];
                 }
             }
         }
         public bool CanNavigateDown()
         {
-            if (boardItemList.Count != 0) return boardItemList[columns*rows - 1].Ycoordinate < map.rows - 1;
+            if (boardItemList.Count != 0) return boardItemList[columns*rows - 1].Ycoordinate > 0;
             else return false;
         }
 
@@ -250,11 +250,11 @@ namespace WarlordsMapEditor
             int Xcoordinate = _boardItems[0].Xcoordinate;
             int Ycoordinate = _boardItems[0].Ycoordinate;
             _boardItems.Clear();
-            for (int r = Ycoordinate; r < rows + Ycoordinate; r++)
+            for (int r = map.rows - 1 - Ycoordinate; r < rows + map.rows - 1 - Ycoordinate; r++)
             {
                 for (int c = Xcoordinate; c < columns + Xcoordinate; c++)
                 {
-                    _boardItems.Add(map.tiles[c + r * map.columns]);
+                    _boardItems.Add(map.tiles[c + map.columns * (map.rows - 1 - r)]);
                 }
             }
         }
@@ -273,14 +273,13 @@ namespace WarlordsMapEditor
             int Xcoordinate = _boardItems[0].Xcoordinate;
             int Ycoordinate = _boardItems[0].Ycoordinate;
             _boardItems.Clear();
-            for (int r = Ycoordinate; r < rows + Ycoordinate; r++)
+            for (int r = map.rows - 1 - Ycoordinate; r < rows + map.rows - 1 - Ycoordinate; r++)
             {
-                for (int c = Xcoordinate; c < columns+ Xcoordinate; c++)
+                for (int c = Xcoordinate; c < columns + Xcoordinate; c++)
                 {
-                    _boardItems.Add(map.tiles[c + r * map.columns]);
+                    _boardItems.Add(map.tiles[c + map.columns * (map.rows - 1 - r)]);
                 }
             }
-
         }
         public bool CanZoomOut()
         {

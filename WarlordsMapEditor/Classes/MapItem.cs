@@ -63,6 +63,7 @@ namespace WarlordsMapEditor
                 combinedBitmapImage.EndInit();
             }
 
+            bitmap = combined;
             image= combinedBitmapImage;
         }
 

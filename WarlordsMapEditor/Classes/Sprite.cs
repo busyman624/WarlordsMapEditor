@@ -28,7 +28,7 @@ namespace WarlordsMapEditor
             for (int i = 0; i < bmp.Width / bmp.Height; i++)
             {
                 Bitmap temp_bmp = bmp.Clone(new Rectangle(i * bmp.Height, 0, bmp.Height, bmp.Height), bmp.PixelFormat);
-                temp_bmp.RotateFlip(RotateFlipType.Rotate180FlipX);
+                //temp_bmp.RotateFlip(RotateFlipType.Rotate180FlipX);
                 using (var memory = new MemoryStream())
                 {
                     temp_bmp.Save(memory, ImageFormat.Png);

@@ -159,7 +159,7 @@ namespace WarlordsMapEditor
             {
                 for (int c = 0; c < mapColumns; c++)
                 {
-                    Bitmap temp_bmp = new Bitmap(mapItems[c + r * mapColumns].bitmap, new Size(multiplier, multiplier));
+                    Bitmap temp_bmp = new Bitmap(mapItems[c + mapColumns * (mapRows - 1 - r)].bitmap, new Size(multiplier, multiplier));
                     g.DrawImage(temp_bmp, new Point(c* multiplier, r* multiplier));
                 }
             }
@@ -181,9 +181,8 @@ namespace WarlordsMapEditor
         {
             BitmapImage temp = new BitmapImage();
             Graphics g = Graphics.FromImage(miniMap);
-            Bitmap temp_bmp = new Bitmap(mapItems[Xcoordinate + Ycoordinate * mapColumns].bitmap, new Size(multiplier, multiplier));
-            g.DrawImage(temp_bmp, new Point(Xcoordinate* multiplier, Ycoordinate* multiplier));
-
+            Bitmap temp_bmp = new Bitmap(mapItems[Xcoordinate + mapColumns * Ycoordinate].bitmap, new Size(multiplier, multiplier));
+            g.DrawImage(temp_bmp, new Point(Xcoordinate* multiplier, (mapRows - 1 - Ycoordinate) * multiplier));
             using (var memory = new MemoryStream())
             {
                 miniMap.Save(memory, ImageFormat.Png);
