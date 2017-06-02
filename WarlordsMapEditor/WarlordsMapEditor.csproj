@@ -63,6 +63,7 @@
     <Compile Include="Classes\Item.cs" />
     <Compile Include="Classes\Carousel.cs" />
     <Compile Include="Classes\MapItem.cs" />
+    <Compile Include="Classes\MouseBehaviour.cs" />
     <Compile Include="Classes\RelayCommand.cs" />
     <Compile Include="Classes\Brush.cs" />
     <Compile Include="Classes\ShitClasses\CastleInfo.cs" />

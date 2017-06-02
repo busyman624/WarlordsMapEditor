@@ -38,10 +38,10 @@ namespace WarlordsMapEditor
         }
 
         public virtual void onItemClick(){ }
+        public virtual void execute_MouseMoveCommand(MouseEventArgs param) { }
         public virtual bool CanPerform() { return true; }
 
         private ICommand _ItemClick;
-
         public ICommand ItemClick
         {
             get
@@ -56,6 +56,20 @@ namespace WarlordsMapEditor
                 return _ItemClick;
             }
         }
+
+        private RelayCommand _MouseMoveCommand;
+        public RelayCommand MouseMoveCommand
+        {
+            get
+            {
+                if (_MouseMoveCommand == null) return _MouseMoveCommand = new RelayCommand(param => execute_MouseMoveCommand((MouseEventArgs)param));
+                return _MouseMoveCommand;
+            }
+            set { _MouseMoveCommand = value; }
+        }
+
+        
+
     }
 }
 

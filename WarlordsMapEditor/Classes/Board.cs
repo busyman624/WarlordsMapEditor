@@ -113,6 +113,7 @@ namespace WarlordsMapEditor
 
             brushCategories = new BrushCategories(_sprites);
             miniMap = new MiniMap();
+            _brushIsClicked = false;
         }
 
         public void MapLoad()
@@ -292,6 +293,22 @@ namespace WarlordsMapEditor
         private void RaisePropertyChaged(string info)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(info));
+        }
+
+        public static bool brushDrawStart = false;
+        public static bool _brushIsClicked;
+        public bool BrushIsClicked
+        {
+            get
+            {
+                return _brushIsClicked;
+            }
+            set
+            {
+                brushDrawStart = false;
+                _brushIsClicked = value;
+                RaisePropertyChaged("BrushIsClicked");
+            }
         }
 
         private ICommand _mapLoad;

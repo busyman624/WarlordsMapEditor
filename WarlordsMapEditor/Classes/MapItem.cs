@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
 namespace WarlordsMapEditor
@@ -67,9 +68,30 @@ namespace WarlordsMapEditor
             image= combinedBitmapImage;
         }
 
+        public override void execute_MouseMoveCommand(MouseEventArgs param)
+        {
+            if (Board.brushDrawStart) //is brush selected ?
+            {
+                changeTile();
+            }
+        }
+
         public override void onItemClick()
         {
-            if(Board.selectedItemIndex!=null && Board.selectedSetIndex != null)
+            changeTile();
+            if (Board._brushIsClicked && Board.brushDrawStart == false) //decide if brush drawing starts or ends
+            {
+                Board.brushDrawStart = true;
+            }
+            else
+            {
+                Board.brushDrawStart = false;
+            }
+        }
+
+        private void changeTile()
+        {
+            if (Board.selectedItemIndex != null && Board.selectedSetIndex != null)
             {
                 if (_sprites[(int)Board.selectedSetIndex].category == "Terrain")
                 {
