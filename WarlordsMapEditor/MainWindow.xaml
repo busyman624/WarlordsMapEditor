@@ -111,23 +111,29 @@
                     <RowDefinition Height="3*" />
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                    <StackPanel Margin="0,0,50,0">
+                    <StackPanel Margin="50,0,50,0">
                         <TextBlock Text="Terrain" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"/>
                         <Button Command="{Binding brushCategories.terrainCategory}" Height="40" Width="40" >
                             <Image Source="{Binding brushCategories.brushCategoryImages[0]}" Stretch="Fill"></Image>
                         </Button>
                     </StackPanel>
-                    <StackPanel Margin="50,0,0,0">
+                    <StackPanel>
                         <TextBlock Text="Road" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"/>
                         <Button Command="{Binding brushCategories.roadCategory}" Height="40" Width="40" >
                             <Image Source="{Binding brushCategories.brushCategoryImages[1]}" Stretch="Fill"></Image>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Margin="50,0,50,0">
+                        <TextBlock Text="Building" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"/>
+                        <Button Command="{Binding brushCategories.buildingCategory}" Height="40" Width="40" >
+                            <Image Source="{Binding brushCategories.brushCategoryImages[2]}" Stretch="Fill"></Image>
                         </Button>
                     </StackPanel>
                 </StackPanel>
                 <ListView Grid.Row="1" ItemsSource="{Binding brushCategories.visibleCarousels}" ScrollViewer.CanContentScroll="False" HorizontalAlignment="Center" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel>
+                            <StackPanel HorizontalAlignment="Center">
                                 <TextBlock Text="{Binding setName}" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"/>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                     <Button Command="{Binding CarouselLeftArrowClick}" FontFamily="Marlett" FontSize="20" Content="3" VerticalAlignment="Center"/>

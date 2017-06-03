@@ -211,6 +211,25 @@ namespace WarlordsMapEditor
 
                     map.castles.Add(new CastleInfo(prefabName, castleName, x, y, owner, razed, purchasedBuildings,
                         producedUnitName, producedUnitTurnsLeft, producedUnitDestination, unitQueue));
+
+                    int tileID = map.tiles.FindIndex(t => (t.Xcoordinate == map.castles[i].x) && (t.Ycoordinate == map.castles[i].y));
+                    switch (map.castles[i].prefabName)
+                    {
+                        case "Castle":
+                            {
+                                map.tiles[tileID].objectSet = 8;
+                                map.tiles[tileID].objectIndex = 0;
+                                map.tiles[tileID].combineImages();
+                                break;
+                            }
+                        case "Rampart":
+                            {
+                                map.tiles[tileID].objectSet = 8;
+                                map.tiles[tileID].objectIndex = 1;
+                                map.tiles[tileID].combineImages();
+                                break;
+                            }
+                    }
                 }
 
                 // Ruins

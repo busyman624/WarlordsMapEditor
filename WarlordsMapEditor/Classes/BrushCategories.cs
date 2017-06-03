@@ -13,6 +13,7 @@ namespace WarlordsMapEditor
     {
         private ObservableCollection<Carousel> _terrainCarousels;
         private ObservableCollection<Carousel> _roadCarousels;
+        private ObservableCollection<Carousel> _buildingCarousels;
 
         private List<BitmapImage> _brushCategoryImages;
         public List<BitmapImage> brushCategoryImages
@@ -34,6 +35,7 @@ namespace WarlordsMapEditor
             _brushCategoryImages = new List<BitmapImage>();
             _terrainCarousels  = new ObservableCollection<Carousel>();
             _roadCarousels = new ObservableCollection<Carousel>();
+            _buildingCarousels = new ObservableCollection<Carousel>();
 
             _visibleCarousels = new ObservableCollection<Carousel>();
 
@@ -43,11 +45,13 @@ namespace WarlordsMapEditor
                 {
                     case "Terrain": _terrainCarousels.Add(new Carousel(sprite)); break;
                     case "Road": _roadCarousels.Add(new Carousel(sprite)); break;
+                    case "Building": _buildingCarousels.Add(new Carousel(sprite)); break;
                 }
             }
 
             _brushCategoryImages.Add(_terrainCarousels[0].brushList[0].image);
             _brushCategoryImages.Add(_roadCarousels[0].brushList[0].image);
+            _brushCategoryImages.Add(_buildingCarousels[0].brushList[0].image);
         }
 
         public void terrainCategoryClick()
@@ -62,9 +66,16 @@ namespace WarlordsMapEditor
             foreach (Carousel carousel in _roadCarousels)
                 _visibleCarousels.Add(carousel);
         }
+        public void buildingCategoryClick()
+        {
+            _visibleCarousels.Clear();
+            foreach (Carousel carousel in _buildingCarousels)
+                _visibleCarousels.Add(carousel);
+        }
 
         private ICommand _terrainCategory;
         private ICommand _roadCategory;
+        private ICommand _buildingCategory;
 
         public ICommand terrainCategory
         {
@@ -93,6 +104,21 @@ namespace WarlordsMapEditor
                     );
                 }
                 return _roadCategory;
+            }
+        }
+
+        public ICommand buildingCategory
+        {
+            get
+            {
+                if (_buildingCategory == null)
+                {
+                    _buildingCategory = new RelayCommand(
+                        param => buildingCategoryClick(),
+                        param => true
+                    );
+                }
+                return _buildingCategory;
             }
         }
     }

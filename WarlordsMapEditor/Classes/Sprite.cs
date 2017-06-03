@@ -10,6 +10,7 @@ namespace WarlordsMapEditor
     {
         public List<BitmapImage> imagesList;
         public List<Bitmap> bitmapList;
+        public List<List<Bitmap>> buildingFragment;
 
         public int setIndex;
         public string setName { get; set; }
@@ -21,13 +22,20 @@ namespace WarlordsMapEditor
             this.setName = setName;
             this.setIndex = setIndex;
             this.category = category;
+            Bitmap tile;
 
             imagesList = new List<BitmapImage>();
             bitmapList = new List<Bitmap>();
-
-            for (int i = 0; i < bmp.Width / bmp.Height; i++)
+            if (category == "Building")
             {
-                Bitmap temp_bmp = bmp.Clone(new Rectangle(i * bmp.Height, 0, bmp.Height, bmp.Height), bmp.PixelFormat);
+                buildingFragment = new List<List<Bitmap>>();
+                tile = new Bitmap(bmp, new Size(bmp.Width / bmp.Height * 40, 40));
+            }
+           else tile = bmp;
+
+            for (int i = 0; i < tile.Width / tile.Height; i++)
+            {
+                Bitmap temp_bmp = tile.Clone(new Rectangle(i * tile.Height, 0, tile.Height, tile.Height), tile.PixelFormat);
                 //temp_bmp.RotateFlip(RotateFlipType.Rotate180FlipX);
                 using (var memory = new MemoryStream())
                 {
@@ -42,6 +50,18 @@ namespace WarlordsMapEditor
                     imagesList.Add(temp_img);
                 }
                 bitmapList.Add(temp_bmp);
+                if (category == "Building")
+                {
+                    List<Bitmap> Fragments = new List<Bitmap>();
+                    for(int j=0; j < temp_bmp.Width / 40 ; j++)
+                    {
+                        for(int k=0; k < temp_bmp.Height / 40; k++)
+                        {
+                            Fragments.Add(temp_bmp.Clone(new Rectangle(j * 40, k * 40, 40, 40), bmp.PixelFormat));
+                        }
+                    }
+                    buildingFragment.Add(Fragments);
+                }
             }
         }
     }

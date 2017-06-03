@@ -14,8 +14,8 @@ namespace WarlordsMapEditor
             get { return _setName; }
             set { _setName = value; }
         }
-        private ObservableCollection<Brush> _brushList;
-        public ObservableCollection<Brush> brushList
+        private ObservableCollection<Item> _brushList;
+        public ObservableCollection<Item> brushList
         {
             get { return _brushList; }
             set { _brushList = value; }
@@ -23,8 +23,8 @@ namespace WarlordsMapEditor
 
         public Carousel(Sprite itemSet)
         {
-            _brushList = new ObservableCollection<Brush>();
-            for(int i = 0; i < 3; i++)
+            _brushList = new ObservableCollection<Item>();
+            for(int i = 0; i < 3 && itemSet.imagesList.Count-i>0; i++)
             {
                 _brushList.Add(new Brush(i, itemSet.setIndex, itemSet.imagesList[i]));
             }
@@ -41,7 +41,9 @@ namespace WarlordsMapEditor
         }
         public bool CanSelectableItemsGoLeft()
         {
-            return _brushList[0].itemIndex != 0;
+            if (_brushList.Count == 3)
+                return _brushList[0].itemIndex != 0;
+            else return false;
         }
 
         private ICommand _carouselLeftArrowClick;
@@ -70,7 +72,9 @@ namespace WarlordsMapEditor
         }
         public bool CanSelectableItemsGoRight()
         {
-            return _brushList[2].itemIndex != itemSet.imagesList.Count()-1;
+            if (_brushList.Count == 3)
+                return _brushList[2].itemIndex != itemSet.imagesList.Count() - 1;
+            else return false;
         }
 
         private ICommand _carouselRightArrowClick;

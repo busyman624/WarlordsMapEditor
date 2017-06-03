@@ -107,6 +107,10 @@ namespace WarlordsMapEditor
             _sprites.Add(new Sprite(Resources.water, "Water", 5, "Terrain"));
             _sprites.Add(new Sprite(Resources.roads, "Roads", 6, "Road"));
             _sprites.Add(new Sprite(Resources.bridges, "Bridges", 7, "Road"));
+            _sprites.Add(new Sprite(Resources.castles, "Castle", 8, "Building"));
+            _sprites.Add(new Sprite(Resources.temples, "Temple", 9, "Building"));
+            _sprites.Add(new Sprite(Resources.ruin, "Ruin", 10, "Building"));
+
 
             columns = 10;
             rows = 10;
