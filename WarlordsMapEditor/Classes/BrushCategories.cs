@@ -30,7 +30,7 @@ namespace WarlordsMapEditor
         }
 
 
-        public BrushCategories(List<Sprite> spriteList)
+        public BrushCategories(List<Sprite> spriteList, Configs configs)
         {
             _brushCategoryImages = new List<BitmapImage>();
             _terrainCarousels  = new ObservableCollection<Carousel>();
@@ -45,7 +45,21 @@ namespace WarlordsMapEditor
                 {
                     case "Terrain": _terrainCarousels.Add(new Carousel(sprite)); break;
                     case "Road": _roadCarousels.Add(new Carousel(sprite)); break;
-                    case "Building": _buildingCarousels.Add(new Carousel(sprite)); break;
+                    case "Building":
+                        {
+                            if(sprite.setName=="Castle")
+                            {
+                                Sprite cutSprite = sprite;
+                                cutSprite.imagesList.RemoveRange(configs.fractions.Count, sprite.imagesList.Count - configs.fractions.Count);
+                                _buildingCarousels.Add(new Carousel(cutSprite));
+                            }
+                            else
+                            {
+                                _buildingCarousels.Add(new Carousel(sprite));
+                            }
+                            break;
+                        }
+
                 }
             }
 

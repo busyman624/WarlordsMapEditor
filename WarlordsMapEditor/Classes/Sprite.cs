@@ -10,7 +10,6 @@ namespace WarlordsMapEditor
     {
         public List<BitmapImage> imagesList;
         public List<Bitmap> bitmapList;
-        public List<List<Bitmap>> buildingFragment;
 
         public int setIndex;
         public string setName { get; set; }
@@ -28,7 +27,6 @@ namespace WarlordsMapEditor
             bitmapList = new List<Bitmap>();
             if (category == "Building")
             {
-                buildingFragment = new List<List<Bitmap>>();
                 tile = new Bitmap(bmp, new Size(bmp.Width / bmp.Height * 40, 40));
             }
            else tile = bmp;
@@ -50,18 +48,6 @@ namespace WarlordsMapEditor
                     imagesList.Add(temp_img);
                 }
                 bitmapList.Add(temp_bmp);
-                if (category == "Building")
-                {
-                    List<Bitmap> Fragments = new List<Bitmap>();
-                    for(int j=0; j < temp_bmp.Width / 40 ; j++)
-                    {
-                        for(int k=0; k < temp_bmp.Height / 40; k++)
-                        {
-                            Fragments.Add(temp_bmp.Clone(new Rectangle(j * 40, k * 40, 40, 40), bmp.PixelFormat));
-                        }
-                    }
-                    buildingFragment.Add(Fragments);
-                }
             }
         }
     }

@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
@@ -20,6 +24,9 @@ namespace WarlordsMapEditor
         public int palleteId;
         public MiniMap miniMap;
 
+        public string castleName;
+        public int? castleOwner;
+
         public MapItem(int itemIndex, int setIndex, List<Sprite> _sprites, int Xcoordinate, int Ycoordinate, int palleteId, MiniMap miniMap)
         {
             this.palleteId = palleteId;
@@ -28,6 +35,8 @@ namespace WarlordsMapEditor
             this.miniMap = miniMap;
             objectIndex = null;
             objectSet = null;
+            castleName = null;
+            castleOwner = null;
             this._sprites = _sprites;
             this.Xcoordinate = Xcoordinate;
             this.Ycoordinate = Ycoordinate;
@@ -79,7 +88,7 @@ namespace WarlordsMapEditor
         public override void onItemClick()
         {
             changeTile();
-            if (Board._brushIsClicked && Board.brushDrawStart == false) //decide if brush drawing starts or ends
+            if (Board._brushIsClicked && Board.brushDrawStart == false &&Board.selectedSetIndex<8) //decide if brush drawing starts or ends
             {
                 Board.brushDrawStart = true;
             }
@@ -99,6 +108,8 @@ namespace WarlordsMapEditor
                     setIndex = (int)Board.selectedSetIndex;
                     objectIndex = null;
                     objectSet = null;
+                    castleName = null;
+                    castleOwner = null;
 
                     image = _sprites[setIndex].imagesList[itemIndex];
                     bitmap = _sprites[setIndex].bitmapList[itemIndex];
@@ -111,8 +122,25 @@ namespace WarlordsMapEditor
                     objectSet = Board.selectedSetIndex;
                     combineImages();
                 }
+                if (Board.selectedSetIndex == 8)
+                {
+                    var dialog = new CastleDialog(this);
+                    dialog.showDialog();
+                }
                 miniMap.refresh(Xcoordinate, Ycoordinate);
+
             }
+        }
+
+        public void clearTile()
+        {
+            objectIndex = null;
+            objectSet = null;
+            castleName = null;
+            castleOwner = null;
+
+            image = _sprites[setIndex].imagesList[itemIndex];
+            bitmap = _sprites[setIndex].bitmapList[itemIndex];
         }
     }
 }

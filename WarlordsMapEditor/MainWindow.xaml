@@ -8,6 +8,7 @@
         xmlns:mousebehav="clr-namespace:MouseNamespace"
         mc:Ignorable="d"
         Title="Warlords Map Editor" Height="800" Width="1000"
+        WindowStartupLocation="CenterScreen"
         >
     <!--
     <Window.Resources>

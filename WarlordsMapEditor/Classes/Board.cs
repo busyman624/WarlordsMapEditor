@@ -12,6 +12,7 @@ namespace WarlordsMapEditor
         public static int? selectedItemIndex=null;
         public static int? selectedSetIndex=null;
 
+        private Configs configs = new Configs();
         private int _boardRows;
         private int _boardColumns;
         private string _mapName;
@@ -99,6 +100,8 @@ namespace WarlordsMapEditor
 
         public Board() 
         {
+            changeConfigs();
+
             _sprites.Add(new Sprite(Resources.forest, "Forest", 0, "Terrain"));
             _sprites.Add(new Sprite(Resources.grass, "Grass", 1, "Terrain"));
             _sprites.Add(new Sprite(Resources.hills, "Hills", 2, "Terrain"));
@@ -115,7 +118,7 @@ namespace WarlordsMapEditor
             columns = 10;
             rows = 10;
 
-            brushCategories = new BrushCategories(_sprites);
+            brushCategories = new BrushCategories(_sprites, configs);
             miniMap = new MiniMap();
             _brushIsClicked = false;
         }
@@ -133,8 +136,9 @@ namespace WarlordsMapEditor
             Nullable<bool> result = dlg.ShowDialog(); 
             if (result == true)
             {
+                changeConfigs();
                 string filename = dlg.FileName;
-                map = mapProvider.LoadMapFromBytes(_sprites, filename, miniMap);
+                map = mapProvider.LoadMapFromBytes(_sprites, filename, miniMap, configs);
                 mapName = map.name.Split('\\')[map.name.Split('\\').Length-1];
                 mapDescription = map.description;
                 refresh();
@@ -156,8 +160,42 @@ namespace WarlordsMapEditor
                 string filename = dlg.FileName;
                 map.name = map.name.Substring(0, map.name.LastIndexOf('\\') + 1) + filename.Substring(filename.LastIndexOf('\\')+1).Split('.')[0];
                 mapName = map.name.Split('\\')[map.name.Split('\\').Length - 1];
-                mapProvider.SaveMapToFile(filename, map);
+                mapProvider.SaveMapToFile(filename, map, configs);
             }
+        }
+
+        public void changeConfigs()
+        {
+            Microsoft.Win32.OpenFileDialog fractionsXML = new Microsoft.Win32.OpenFileDialog();
+
+            // Set filter for file extension and default file extension 
+            fractionsXML.DefaultExt = ".xml";
+            fractionsXML.Filter = "(*.xml)|*.xml";
+            fractionsXML.Title = "Choose Fractions Configuration File";
+
+            // Display OpenFileDialog by calling ShowDialog method 
+            Nullable<bool> fractionsXMLresult = fractionsXML.ShowDialog();
+            if (fractionsXMLresult == true)
+            {
+                string filename = fractionsXML.FileName;
+                configs.SetFractionsConfig(filename);
+            }
+
+            Microsoft.Win32.OpenFileDialog ruinsXML = new Microsoft.Win32.OpenFileDialog();
+
+            // Set filter for file extension and default file extension 
+            ruinsXML.DefaultExt = ".xml";
+            ruinsXML.Filter = "(*.xml)|*.xml";
+            ruinsXML.Title = "Choose Ruins Configuration File";
+
+            // Display OpenFileDialog by calling ShowDialog method 
+            Nullable<bool> ruinsXMLresult = ruinsXML.ShowDialog();
+            if (ruinsXMLresult == true)
+            {
+                string filename = ruinsXML.FileName;
+                configs.SetRuinsConfig(filename);
+            }
+
         }
 
         public void refresh()
