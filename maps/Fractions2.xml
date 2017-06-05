@@ -1,0 +1,32 @@
+﻿<?xml version="1.0"?>
+<FractionList>
+  <fractions>
+    <Fraction name="Castle">
+      <buildings>
+        <building>Guardhouse</building>
+        <building>Armory</building>
+        <building>Archers' Tower</building>
+        <building>Barracks</building>
+        <building>Stables</building>
+      </buildings>
+    </Fraction>
+    <Fraction name="Rampart">
+      <buildings>
+        <building>Dwarf Cottage</building>
+        <building>Enchanted Spring</building>
+        <building>Wizard Tower</building>
+        <building>Unicorn Glade</building>
+        <building>Dragon Cliffs</building>
+      </buildings>
+    </Fraction>
+	    <Fraction name="Dudzikos">
+      <buildings>
+        <building>Dwarf Cottage</building>
+        <building>Enchanted Spring</building>
+        <building>Wizard Tower</building>
+        <building>Unicorn Glade</building>
+        <building>Dragon Cliffs</building>
+      </buildings>
+    </Fraction>
+  </fractions>
+</FractionList>

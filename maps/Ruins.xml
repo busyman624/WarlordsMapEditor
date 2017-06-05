@@ -1,0 +1,41 @@
+﻿<?xml version="1.0"?>
+<RuinsDataList>
+
+	<Ruins name="ruins">
+		<sprites>
+			<string>ruin_0</string>
+			<string>ruin_1</string>
+			<string>ruin_2</string>
+		</sprites>
+		<action>UnitsBattle</action>
+		<enemyUnits>
+			<string>Axeman</string>
+			<string>Pikeman</string>
+			<string>Dwarf</string>
+		</enemyUnits>
+		<resourceBonus>
+			<Resource>
+				<name>gold</name>
+				<count>5000</count>
+			</Resource>
+		</resourceBonus>
+	</Ruins>
+		<Ruins name="temples">
+		<sprites>
+			<string>temples_0</string>
+		</sprites>
+		<action>UnitsBattle</action>
+		<enemyUnits>
+			<string>Axeman</string>
+			<string>Pikeman</string>
+			<string>Dwarf</string>
+		</enemyUnits>
+		<resourceBonus>
+			<Resource>
+				<name>gold</name>
+				<count>666</count>
+			</Resource>
+		</resourceBonus>
+	</Ruins>
+
+</RuinsDataList>
