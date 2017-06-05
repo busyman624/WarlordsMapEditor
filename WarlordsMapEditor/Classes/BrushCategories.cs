@@ -62,14 +62,16 @@ namespace WarlordsMapEditor
                             {
                                 _buildingCarousels.Add(new Carousel(sprite, configs.fractions.Count));
                             }
-                            else
-                            {
-                                _buildingCarousels.Add(new Carousel(sprite, sprite.imagesList.Count));
-                            }
                             break;
                         }
 
                 }
+
+            }
+
+            foreach (RuinsData ruin in configs.ruinsData)
+            {
+                _buildingCarousels.Add(new Carousel(spriteList.Find(s => s.setName.ToLower() == ruin.name.ToLower()), ruin.sprites.Count));
             }
 
             _brushCategoryImages.Add(_terrainCarousels[0].brushList[0].image);

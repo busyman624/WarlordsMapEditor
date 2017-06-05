@@ -231,6 +231,13 @@ namespace WarlordsMapEditor
                     bool isVisited = reader.ReadBoolean();  
 
                     map.ruins.Add(new RuinsInfo(prefabName, x, y, isVisited));
+
+                    int tileID = map.tiles.FindIndex(t => (t.Xcoordinate == map.ruins[i].x) && (t.Ycoordinate == map.ruins[i].y));
+                    int objectSet = configs.ruinsData.FindIndex(o => o.name == map.ruins[i].prefabName);
+
+                    map.tiles[tileID].objectSet = objectSet+9;
+                    map.tiles[tileID].objectIndex = new Random().Next(configs.ruinsData[objectSet].sprites.Count);
+                    map.tiles[tileID].combineImages();
                 }
 
                 // Units
@@ -423,6 +430,7 @@ namespace WarlordsMapEditor
                     map.overlayTilesY.Clear();
                     map.overlayTilesPrefabId.Clear();
                     map.castles.Clear();
+                    map.ruins.Clear();
 
                     foreach (MapItem tile in overlayedTiles)
                     {
@@ -451,6 +459,11 @@ namespace WarlordsMapEditor
                             case 8:
                                 {
                                     map.castles.Add(new CastleInfo(configs.fractions[(int)tile.objectIndex].name, tile.castleName, tile.Xcoordinate, tile.Ycoordinate, (int)tile.castleOwner, false, new HashSet<string>(), " ", 0, " ", new Queue<string>() ));
+                                    break;
+                                }
+                            case 9: case 10:
+                                {
+                                    map.ruins.Add(new RuinsInfo(configs.ruinsData[(int)tile.objectSet - 9].name, tile.Xcoordinate, tile.Ycoordinate, false));
                                     break;
                                 }
                         }
