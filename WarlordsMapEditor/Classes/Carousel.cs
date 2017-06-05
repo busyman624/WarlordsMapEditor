@@ -9,6 +9,7 @@ namespace WarlordsMapEditor
     {
         private Sprite itemSet;
         private string _setName;
+        private int itemCount;
         public string setName
         {
             get { return _setName; }
@@ -21,10 +22,11 @@ namespace WarlordsMapEditor
             set { _brushList = value; }
         }
 
-        public Carousel(Sprite itemSet)
+        public Carousel(Sprite itemSet, int itemCount)
         {
+            this.itemCount = itemCount;
             _brushList = new ObservableCollection<Item>();
-            for(int i = 0; i < 3 && itemSet.imagesList.Count-i>0; i++)
+            for(int i = 0; i < 3 && itemCount-i>0; i++)
             {
                 _brushList.Add(new Brush(i, itemSet.setIndex, itemSet.imagesList[i]));
             }
@@ -73,7 +75,7 @@ namespace WarlordsMapEditor
         public bool CanSelectableItemsGoRight()
         {
             if (_brushList.Count == 3)
-                return _brushList[2].itemIndex != itemSet.imagesList.Count() - 1;
+                return _brushList[2].itemIndex != itemCount - 1;
             else return false;
         }
 

@@ -91,6 +91,31 @@ namespace WarlordsMapEditor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot;?&gt;
+        ///&lt;FractionList&gt;
+        ///  &lt;fractions&gt;
+        ///    &lt;Fraction name=&quot;Castle&quot;&gt;
+        ///      &lt;buildings&gt;
+        ///        &lt;building&gt;Guardhouse&lt;/building&gt;
+        ///        &lt;building&gt;Armory&lt;/building&gt;
+        ///        &lt;building&gt;Archers&apos; Tower&lt;/building&gt;
+        ///        &lt;building&gt;Barracks&lt;/building&gt;
+        ///        &lt;building&gt;Stables&lt;/building&gt;
+        ///      &lt;/buildings&gt;
+        ///    &lt;/Fraction&gt;
+        ///    &lt;Fraction name=&quot;Rampart&quot;&gt;
+        ///      &lt;buildings&gt;
+        ///        &lt;building&gt;Dwarf Cottage&lt;/building&gt;
+        ///        &lt;building&gt;Enchanted Spring&lt;/building&gt;
+        ///        &lt;building&gt;Wizard Tower&lt; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Fractions {
+            get {
+                return ResourceManager.GetString("Fractions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap grass {
@@ -137,6 +162,39 @@ namespace WarlordsMapEditor.Properties {
             get {
                 object obj = ResourceManager.GetObject("ruin", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot;?&gt;
+        ///&lt;RuinsDataList&gt;
+        ///
+        ///	&lt;Ruins name=&quot;ruins&quot;&gt;
+        ///		&lt;sprites&gt;
+        ///			&lt;string&gt;ruin_1&lt;/string&gt;
+        ///			&lt;string&gt;ruin_2&lt;/string&gt;
+        ///			&lt;string&gt;temples_0&lt;/string&gt;
+        ///		&lt;/sprites&gt;
+        ///		&lt;action&gt;UnitsBattle&lt;/action&gt;
+        ///		&lt;enemyUnits&gt;
+        ///			&lt;string&gt;Axeman&lt;/string&gt;
+        ///			&lt;string&gt;Pikeman&lt;/string&gt;
+        ///			&lt;string&gt;Dwarf&lt;/string&gt;
+        ///		&lt;/enemyUnits&gt;
+        ///		&lt;resourceBonus&gt;
+        ///			&lt;Resource&gt;
+        ///				&lt;name&gt;gold&lt;/name&gt;
+        ///				&lt;count&gt;5000&lt;/count&gt;
+        ///			&lt;/Resource&gt;
+        ///		&lt;/resourceBonus&gt;
+        ///	&lt;/Ruins&gt;
+        ///
+        ///&lt;/RuinsDataList&gt;
+        ///.
+        /// </summary>
+        internal static string Ruins {
+            get {
+                return ResourceManager.GetString("Ruins", resourceCulture);
             }
         }
         

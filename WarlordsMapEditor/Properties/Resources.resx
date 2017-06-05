@@ -127,6 +127,9 @@
   <data name="forest" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\forest.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Fractions" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Fractions.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
   <data name="grass" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\grass.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -141,6 +144,9 @@
   </data>
   <data name="ruin" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ruin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Ruins" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Ruins.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="swamp" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\swamp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

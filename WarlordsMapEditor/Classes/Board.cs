@@ -12,7 +12,7 @@ namespace WarlordsMapEditor
         public static int? selectedItemIndex=null;
         public static int? selectedSetIndex=null;
 
-        private Configs configs = new Configs();
+        private Configs configs;
         private int _boardRows;
         private int _boardColumns;
         private string _mapName;
@@ -100,7 +100,7 @@ namespace WarlordsMapEditor
 
         public Board() 
         {
-            changeConfigs();
+            configs = new Configs();
 
             _sprites.Add(new Sprite(Resources.forest, "Forest", 0, "Terrain"));
             _sprites.Add(new Sprite(Resources.grass, "Grass", 1, "Terrain"));
@@ -166,36 +166,9 @@ namespace WarlordsMapEditor
 
         public void changeConfigs()
         {
-            Microsoft.Win32.OpenFileDialog fractionsXML = new Microsoft.Win32.OpenFileDialog();
-
-            // Set filter for file extension and default file extension 
-            fractionsXML.DefaultExt = ".xml";
-            fractionsXML.Filter = "(*.xml)|*.xml";
-            fractionsXML.Title = "Choose Fractions Configuration File";
-
-            // Display OpenFileDialog by calling ShowDialog method 
-            Nullable<bool> fractionsXMLresult = fractionsXML.ShowDialog();
-            if (fractionsXMLresult == true)
-            {
-                string filename = fractionsXML.FileName;
-                configs.SetFractionsConfig(filename);
-            }
-
-            Microsoft.Win32.OpenFileDialog ruinsXML = new Microsoft.Win32.OpenFileDialog();
-
-            // Set filter for file extension and default file extension 
-            ruinsXML.DefaultExt = ".xml";
-            ruinsXML.Filter = "(*.xml)|*.xml";
-            ruinsXML.Title = "Choose Ruins Configuration File";
-
-            // Display OpenFileDialog by calling ShowDialog method 
-            Nullable<bool> ruinsXMLresult = ruinsXML.ShowDialog();
-            if (ruinsXMLresult == true)
-            {
-                string filename = ruinsXML.FileName;
-                configs.SetRuinsConfig(filename);
-            }
-
+            configs.SetFractionsConfig();
+            configs.SetRuinsConfig();
+            brushCategories.updateCategories(_sprites, configs);
         }
 
         public void refresh()

@@ -39,23 +39,32 @@ namespace WarlordsMapEditor
 
             _visibleCarousels = new ObservableCollection<Carousel>();
 
+            updateCategories(spriteList, configs);
+        }
+
+        public void updateCategories(List<Sprite> spriteList, Configs configs)
+        {
+            _brushCategoryImages.Clear();
+            _terrainCarousels.Clear();
+            _roadCarousels.Clear();
+            _buildingCarousels.Clear();
+            _visibleCarousels.Clear();
+
             foreach (Sprite sprite in spriteList)
             {
                 switch (sprite.category)
                 {
-                    case "Terrain": _terrainCarousels.Add(new Carousel(sprite)); break;
-                    case "Road": _roadCarousels.Add(new Carousel(sprite)); break;
+                    case "Terrain": _terrainCarousels.Add(new Carousel(sprite, sprite.imagesList.Count)); break;
+                    case "Road": _roadCarousels.Add(new Carousel(sprite, sprite.imagesList.Count)); break;
                     case "Building":
                         {
-                            if(sprite.setName=="Castle")
+                            if (sprite.setName == "Castle")
                             {
-                                Sprite cutSprite = sprite;
-                                cutSprite.imagesList.RemoveRange(configs.fractions.Count, sprite.imagesList.Count - configs.fractions.Count);
-                                _buildingCarousels.Add(new Carousel(cutSprite));
+                                _buildingCarousels.Add(new Carousel(sprite, configs.fractions.Count));
                             }
                             else
                             {
-                                _buildingCarousels.Add(new Carousel(sprite));
+                                _buildingCarousels.Add(new Carousel(sprite, sprite.imagesList.Count));
                             }
                             break;
                         }

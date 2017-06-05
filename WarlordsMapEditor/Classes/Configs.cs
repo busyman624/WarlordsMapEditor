@@ -15,19 +15,63 @@ namespace WarlordsMapEditor
         public List<Fraction> fractions = new List<Fraction>();
         public List<RuinsData> ruinsData = new List<RuinsData>();
 
-        public void SetRuinsConfig(string path)
+        public Configs()
         {
-            ruinsData = DeserializeConfig<RuinsDataList>(path).ruinsData;
+            fractions = DeserializeDefaultConfig<FractionList>(Resources.Fractions).fractions;
+            ruinsData = DeserializeDefaultConfig<RuinsDataList>(Resources.Ruins).ruinsData;
         }
 
-        public void SetFractionsConfig(string path)
+        public void SetRuinsConfig()
         {
-            fractions = DeserializeConfig<FractionList>(path).fractions;
+
+            Microsoft.Win32.OpenFileDialog ruinsXML = new Microsoft.Win32.OpenFileDialog();
+
+            // Set filter for file extension and default file extension 
+            ruinsXML.DefaultExt = ".xml";
+            ruinsXML.Filter = "(*.xml)|*.xml";
+            ruinsXML.Title = "Choose Ruins Configuration File";
+
+            // Display OpenFileDialog by calling ShowDialog method 
+            Nullable<bool> ruinsXMLresult = ruinsXML.ShowDialog();
+            if (ruinsXMLresult == true)
+            {
+                string filename = ruinsXML.FileName;
+                ruinsData = DeserializeConfig<RuinsDataList>(filename).ruinsData;
+            }
+
+        }
+
+        public void SetFractionsConfig()
+        {
+            Microsoft.Win32.OpenFileDialog fractionsXML = new Microsoft.Win32.OpenFileDialog();
+
+            // Set filter for file extension and default file extension 
+            fractionsXML.DefaultExt = ".xml";
+            fractionsXML.Filter = "(*.xml)|*.xml";
+            fractionsXML.Title = "Choose Fractions Configuration File";
+
+            // Display OpenFileDialog by calling ShowDialog method 
+            Nullable<bool> fractionsXMLresult = fractionsXML.ShowDialog();
+            if (fractionsXMLresult == true)
+            {
+                string filename = fractionsXML.FileName;
+                fractions = DeserializeConfig<FractionList>(filename).fractions;
+            }
+
         }
 
         private T DeserializeConfig<T>(string path) where T : class
         {
             using (StreamReader reader = new StreamReader(path))
+            {
+                XmlSerializer deserializer = new XmlSerializer(typeof(T));
+                return deserializer.Deserialize(reader) as T;
+            }
+        }
+
+        private T DeserializeDefaultConfig<T>(string xml) where T : class
+        {
+            using (TextReader reader = new StringReader(xml))
             {
                 XmlSerializer deserializer = new XmlSerializer(typeof(T));
                 return deserializer.Deserialize(reader) as T;
