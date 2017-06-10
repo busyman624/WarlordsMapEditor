@@ -40,7 +40,7 @@
                 <RowDefinition Height="33*"/>
                 <RowDefinition Height="7*" />
             </Grid.RowDefinitions>
-            <ItemsControl ItemsSource="{Binding boardItemList}" Padding="10">
+            <ItemsControl ItemsSource="{Binding boardItemList}" Margin="4,4,4,4" Padding="4"  BorderBrush="Black" BorderThickness="2">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Button mousebehav:MouseBehaviour.MouseMoveCommand="{Binding MouseMoveCommand}" Command="{Binding ItemClick}" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Padding="-4">
@@ -54,7 +54,7 @@
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1" Margin="4,4,4,4">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
@@ -69,6 +69,7 @@
                         <TextBlock Grid.Column="1" Text="{Binding mapName}" FontSize="20" FontWeight="Bold"/>
                     </StackPanel>
                     <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Button VerticalAlignment="Center" Command="{Binding newMap}" Content="New" FontSize="10" Margin="5,5,5,5"/>
                         <Button VerticalAlignment="Center" Command="{Binding mapLoad}" Content="Load" FontSize="10" Margin="5,5,5,5"/>
                         <Button VerticalAlignment="Center" Command="{Binding mapSave}" Content="Save" FontSize="10" Margin="5,5,5,5"/>
                         <ToggleButton x:Name="tileBrush" IsChecked="{Binding BrushIsClicked, Mode=TwoWay}"  Content="Brush" Margin="20" Width="108"/>

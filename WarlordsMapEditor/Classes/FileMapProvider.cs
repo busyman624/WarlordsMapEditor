@@ -20,6 +20,84 @@ namespace WarlordsMapEditor
 
         public const UInt32 headerMagic = 0x50414d58; // "XMAP"
 
+        public Map CreateNewMap(List<Sprite> sprites, MiniMap miniMap, Configs configs, MapLoadMode mode = MapLoadMode.All)
+        {
+            Map map = new Map();
+           
+            map.columns = 100;
+            map.rows = 100;
+
+            map.tiles = new List<MapItem>();
+            map.name = ""; //zmienna
+            map.description = ""; //zmienna
+            map.startTurn = 0; //zmienna
+            map.startPlayer = 0; //zmienna
+
+            int players = 2; //zmienna
+            for (int i = 0; i < players; i++)
+            {
+                map.playersInTurnOrder.Add(i); //zmienna
+            }
+
+            for (int i = 0; i < players; i++)
+            {
+                List<Resource> playerResources = new List<Resource>();
+                bool isAi = false; //zmienna
+                bool useColor = true;
+                map.isAi.Add(isAi);
+                map.useColor.Add(useColor);
+                if (useColor)
+                {
+                    map.r.Add(255); //zmienna
+                    map.g.Add(0); //zmienna
+                    map.b.Add(0); //zmienna
+                }
+
+                int resourceCount = 0; //zmienna
+                map.resourceCount.Add(resourceCount);
+                for (int j = 0; j < resourceCount; j++)
+                {
+                    playerResources.Add(new Resource("", 2)); //zmienna
+                }
+                map.resourcesList.Add(playerResources);
+            }
+
+            // Prefab palette
+            int palletteSize = 0;            
+            List<string> palette = new List<string>();
+
+            for (int i = 0; i < sprites.Count; i++)
+            {
+                string name = sprites[i].setName;
+                if (name != "Ruins" && name != "Castle" && name != "Temples")
+                {
+                    for (int j = 0; j < sprites[i].imagesList.Count; j++)
+                    {
+                        name = Char.ToLowerInvariant(name[0]) + name.Substring(1);
+                        string spriteName = name + "_" + j;
+                        //palette.Add(spriteName);
+                        map.prefabPath.Add(spriteName);
+                        palletteSize++;
+                    }
+                }
+            }
+            map.paletteSize = palletteSize;
+
+            // Tiles
+            for (int i = 0; i < map.rows; i++)
+            {
+                for (int j = 0; j < map.columns; j++)
+                {
+                    map.tiles.Add(new MapItem(1, 1, sprites, j, i, 0, miniMap)); 
+                }
+            }
+
+            // Overlay tiles
+            map.overlayTilesCount = 0;
+
+            return map; 
+        }
+
         public Map LoadMapFromBytes(List<Sprite> sprites, string path, MiniMap miniMap, Configs configs, MapLoadMode mode = MapLoadMode.All)
         {
             byte[] serializedMap = File.ReadAllBytes(path);

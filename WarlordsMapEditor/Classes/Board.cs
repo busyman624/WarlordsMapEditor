@@ -114,14 +114,22 @@ namespace WarlordsMapEditor
             _sprites.Add(new Sprite(Resources.ruin, "Ruins", 9, "Building"));
             _sprites.Add(new Sprite(Resources.temples, "Temples", 10, "Building"));
 
-
-
             columns = 10;
             rows = 10;
 
             brushCategories = new BrushCategories(_sprites, configs);
             miniMap = new MiniMap();
             _brushIsClicked = false;
+        }
+
+        public void CreateNewMap()
+        {
+            changeConfigs();
+            map = mapProvider.CreateNewMap(_sprites, miniMap, configs);
+            mapName = map.name.Split('\\')[map.name.Split('\\').Length - 1];
+            mapDescription = map.description;
+            refresh();
+            miniMap.calculate(map.tiles, map.columns, map.rows, columns, rows);
         }
 
         public void MapLoad()
@@ -185,6 +193,7 @@ namespace WarlordsMapEditor
         }
 
         public bool CanMapLoad() { return true; }
+        public bool CanCreateNewMap() { return true; }
         public virtual bool CanMapSave() { return map!=null; }
 
         //Map Navigation
@@ -329,6 +338,7 @@ namespace WarlordsMapEditor
 
         private ICommand _mapLoad;
         private ICommand _mapSave;
+        private ICommand _newMap;
 
         private ICommand _mapNavigateLeft;
         private ICommand _mapNavigateRight;
@@ -337,6 +347,21 @@ namespace WarlordsMapEditor
 
         private ICommand _mapZoomIn;
         private ICommand _mapZoomOut;
+
+        public ICommand newMap
+        {
+            get
+            {
+                if (_newMap == null)
+                {
+                    _newMap = new RelayCommand(
+                        param => this.CreateNewMap(),
+                        param => this.CanCreateNewMap()
+                    );
+                }
+                return _newMap;
+            }
+        }
 
         public ICommand mapLoad
         {
