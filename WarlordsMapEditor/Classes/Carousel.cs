@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace WarlordsMapEditor
 {
@@ -15,6 +16,9 @@ namespace WarlordsMapEditor
             get { return _setName; }
             set { _setName = value; }
         }
+
+        public SelectedBrush selectedBrush;
+
         private ObservableCollection<Item> _brushList;
         public ObservableCollection<Item> brushList
         {
@@ -22,16 +26,18 @@ namespace WarlordsMapEditor
             set { _brushList = value; }
         }
 
-        public Carousel(Sprite itemSet, int itemCount)
+        public Carousel(Sprite itemSet, int itemCount, SelectedBrush selectedBrush)
         {
             this.itemCount = itemCount;
             _brushList = new ObservableCollection<Item>();
-            for(int i = 0; i < 3 && itemCount-i>0; i++)
+            
+            for (int i = 0; i < 3 && itemCount-i>0; i++)
             {
-                _brushList.Add(new Brush(i, itemSet.setIndex, itemSet.imagesList[i]));
+                _brushList.Add(new Brush(i, itemSet.setIndex, itemSet.imagesList[i], selectedBrush));
             }
             this.itemSet = itemSet;
             this._setName = itemSet.setName;
+            this.selectedBrush = selectedBrush;
 
         }
 
@@ -39,7 +45,7 @@ namespace WarlordsMapEditor
         {
             _brushList[2] = _brushList[1];
             _brushList[1] = _brushList[0];
-            _brushList[0] = new Brush(_brushList[1].itemIndex - 1, itemSet.setIndex, itemSet.imagesList[_brushList[1].itemIndex - 1]);
+            _brushList[0] = new Brush(_brushList[1].itemIndex - 1, itemSet.setIndex, itemSet.imagesList[_brushList[1].itemIndex - 1], selectedBrush);
         }
         public bool CanSelectableItemsGoLeft()
         {
@@ -70,7 +76,7 @@ namespace WarlordsMapEditor
         {
             _brushList[0] = _brushList[1];
             _brushList[1] = _brushList[2];
-            _brushList[2] = new Brush(_brushList[1].itemIndex + 1, itemSet.setIndex, itemSet.imagesList[_brushList[1].itemIndex + 1]);
+            _brushList[2] = new Brush(_brushList[1].itemIndex + 1, itemSet.setIndex, itemSet.imagesList[_brushList[1].itemIndex + 1], selectedBrush);
         }
         public bool CanSelectableItemsGoRight()
         {

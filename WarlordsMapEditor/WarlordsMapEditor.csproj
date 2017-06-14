@@ -72,6 +72,7 @@
     <Compile Include="Classes\ShitClasses\Statistics.cs" />
     <Compile Include="Classes\ShitClasses\UnitInfo.cs" />
     <Compile Include="Classes\Sprite.cs" />
+    <Compile Include="Classes\SelectedBrush.cs" />
     <Page Include="CastleDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

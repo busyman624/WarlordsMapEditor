@@ -54,32 +54,65 @@
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
-            <Grid Grid.Row="1" Margin="4,4,4,4">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock Text="Map Name: " FontSize="20" FontWeight="Bold"/>
-                        <TextBlock Grid.Column="1" Text="{Binding mapName}" FontSize="20" FontWeight="Bold"/>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Border BorderThickness="2" BorderBrush="Black" Margin="4,4,4,4">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                                <Button VerticalAlignment="Center" Command="{Binding newMap}" Content="New Map" FontSize="10" Width="60" Margin="15,5,5,5"/>
+                                <Button VerticalAlignment="Center" Command="{Binding mapLoad}" Content="Load Map" FontSize="10" Width="60" Margin="50,5,50,5"/>
+                                <Button VerticalAlignment="Center" Command="{Binding mapSave}" Content="Save Map" FontSize="10" Width="60" Margin="5,5,15,5"/>
+                            </StackPanel>
+                            <StackPanel>
+                                <TextBlock Text="{Binding mapName}" FontSize="20" FontWeight="Bold" Margin="5,0,5,0"/>
+                                <TextBlock Text="{Binding mapDescription}" Height="45" Margin="5,0,5,0"/>
+                            </StackPanel>
                     </StackPanel>
-                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <Button VerticalAlignment="Center" Command="{Binding newMap}" Content="New" FontSize="10" Margin="5,5,5,5"/>
-                        <Button VerticalAlignment="Center" Command="{Binding mapLoad}" Content="Load" FontSize="10" Margin="5,5,5,5"/>
-                        <Button VerticalAlignment="Center" Command="{Binding mapSave}" Content="Save" FontSize="10" Margin="5,5,5,5"/>
-                        <ToggleButton x:Name="tileBrush" IsChecked="{Binding BrushIsClicked, Mode=TwoWay}"  Content="Brush" Margin="20" Width="108"/>
-                        <!--<ToggleButton x:Name = "brush" Content="Brush" Checked="{Binding brushChecked}" Unchecked="{Binding brushUnchecked}" Margin="20" Width="108"/>-->
+                </Border>
+                <Border Grid.Column="1" BorderThickness="2" BorderBrush="Black" Margin="4,4,4,4">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                                <Button VerticalAlignment="Center" Content="Back" FontSize="10" Width="60" Margin="15,5,5,5"/>
+                                <Button VerticalAlignment="Center" Content="Delete" FontSize="10" Width="60" Margin="50,5,50,5"/>
+                                <ToggleButton x:Name="tileBrush" IsChecked="{Binding BrushIsClicked, Mode=TwoWay}"  Content="Brush" FontSize="10" Width="60" Margin="5,5,15,5"/>
+                            </StackPanel>
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Image  Source="{Binding brushCategories.selectedBrush.image  , TargetNullValue={x:Null}}" Stretch="Fill" Height="40" Width="40"  Margin="5,5,5,5" />
+                                <TextBlock VerticalAlignment="Center" Text="{Binding brushCategories.selectedBrush.description}" FontSize="10" FontWeight="Bold" Margin="5,0,5,0"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock VerticalAlignment="Center" Text="{Binding brushCategories.selectedBrush.additionalInfo}" FontSize="10" FontWeight="Bold" Margin="5,0,5,0"/>
+                                <ComboBox ItemsSource="{Binding brushCategories.selectedBrush.details}" Margin="5,0,5,0">
+                                    <ComboBox.Style>
+                                        <Style TargetType="ComboBox" >
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Path=Items.Count, RelativeSource={RelativeSource Self}}"  Value="0" >
+                                                    <Setter Property="Width" Value="0" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ComboBox.Style>
+                                </ComboBox>
+                                <TextBlock VerticalAlignment="Center" Text="{Binding brushCategories.selectedBrush.additionalInfo2}" FontSize="10" FontWeight="Bold" Margin="5,0,5,0"/>
+                                <ComboBox ItemsSource="{Binding brushCategories.selectedBrush.rewards}" Margin="5,0,5,0">
+                                    <ComboBox.Style>
+                                        <Style TargetType="ComboBox" >
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Path=Items.Count, RelativeSource={RelativeSource Self}}"  Value="0" >
+                                                    <Setter Property="Width" Value="0" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ComboBox.Style>
+                                </ComboBox>
+                            </StackPanel>
+                        </StackPanel>
                     </StackPanel>
-                </Grid>
-                <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center">
-                    <TextBlock Text="Map Description: "/>
-                    <TextBlock Grid.Column="1" Text="{Binding mapDescription}" />
-                </StackPanel>
+                </Border>
             </Grid>
         </Grid>
         <Grid Grid.Column="1">

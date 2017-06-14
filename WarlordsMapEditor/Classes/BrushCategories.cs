@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +30,13 @@ namespace WarlordsMapEditor
             set { _visibleCarousels = value; }
         }
 
+        private SelectedBrush _selectedBrush;
+        public SelectedBrush selectedBrush
+        {
+            get { return _selectedBrush; }
+            set { _selectedBrush = value; }
+        }
+
 
         public BrushCategories(List<Sprite> spriteList, Configs configs)
         {
@@ -38,6 +46,7 @@ namespace WarlordsMapEditor
             _buildingCarousels = new ObservableCollection<Carousel>();
 
             _visibleCarousels = new ObservableCollection<Carousel>();
+            selectedBrush = new SelectedBrush(spriteList, configs);
 
             updateCategories(spriteList, configs);
         }
@@ -49,18 +58,19 @@ namespace WarlordsMapEditor
             _roadCarousels.Clear();
             _buildingCarousels.Clear();
             _visibleCarousels.Clear();
+            Console.WriteLine(selectedBrush.GetHashCode().ToString());
 
             foreach (Sprite sprite in spriteList)
             {
                 switch (sprite.category)
                 {
-                    case "Terrain": _terrainCarousels.Add(new Carousel(sprite, sprite.imagesList.Count)); break;
-                    case "Road": _roadCarousels.Add(new Carousel(sprite, sprite.imagesList.Count)); break;
+                    case "Terrain": _terrainCarousels.Add(new Carousel(sprite, sprite.imagesList.Count, selectedBrush)); break;
+                    case "Road": _roadCarousels.Add(new Carousel(sprite, sprite.imagesList.Count, selectedBrush)); break;
                     case "Building":
                         {
                             if (sprite.setName == "Castle")
                             {
-                                _buildingCarousels.Add(new Carousel(sprite, configs.fractions.Count));
+                                _buildingCarousels.Add(new Carousel(sprite, configs.fractions.Count, selectedBrush));
                             }
                             break;
                         }
@@ -71,7 +81,7 @@ namespace WarlordsMapEditor
 
             foreach (RuinsData ruin in configs.ruinsData)
             {
-                _buildingCarousels.Add(new Carousel(spriteList.Find(s => s.setName.ToLower() == ruin.name.ToLower()), ruin.sprites.Count));
+                _buildingCarousels.Add(new Carousel(spriteList.Find(s => s.setName.ToLower() == ruin.name.ToLower()), ruin.sprites.Count,selectedBrush));
             }
 
             _brushCategoryImages.Add(_terrainCarousels[0].brushList[0].image);
@@ -146,5 +156,6 @@ namespace WarlordsMapEditor
                 return _buildingCategory;
             }
         }
+
     }
 }

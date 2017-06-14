@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using WarlordsMapEditor.Properties;
 
 namespace WarlordsMapEditor
@@ -150,6 +151,9 @@ namespace WarlordsMapEditor
                 map = mapProvider.LoadMapFromBytes(_sprites, filename, miniMap, configs);
                 mapName = map.name.Split('\\')[map.name.Split('\\').Length-1];
                 mapDescription = map.description;
+                Board.selectedItemIndex = null;
+                Board.selectedSetIndex = null;
+                brushCategories.selectedBrush.clear();
                 refresh();
                 miniMap.calculate(map.tiles, map.columns, map.rows, columns, rows);
             }

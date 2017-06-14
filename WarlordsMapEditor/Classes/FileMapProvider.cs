@@ -30,8 +30,8 @@ namespace WarlordsMapEditor
             map.tiles = new List<MapItem>();
             map.name = ""; //zmienna
             map.description = ""; //zmienna
-            map.startTurn = 0; //zmienna
-            map.startPlayer = 0; //zmienna
+            map.startTurn = -1; //zmienna
+            map.startPlayer = -1; //zmienna
 
             int players = 2; //zmienna
             for (int i = 0; i < players; i++)
@@ -53,11 +53,11 @@ namespace WarlordsMapEditor
                     map.b.Add(0); //zmienna
                 }
 
-                int resourceCount = 0; //zmienna
+                int resourceCount = 1; //zmienna
                 map.resourceCount.Add(resourceCount);
                 for (int j = 0; j < resourceCount; j++)
                 {
-                    playerResources.Add(new Resource("", 2)); //zmienna
+                    playerResources.Add(new Resource("gold", 12000)); //zmienna
                 }
                 map.resourcesList.Add(playerResources);
             }
