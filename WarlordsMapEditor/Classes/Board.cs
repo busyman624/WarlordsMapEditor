@@ -10,8 +10,9 @@ namespace WarlordsMapEditor
 {
     public class Board : INotifyPropertyChanged
     {
-        public static int? selectedItemIndex=null;
-        public static int? selectedSetIndex=null;
+        public static int? selectedItemIndex;
+        public static int? selectedSetIndex;
+        public static List<MapItem> changedItems=new List<MapItem>();
 
         private Configs configs;
         private int _boardRows;
@@ -127,10 +128,7 @@ namespace WarlordsMapEditor
         {
             changeConfigs();
             map = mapProvider.CreateNewMap(_sprites, miniMap, configs);
-            mapName = map.name.Split('\\')[map.name.Split('\\').Length - 1];
-            mapDescription = map.description;
             refresh();
-            miniMap.calculate(map.tiles, map.columns, map.rows, columns, rows);
         }
 
         public void MapLoad()
@@ -149,13 +147,7 @@ namespace WarlordsMapEditor
                 changeConfigs();
                 string filename = dlg.FileName;
                 map = mapProvider.LoadMapFromBytes(_sprites, filename, miniMap, configs);
-                mapName = map.name.Split('\\')[map.name.Split('\\').Length-1];
-                mapDescription = map.description;
-                Board.selectedItemIndex = null;
-                Board.selectedSetIndex = null;
-                brushCategories.selectedBrush.clear();
                 refresh();
-                miniMap.calculate(map.tiles, map.columns, map.rows, columns, rows);
             }
         }
 
@@ -194,11 +186,38 @@ namespace WarlordsMapEditor
                     _boardItems.Add(map.tiles[c + map.columns*(map.rows-1-r)]);
                 }
             }
+            mapName = map.name.Split('\\')[map.name.Split('\\').Length - 1];
+            mapDescription = map.description;
+            Board.selectedItemIndex = null;
+            Board.selectedSetIndex = null;
+            Board.changedItems.Clear();
+            brushCategories.selectedBrush.clear();
+            miniMap.calculate(map.tiles, map.columns, map.rows, columns, rows);
+        }
+
+        public void DeleteClick()
+        {
+            Board.selectedSetIndex = -1;
+            Board.selectedItemIndex = -1;
+            brushCategories.selectedBrush.update();
+        }
+
+        public void BackClick()
+        {
+            foreach (MapItem item in Board.changedItems)
+            {
+                map.tiles[item.Xcoordinate + map.columns * item.Ycoordinate].restore(item);
+            }
+            Board.changedItems.Clear();
+            miniMap.calculate(map.tiles, map.columns, map.rows, columns, rows);
         }
 
         public bool CanMapLoad() { return true; }
         public bool CanCreateNewMap() { return true; }
-        public virtual bool CanMapSave() { return map!=null; }
+        public bool CanMapSave() { return map!=null; }
+
+        public bool CanDeleteClick() { return map != null; }
+        public bool CanBackClick() { return Board.changedItems.Count>0; }
 
         //Map Navigation
         public void NavigateLeft()
@@ -344,6 +363,9 @@ namespace WarlordsMapEditor
         private ICommand _mapSave;
         private ICommand _newMap;
 
+        private ICommand _delete;
+        private ICommand _back;
+
         private ICommand _mapNavigateLeft;
         private ICommand _mapNavigateRight;
         private ICommand _mapNavigateUp;
@@ -394,6 +416,36 @@ namespace WarlordsMapEditor
                     );
                 }
                 return _mapSave;
+            }
+        }
+
+        public ICommand delete
+        {
+            get
+            {
+                if (_delete == null)
+                {
+                    _delete = new RelayCommand(
+                        param => this.DeleteClick(),
+                        param => this.CanDeleteClick()
+                    );
+                }
+                return _delete;
+            }
+        }
+
+        public ICommand back
+        {
+            get
+            {
+                if (_back == null)
+                {
+                    _back = new RelayCommand(
+                        param => this.BackClick(),
+                        param => this.CanBackClick()
+                    );
+                }
+                return _back;
             }
         }
 

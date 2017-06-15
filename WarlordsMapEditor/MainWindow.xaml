@@ -10,26 +10,6 @@
         Title="Warlords Map Editor" Height="800" Width="1000"
         WindowStartupLocation="CenterScreen"
         >
-    <!--
-    <Window.Resources>
-        <Style TargetType="{x:Type local:Tile}" BasedOn="{StaticResource {x:Type Button}}" >
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type local:Tile}">
-                        <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="0">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Opacity" Value="0.5" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-    </Window.Resources> -->
-
     <Grid Background="Gray">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />
@@ -75,10 +55,20 @@
                 <Border Grid.Column="1" BorderThickness="2" BorderBrush="Black" Margin="4,4,4,4">
                     <StackPanel>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Stretch">
-                                <Button VerticalAlignment="Center" Content="Back" FontSize="10" Width="60" Margin="15,5,5,5"/>
-                                <Button VerticalAlignment="Center" Content="Delete" FontSize="10" Width="60" Margin="50,5,50,5"/>
-                                <ToggleButton x:Name="tileBrush" IsChecked="{Binding BrushIsClicked, Mode=TwoWay}"  Content="Brush" FontSize="10" Width="60" Margin="5,5,15,5"/>
-                            </StackPanel>
+                                <Button VerticalAlignment="Center" Command="{Binding back}" Content="Back" FontSize="10" Width="60" Margin="15,5,5,5"/>
+                                <Button VerticalAlignment="Center" Command="{Binding delete}" Content="Delete" FontSize="10" Width="60" Margin="50,5,50,5"/>
+                                <ToggleButton x:Name="tileBrush" IsChecked="{Binding BrushIsClicked, Mode=TwoWay}"  Content="Brush" FontSize="10" Width="60" Margin="5,5,15,5">
+                                    <ToggleButton.Style>
+                                        <Style TargetType="{x:Type ToggleButton}">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsChecked" Value="true">
+                                                <Setter Property="Foreground" Value="Red"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                    </ToggleButton.Style>
+                                </ToggleButton>
+                        </StackPanel>
                         <StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <Image  Source="{Binding brushCategories.selectedBrush.image  , TargetNullValue={x:Null}}" Stretch="Fill" Height="40" Width="40"  Margin="5,5,5,5" />

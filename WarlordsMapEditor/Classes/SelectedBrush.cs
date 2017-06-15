@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using WarlordsMapEditor.Properties;
 
 namespace WarlordsMapEditor
 {
@@ -99,30 +103,53 @@ namespace WarlordsMapEditor
         public void update()
         {
             clear();
-            image = sprites[(int)Board.selectedSetIndex].imagesList[(int)Board.selectedItemIndex];
-            description = sprites[(int)Board.selectedSetIndex].category + ": " + sprites[(int)Board.selectedSetIndex].setName + " - " + (int)Board.selectedItemIndex;
-            if(sprites[(int)Board.selectedSetIndex].setName=="Castle")
+            if (Board.selectedSetIndex != -1 && Board.selectedItemIndex != -1)
             {
-                additionalInfo = "Buildings:";
-                foreach (string building in configs.fractions[(int)Board.selectedItemIndex].buildings)
+                image = sprites[(int)Board.selectedSetIndex].imagesList[(int)Board.selectedItemIndex];
+                description = sprites[(int)Board.selectedSetIndex].category + ": " + sprites[(int)Board.selectedSetIndex].setName + " - " + (int)Board.selectedItemIndex;
+                if (sprites[(int)Board.selectedSetIndex].setName == "Castle")
                 {
-                    details.Add(building);
+                    additionalInfo = "Buildings:";
+                    foreach (string building in configs.fractions[(int)Board.selectedItemIndex].buildings)
+                    {
+                        details.Add(building);
+                    }
+                }
+                int ruinIndex = configs.ruinsData.FindIndex(r => r.name == sprites[(int)Board.selectedSetIndex].setName.ToLower());
+                if (ruinIndex != -1)
+                {
+                    additionalInfo = "Enemy Units:";
+                    additionalInfo2 = "Rewards:";
+                    foreach (string unit in configs.ruinsData[ruinIndex].enemyUnits)
+                    {
+                        details.Add(unit);
+                    }
+                    foreach (Resource resource in configs.ruinsData[ruinIndex].resourceBonus)
+                    {
+                        rewards.Add(resource.count + " " + resource.name);
+                    }
                 }
             }
-            int ruinIndex = configs.ruinsData.FindIndex(r => r.name == sprites[(int)Board.selectedSetIndex].setName.ToLower());
-            if (ruinIndex != -1)
+            else
             {
-                additionalInfo = "Enemy Units:";
-                additionalInfo2 = "Rewards:";
-                foreach (string unit in configs.ruinsData[ruinIndex].enemyUnits)
+                Bitmap bmp = Resources.cross;
+                using (var memory = new MemoryStream())
                 {
-                    details.Add(unit);
+                    bmp.Save(memory, ImageFormat.Png);
+                    memory.Position = 0;
+
+                    BitmapImage temp_img = new BitmapImage();
+                    temp_img.BeginInit();
+                    temp_img.StreamSource = memory;
+                    temp_img.CacheOption = BitmapCacheOption.OnLoad;
+                    temp_img.EndInit();
+                    image = temp_img;
                 }
-                foreach (Resource resource in configs.ruinsData[ruinIndex].resourceBonus)
-                {
-                    rewards.Add(resource.count + " " + resource.name);
-                }
+                description = "Delete";
+                additionalInfo = "Click on roads or buildings to delete them";
             }
+
+
         }
 
         public void clear()
