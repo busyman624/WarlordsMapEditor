@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,10 @@ namespace WarlordsMapEditor
     {
         public int itemIndex;
         public int setIndex;
+        public string setName;
+        public string category;
+
+        public Bitmap bitmap;
 
         private BitmapImage _image;
         public BitmapImage image
@@ -24,17 +29,16 @@ namespace WarlordsMapEditor
                 {
                     
                     _image = value;
-                    NotifyPropertyChanged("image");
+                    RaisePropertyChaged("image");
                 }
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void NotifyPropertyChanged(string propName)
+        public void RaisePropertyChaged(string info)
         {
-            if (this.PropertyChanged != null)
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(info));
         }
 
         public virtual void onItemClick(){ }

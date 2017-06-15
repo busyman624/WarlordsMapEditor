@@ -14,36 +14,42 @@ namespace WarlordsMapEditor
 {
     public class MapItem : Item
     {
-        private List<Sprite> _sprites;
+        public MapObjects mapObjects;
+        public SelectedBrush selectedBrush;
+        public List<MapItem> changedItems;
         public int Xcoordinate;
         public int Ycoordinate;
-        public Bitmap bitmap;
         public bool isWater;
         public int? objectIndex;
         public int? objectSet;
-        public int palleteId;
+        public string objectCategory;
         public MiniMap miniMap;
 
         public string castleName;
         public int? castleOwner;
 
-        public MapItem(int itemIndex, int setIndex, List<Sprite> _sprites, int Xcoordinate, int Ycoordinate, int palleteId, MiniMap miniMap)
+        public MapItem(int itemIndex, int setIndex, string setName, string category, MapObjects mapObjects, int Xcoordinate, int Ycoordinate,
+            MiniMap miniMap, SelectedBrush selectedBrush, List<MapItem> changedItems)
         {
-            this.palleteId = palleteId;
             this.itemIndex = itemIndex;
             this.setIndex = setIndex;
+            this.setName = setName;
+            this.category = category;
             this.miniMap = miniMap;
             objectIndex = null;
             objectSet = null;
+            objectCategory = null;
             castleName = null;
             castleOwner = null;
-            this._sprites = _sprites;
+            this.mapObjects = mapObjects;
+            this.selectedBrush = selectedBrush;
+            this.changedItems = changedItems;
             this.Xcoordinate = Xcoordinate;
             this.Ycoordinate = Ycoordinate;
-            if (_sprites[setIndex].setName == "Water") isWater = true;
+            if (setName == "Waters") isWater = true;
             else isWater = false;
-            image = _sprites[setIndex].imagesList[itemIndex];
-            bitmap = _sprites[setIndex].bitmapList[itemIndex];
+            image = mapObjects.terrains[setIndex].imagesList[itemIndex];
+            bitmap = mapObjects.terrains[setIndex].bitmapList[itemIndex];
         }
 
         public MapItem() { }
@@ -53,6 +59,8 @@ namespace WarlordsMapEditor
             MapItem mapItem = new MapItem();
             mapItem.itemIndex = itemIndex;
             mapItem.setIndex = setIndex;
+            mapItem.setName = setName;
+            mapItem.category = category;
             mapItem.Xcoordinate = Xcoordinate;
             mapItem.Ycoordinate = Ycoordinate;
             mapItem.bitmap = bitmap;
@@ -60,6 +68,7 @@ namespace WarlordsMapEditor
             mapItem.isWater = isWater;
             mapItem.objectIndex = objectIndex;
             mapItem.objectSet = objectSet;
+            mapItem.objectCategory = objectCategory;
             mapItem.castleName = castleName;
             mapItem.castleOwner = castleOwner;
             return mapItem;
@@ -69,6 +78,8 @@ namespace WarlordsMapEditor
         {
             itemIndex = mapItem.itemIndex;
             setIndex = mapItem.setIndex;
+            setName = mapItem.setName;
+            category = mapItem.category;
             Xcoordinate = mapItem.Xcoordinate;
             Ycoordinate = mapItem.Ycoordinate;
             bitmap = mapItem.bitmap;
@@ -76,13 +87,33 @@ namespace WarlordsMapEditor
             isWater = mapItem.isWater;
             objectIndex = mapItem.objectIndex;
             objectSet = mapItem.objectSet;
+            objectCategory = mapItem.objectCategory;
             castleName = mapItem.castleName;
             castleOwner = mapItem.castleOwner;
         }
 
         public void combineImages()
         {
-            Bitmap topbmp = _sprites[(int)objectSet].bitmapList[(int)objectIndex];
+            Bitmap topbmp=null;
+            switch (objectCategory)
+            {
+                case "Roads":
+                    {
+                        topbmp = mapObjects.roads[(int)objectSet].bitmapList[(int)objectIndex];
+                        break;
+                    }
+                case "Castles":
+                    {
+                        topbmp = mapObjects.castles[(int)objectSet].bitmapList[(int)objectIndex];
+                        break;
+                    }
+                case "Ruins":
+                    {
+                        topbmp = mapObjects.ruins[(int)objectSet].bitmapList[(int)objectIndex];
+                        break;
+                    }
+            }
+            
             Bitmap combined;
             BitmapImage combinedBitmapImage = new BitmapImage();
 
@@ -113,7 +144,7 @@ namespace WarlordsMapEditor
 
         public override void execute_MouseMoveCommand(MouseEventArgs param)
         {
-            if (Board.brushDrawStart && !Board.changedItems.Exists(item => item.Xcoordinate==Xcoordinate && item.Ycoordinate==Ycoordinate)) //is brush selected ?
+            if (Board.brushDrawStart && !changedItems.Exists(item => item.Xcoordinate==Xcoordinate && item.Ycoordinate==Ycoordinate)) //is brush selected ?
             {
                 changeTile();
             }
@@ -123,14 +154,14 @@ namespace WarlordsMapEditor
         {
             if (!Board._brushIsClicked)
             {
-                Board.changedItems.Clear();
+                changedItems.Clear();
                 changeTile();
             }
 
-            if (Board._brushIsClicked && Board.brushDrawStart == false &&Board.selectedSetIndex<8) //decide if brush drawing starts or ends
+            if (Board._brushIsClicked && Board.brushDrawStart == false && (selectedBrush.category == "Terrains" || selectedBrush.category == "Roads" || selectedBrush.category == "Delete")) //decide if brush drawing starts or ends
             {
                 Board.brushDrawStart = true;
-                Board.changedItems.Clear();
+                changedItems.Clear();
             }
             else
             {
@@ -140,33 +171,33 @@ namespace WarlordsMapEditor
 
         private void changeTile()
         {
-            if (Board.selectedItemIndex != null && Board.selectedSetIndex != null)
-            {
-                Board.changedItems.Add(saveInstance());
-                if (Board.selectedItemIndex != -1 && Board.selectedSetIndex != -1)
+                changedItems.Add(saveInstance());
+                if (selectedBrush.setIndex != -1 && selectedBrush.itemIndex != -1)
                 {
-                    if (_sprites[(int)Board.selectedSetIndex].category == "Terrain")
+                    if (selectedBrush.category == "Terrains")
                     {
-                        itemIndex = (int)Board.selectedItemIndex;
-                        setIndex = (int)Board.selectedSetIndex;
+                        itemIndex = selectedBrush.setIndex;
+                        setIndex = selectedBrush.itemIndex;
                         objectIndex = null;
                         objectSet = null;
                         castleName = null;
                         castleOwner = null;
 
-                        image = _sprites[setIndex].imagesList[itemIndex];
-                        bitmap = _sprites[setIndex].bitmapList[itemIndex];
-                        if (_sprites[setIndex].setName == "Water") isWater = true;
+                        image = selectedBrush.image;
+                        bitmap = selectedBrush.bitmap;
+                        if (selectedBrush.setName == "Waters") isWater = true;
                         else isWater = false;
                     }
-                    else if (!isWater || Board.selectedSetIndex == 7)
+                    else if (!isWater || selectedBrush.setName == "Bridges")
                     {
-                        objectIndex = Board.selectedItemIndex;
-                        objectSet = Board.selectedSetIndex;
+                        objectCategory = selectedBrush.category;
+                        objectIndex = selectedBrush.itemIndex;
+                        objectSet = selectedBrush.setIndex;
                         combineImages();
                     }
-                    if (Board.selectedSetIndex == 8)
+                    if (selectedBrush.category == "Castles")
                     {
+                        objectCategory = selectedBrush.category;
                         var dialog = new CastleDialog(this);
                         dialog.showDialog();
                     }
@@ -176,7 +207,6 @@ namespace WarlordsMapEditor
                     clearTile();
                 }
                 miniMap.refresh(Xcoordinate, Ycoordinate);
-            }
         }
 
         public void clearTile()
@@ -186,8 +216,8 @@ namespace WarlordsMapEditor
             castleName = null;
             castleOwner = null;
 
-            image = _sprites[setIndex].imagesList[itemIndex];
-            bitmap = _sprites[setIndex].bitmapList[itemIndex];
+            image = mapObjects.terrains[setIndex].imagesList[itemIndex];
+            bitmap = mapObjects.terrains[setIndex].bitmapList[itemIndex];
         }
     }
 }

@@ -25,7 +25,7 @@ namespace WarlordsMapEditor
 
             imagesList = new List<BitmapImage>();
             bitmapList = new List<Bitmap>();
-            if (category == "Building")
+            if (category == "Castles" || category == "Ruins")
             {
                 tile = new Bitmap(bmp, new Size(bmp.Width / bmp.Height * 40, 40));
             }
@@ -34,7 +34,6 @@ namespace WarlordsMapEditor
             for (int i = 0; i < tile.Width / tile.Height; i++)
             {
                 Bitmap temp_bmp = tile.Clone(new Rectangle(i * tile.Height, 0, tile.Height, tile.Height), tile.PixelFormat);
-                //temp_bmp.RotateFlip(RotateFlipType.Rotate180FlipX);
                 using (var memory = new MemoryStream())
                 {
                     temp_bmp.Save(memory, ImageFormat.Png);

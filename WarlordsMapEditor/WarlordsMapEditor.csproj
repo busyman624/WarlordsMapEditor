@@ -97,6 +97,7 @@
   <ItemGroup>
     <Compile Include="Classes\Map.cs" />
     <Compile Include="Classes\MiniMap.cs" />
+    <Compile Include="Classes\MapObjects.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

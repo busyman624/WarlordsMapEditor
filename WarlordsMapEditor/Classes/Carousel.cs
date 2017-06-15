@@ -33,7 +33,7 @@ namespace WarlordsMapEditor
             
             for (int i = 0; i < 3 && itemCount-i>0; i++)
             {
-                _brushList.Add(new Brush(i, itemSet.setIndex, itemSet.imagesList[i], selectedBrush));
+                _brushList.Add(new Brush(i, itemSet.setIndex, itemSet.setName, itemSet.category, itemSet.bitmapList[i], itemSet.imagesList[i], selectedBrush));
             }
             this.itemSet = itemSet;
             this._setName = itemSet.setName;
@@ -45,7 +45,7 @@ namespace WarlordsMapEditor
         {
             _brushList[2] = _brushList[1];
             _brushList[1] = _brushList[0];
-            _brushList[0] = new Brush(_brushList[1].itemIndex - 1, itemSet.setIndex, itemSet.imagesList[_brushList[1].itemIndex - 1], selectedBrush);
+            _brushList[0] = new Brush(_brushList[1].itemIndex - 1, itemSet.setIndex, itemSet.setName, itemSet.category, itemSet.bitmapList[_brushList[1].itemIndex - 1], itemSet.imagesList[_brushList[1].itemIndex - 1], selectedBrush);
         }
         public bool CanSelectableItemsGoLeft()
         {
@@ -76,7 +76,7 @@ namespace WarlordsMapEditor
         {
             _brushList[0] = _brushList[1];
             _brushList[1] = _brushList[2];
-            _brushList[2] = new Brush(_brushList[1].itemIndex + 1, itemSet.setIndex, itemSet.imagesList[_brushList[1].itemIndex + 1], selectedBrush);
+            _brushList[2] = new Brush(_brushList[1].itemIndex + 1, itemSet.setIndex, itemSet.setName, itemSet.category, itemSet.bitmapList[_brushList[1].itemIndex + 1], itemSet.imagesList[_brushList[1].itemIndex + 1], selectedBrush);
         }
         public bool CanSelectableItemsGoRight()
         {

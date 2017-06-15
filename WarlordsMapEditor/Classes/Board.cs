@@ -10,9 +10,7 @@ namespace WarlordsMapEditor
 {
     public class Board : INotifyPropertyChanged
     {
-        public static int? selectedItemIndex;
-        public static int? selectedSetIndex;
-        public static List<MapItem> changedItems=new List<MapItem>();
+        public List<MapItem> changedItems=new List<MapItem>();
 
         private Configs configs;
         private int _boardRows;
@@ -22,7 +20,7 @@ namespace WarlordsMapEditor
         private ObservableCollection<MapItem> _boardItems = new ObservableCollection<MapItem>();
         private Map map;
         private MiniMap _miniMap;
-        private List<Sprite> _sprites = new List<Sprite>();
+        private MapObjects mapObjects;
         private BrushCategories _brushCategories;
         FileMapProvider mapProvider = new FileMapProvider();
 
@@ -103,23 +101,11 @@ namespace WarlordsMapEditor
         public Board() 
         {
             configs = new Configs();
-
-            _sprites.Add(new Sprite(Resources.forest, "Forest", 0, "Terrain"));
-            _sprites.Add(new Sprite(Resources.grass, "Grass", 1, "Terrain"));
-            _sprites.Add(new Sprite(Resources.hills, "Hills", 2, "Terrain"));
-            _sprites.Add(new Sprite(Resources.mountains, "Mountains", 3, "Terrain"));
-            _sprites.Add(new Sprite(Resources.swamp, "Swamp", 4, "Terrain"));
-            _sprites.Add(new Sprite(Resources.water, "Water", 5, "Terrain"));
-            _sprites.Add(new Sprite(Resources.roads, "Roads", 6, "Road"));
-            _sprites.Add(new Sprite(Resources.bridges, "Bridges", 7, "Road"));
-            _sprites.Add(new Sprite(Resources.castles, "Castle", 8, "Building"));
-            _sprites.Add(new Sprite(Resources.ruin, "Ruins", 9, "Building"));
-            _sprites.Add(new Sprite(Resources.temples, "Temples", 10, "Building"));
-
+            mapObjects = new MapObjects();
             columns = 10;
             rows = 10;
 
-            brushCategories = new BrushCategories(_sprites, configs);
+            brushCategories = new BrushCategories(mapObjects, configs);
             miniMap = new MiniMap();
             _brushIsClicked = false;
         }
@@ -127,7 +113,7 @@ namespace WarlordsMapEditor
         public void CreateNewMap()
         {
             changeConfigs();
-            map = mapProvider.CreateNewMap(_sprites, miniMap, configs);
+            map = mapProvider.CreateNewMap(mapObjects, miniMap, brushCategories.selectedBrush, changedItems, configs);
             refresh();
         }
 
@@ -146,7 +132,7 @@ namespace WarlordsMapEditor
             {
                 changeConfigs();
                 string filename = dlg.FileName;
-                map = mapProvider.LoadMapFromBytes(_sprites, filename, miniMap, configs);
+                map = mapProvider.LoadMapFromBytes(mapObjects, filename, miniMap, brushCategories.selectedBrush, changedItems, configs);
                 refresh();
             }
         }
@@ -173,7 +159,7 @@ namespace WarlordsMapEditor
         {
             configs.SetFractionsConfig();
             configs.SetRuinsConfig();
-            brushCategories.updateCategories(_sprites, configs);
+            brushCategories.updateCategories(mapObjects, configs);
         }
 
         public void refresh()
@@ -188,27 +174,27 @@ namespace WarlordsMapEditor
             }
             mapName = map.name.Split('\\')[map.name.Split('\\').Length - 1];
             mapDescription = map.description;
-            Board.selectedItemIndex = null;
-            Board.selectedSetIndex = null;
-            Board.changedItems.Clear();
+            changedItems.Clear();
             brushCategories.selectedBrush.clear();
             miniMap.calculate(map.tiles, map.columns, map.rows, columns, rows);
         }
 
         public void DeleteClick()
         {
-            Board.selectedSetIndex = -1;
-            Board.selectedItemIndex = -1;
+            brushCategories.selectedBrush.setIndex = -1;
+            brushCategories.selectedBrush.itemIndex = -1;
+            brushCategories.selectedBrush.category = "Delete";
+            brushCategories.selectedBrush.clear();
             brushCategories.selectedBrush.update();
         }
 
         public void BackClick()
         {
-            foreach (MapItem item in Board.changedItems)
+            foreach (MapItem item in changedItems)
             {
                 map.tiles[item.Xcoordinate + map.columns * item.Ycoordinate].restore(item);
             }
-            Board.changedItems.Clear();
+            changedItems.Clear();
             miniMap.calculate(map.tiles, map.columns, map.rows, columns, rows);
         }
 
@@ -217,7 +203,7 @@ namespace WarlordsMapEditor
         public bool CanMapSave() { return map!=null; }
 
         public bool CanDeleteClick() { return map != null; }
-        public bool CanBackClick() { return Board.changedItems.Count>0; }
+        public bool CanBackClick() { return changedItems.Count>0; }
 
         //Map Navigation
         public void NavigateLeft()

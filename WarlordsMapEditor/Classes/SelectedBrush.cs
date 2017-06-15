@@ -13,22 +13,8 @@ using WarlordsMapEditor.Properties;
 
 namespace WarlordsMapEditor
 {
-    public class SelectedBrush : INotifyPropertyChanged
+    public class SelectedBrush : Item
     {
-        private BitmapImage _image;
-
-        public BitmapImage image
-        {
-            get { return _image; }
-            set
-            {
-                if (_image != value)
-                {
-                    _image = value;
-                    RaisePropertyChaged("image");
-                }
-            }
-        }
 
         private string _description;
 
@@ -89,34 +75,44 @@ namespace WarlordsMapEditor
             set { _details2 = value; }
         }
 
-        private List<Sprite> sprites;
+        private MapObjects mapObjects;
         private Configs configs;
 
-        public SelectedBrush(List<Sprite> sprites, Configs configs)
+        public SelectedBrush(MapObjects mapObjects, Configs configs)
         {
-            this.sprites = sprites;
+            this.mapObjects = mapObjects;
             this.configs = configs;
             details = new ObservableCollection<string>();
             details2 = new ObservableCollection<string>();
         }
 
-        public void update()
+        public void change(Brush brush)
         {
             clear();
-            if (Board.selectedSetIndex != -1 && Board.selectedItemIndex != -1)
+            category = brush.category;
+            setIndex = brush.setIndex;
+            setName = brush.setName;
+            itemIndex = brush.itemIndex;
+            bitmap = brush.bitmap;
+            image = brush.image;
+            update();
+        }
+
+        public void update()
+        {
+            if (category != "Delete")
             {
-                image = sprites[(int)Board.selectedSetIndex].imagesList[(int)Board.selectedItemIndex];
-                description = sprites[(int)Board.selectedSetIndex].category + ": " + sprites[(int)Board.selectedSetIndex].setName + " - " + (int)Board.selectedItemIndex;
-                if (sprites[(int)Board.selectedSetIndex].setName == "Castle")
+                description = category + ": " + setName + " - " + itemIndex;
+                if (setName == "Castles")
                 {
-                    additionalInfo = "Fraction: " + configs.fractions[(int)Board.selectedItemIndex].name;
+                    additionalInfo = "Fraction: " + configs.fractions[itemIndex].name;
                     additionalInfo2 = "Buildings:";
-                    foreach (string building in configs.fractions[(int)Board.selectedItemIndex].buildings)
+                    foreach (string building in configs.fractions[itemIndex].buildings)
                     {
                         details2.Add(building);
                     }
                 }
-                int ruinIndex = configs.ruinsData.FindIndex(r => r.name == sprites[(int)Board.selectedSetIndex].setName.ToLower());
+                int ruinIndex = configs.ruinsData.FindIndex(r => r.name == setName.ToLower());
                 if (ruinIndex != -1)
                 {
                     additionalInfo = "Enemy Units:";
@@ -147,7 +143,6 @@ namespace WarlordsMapEditor
                     image = temp_img;
                 }
                 description = "Delete";
-                additionalInfo = "Click on roads or buildings to delete them";
             }
 
 
@@ -161,14 +156,6 @@ namespace WarlordsMapEditor
             additionalInfo2 = null;
             description = null;
             image = null;
-        }
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void RaisePropertyChaged(string info)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(info));
         }
     }
 }

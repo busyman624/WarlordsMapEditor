@@ -38,7 +38,7 @@ namespace WarlordsMapEditor
         }
 
 
-        public BrushCategories(List<Sprite> spriteList, Configs configs)
+        public BrushCategories(MapObjects mapObjects, Configs configs)
         {
             _brushCategoryImages = new List<BitmapImage>();
             _terrainCarousels  = new ObservableCollection<Carousel>();
@@ -46,43 +46,39 @@ namespace WarlordsMapEditor
             _buildingCarousels = new ObservableCollection<Carousel>();
 
             _visibleCarousels = new ObservableCollection<Carousel>();
-            selectedBrush = new SelectedBrush(spriteList, configs);
+            selectedBrush = new SelectedBrush(mapObjects, configs);
 
-            updateCategories(spriteList, configs);
+            updateCategories(mapObjects, configs);
         }
 
-        public void updateCategories(List<Sprite> spriteList, Configs configs)
+        public void updateCategories(MapObjects mapObjects, Configs configs)
         {
             _brushCategoryImages.Clear();
             _terrainCarousels.Clear();
             _roadCarousels.Clear();
             _buildingCarousels.Clear();
             _visibleCarousels.Clear();
-            Console.WriteLine(selectedBrush.GetHashCode().ToString());
 
-            foreach (Sprite sprite in spriteList)
+            foreach(Sprite sprite in mapObjects.terrains)
             {
-                switch (sprite.category)
-                {
-                    case "Terrain": _terrainCarousels.Add(new Carousel(sprite, sprite.imagesList.Count, selectedBrush)); break;
-                    case "Road": _roadCarousels.Add(new Carousel(sprite, sprite.imagesList.Count, selectedBrush)); break;
-                    case "Building":
-                        {
-                            if (sprite.setName == "Castle")
-                            {
-                                _buildingCarousels.Add(new Carousel(sprite, configs.fractions.Count, selectedBrush));
-                            }
-                            break;
-                        }
+                _terrainCarousels.Add(new Carousel(sprite, sprite.imagesList.Count, selectedBrush));
+            }
 
-                }
+            foreach(Sprite sprite in mapObjects.roads)
+            {
+                _roadCarousels.Add(new Carousel(sprite, sprite.imagesList.Count, selectedBrush));
+            }
 
+            foreach(Sprite sprite in mapObjects.castles)
+            {
+                _buildingCarousels.Add(new Carousel(sprite, configs.fractions.Count, selectedBrush));
             }
 
             foreach (RuinsData ruin in configs.ruinsData)
             {
-                _buildingCarousels.Add(new Carousel(spriteList.Find(s => s.setName.ToLower() == ruin.name.ToLower()), ruin.sprites.Count,selectedBrush));
+                _buildingCarousels.Add(new Carousel(mapObjects.ruins.Find(s => s.setName.ToLower() == ruin.name.ToLower()), ruin.sprites.Count, selectedBrush));
             }
+
 
             _brushCategoryImages.Add(_terrainCarousels[0].brushList[0].image);
             _brushCategoryImages.Add(_roadCarousels[0].brushList[0].image);

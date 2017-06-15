@@ -20,7 +20,7 @@ namespace WarlordsMapEditor
 
         public const UInt32 headerMagic = 0x50414d58; // "XMAP"
 
-        public Map CreateNewMap(List<Sprite> sprites, MiniMap miniMap, Configs configs, MapLoadMode mode = MapLoadMode.All)
+        public Map CreateNewMap(MapObjects mapObjects, MiniMap miniMap, SelectedBrush selectedBrush, List<MapItem> changedItems, Configs configs, MapLoadMode mode = MapLoadMode.All)
         {
             Map map = new Map();
            
@@ -66,19 +66,27 @@ namespace WarlordsMapEditor
             int palletteSize = 0;            
             List<string> palette = new List<string>();
 
-            for (int i = 0; i < sprites.Count; i++)
+            foreach (Sprite sprite in mapObjects.terrains)
             {
-                string name = sprites[i].setName;
-                if (name != "Ruins" && name != "Castle" && name != "Temples")
+                for (int j = 0; j < sprite.imagesList.Count; j++)
                 {
-                    for (int j = 0; j < sprites[i].imagesList.Count; j++)
-                    {
-                        name = Char.ToLowerInvariant(name[0]) + name.Substring(1);
-                        string spriteName = name + "_" + j;
-                        //palette.Add(spriteName);
-                        map.prefabPath.Add(spriteName);
-                        palletteSize++;
-                    }
+                    sprite.setName = Char.ToLowerInvariant(sprite.setName[0]) + sprite.setName.Substring(1);
+                    string spriteName = sprite.setName + "_" + j;
+                    //palette.Add(spriteName);
+                    map.prefabPath.Add(spriteName);
+                    palletteSize++;
+                }
+            }
+
+            foreach (Sprite sprite in mapObjects.roads)
+            {
+                for (int j = 0; j < sprite.imagesList.Count; j++)
+                {
+                    sprite.setName = Char.ToLowerInvariant(sprite.setName[0]) + sprite.setName.Substring(1);
+                    string spriteName = sprite.setName + "_" + j;
+                    //palette.Add(spriteName);
+                    map.prefabPath.Add(spriteName);
+                    palletteSize++;
                 }
             }
             map.paletteSize = palletteSize;
@@ -88,7 +96,7 @@ namespace WarlordsMapEditor
             {
                 for (int j = 0; j < map.columns; j++)
                 {
-                    map.tiles.Add(new MapItem(1, 1, sprites, j, i, 0, miniMap)); 
+                    map.tiles.Add(new MapItem(1, 1, mapObjects.terrains[1].setName, mapObjects.terrains[1].category, mapObjects , j, i, miniMap, selectedBrush, changedItems)); 
                 }
             }
 
@@ -98,7 +106,7 @@ namespace WarlordsMapEditor
             return map; 
         }
 
-        public Map LoadMapFromBytes(List<Sprite> sprites, string path, MiniMap miniMap, Configs configs, MapLoadMode mode = MapLoadMode.All)
+        public Map LoadMapFromBytes(MapObjects mapObjects, string path, MiniMap miniMap, SelectedBrush selectedBrush, List<MapItem> changedItems, Configs configs, MapLoadMode mode = MapLoadMode.All)
         {
             byte[] serializedMap = File.ReadAllBytes(path);
 
@@ -185,8 +193,7 @@ namespace WarlordsMapEditor
                             case "grass":
                                 {
                                     setIndex=1;
-                                    String sss = palette[prefabId].Split('_')[1];
-                                    itemIndex = Int16.Parse(sss);
+                                    itemIndex = Int16.Parse(palette[prefabId].Split('_')[1]);
                                     break;
                                 }
                             case "hills":
@@ -226,7 +233,7 @@ namespace WarlordsMapEditor
                                     break;
                                 }
                         }
-                        map.tiles.Add(new MapItem(itemIndex, setIndex, sprites, j, i, prefabId, miniMap));
+                        map.tiles.Add(new MapItem(itemIndex, setIndex, mapObjects.terrains[setIndex].setName, mapObjects.terrains[setIndex].category, mapObjects, j, i, miniMap, selectedBrush, changedItems));
                     }
                 }
 
@@ -243,14 +250,16 @@ namespace WarlordsMapEditor
                     {
                         case "roads":
                             {
-                                map.tiles[tileID].objectSet = 6;
+                                map.tiles[tileID].objectCategory = "Roads";
+                                map.tiles[tileID].objectSet = 0;
                                 map.tiles[tileID].objectIndex = Int16.Parse(palette[map.overlayTilesPrefabId[i]].Split('_')[1]);
                                 map.tiles[tileID].combineImages();
                                 break;
                             }
                         case "bridges":
                             {
-                                map.tiles[tileID].objectSet = 7;
+                                map.tiles[tileID].objectCategory = "Roads";
+                                map.tiles[tileID].objectSet = 1;
                                 map.tiles[tileID].objectIndex = Int16.Parse(palette[map.overlayTilesPrefabId[i]].Split('_')[1]);
                                 map.tiles[tileID].combineImages();
                                 break;
@@ -292,7 +301,8 @@ namespace WarlordsMapEditor
 
                     int tileID = map.tiles.FindIndex(t => (t.Xcoordinate == map.castles[i].x) && (t.Ycoordinate == map.castles[i].y));
                     int objectIndex = configs.fractions.FindIndex(o => o.name == map.castles[i].prefabName);
-                    map.tiles[tileID].objectSet = 8;
+                    map.tiles[tileID].objectCategory = "Castles";
+                    map.tiles[tileID].objectSet = 0;
                     map.tiles[tileID].objectIndex = objectIndex;
                     map.tiles[tileID].castleName = map.castles[i].castleName;
                     map.tiles[tileID].castleOwner = map.castles[i].owner;
@@ -313,7 +323,8 @@ namespace WarlordsMapEditor
                     int tileID = map.tiles.FindIndex(t => (t.Xcoordinate == map.ruins[i].x) && (t.Ycoordinate == map.ruins[i].y));
                     int objectSet = configs.ruinsData.FindIndex(o => o.name == map.ruins[i].prefabName);
 
-                    map.tiles[tileID].objectSet = objectSet+9;
+                    map.tiles[tileID].objectCategory = "Ruins";
+                    map.tiles[tileID].objectSet = objectSet;
                     map.tiles[tileID].objectIndex = new Random().Next(configs.ruinsData[objectSet].sprites.Count);
                     map.tiles[tileID].combineImages();
                 }
@@ -479,16 +490,6 @@ namespace WarlordsMapEditor
                                     tilePalleteName += "water_" + map.tiles[i].itemIndex.ToString();
                                     break;
                                 }
-                            case 6:
-                                {
-                                    tilePalleteName += "roads_" + map.tiles[i].itemIndex.ToString();
-                                    break;
-                                }
-                            case 7:
-                                {
-                                    tilePalleteName += "bridges_" + map.tiles[i].itemIndex.ToString();
-                                    break;
-                                }
                         }
 
                         for (int j = 0; j < map.prefabPath.Count; j++) //find tile name in pallete
@@ -512,39 +513,47 @@ namespace WarlordsMapEditor
 
                     foreach (MapItem tile in overlayedTiles)
                     {
-                        switch (tile.objectSet)
+                        switch (tile.objectCategory)
                         {
-                            case 6:
+                            case "Roads":
                                 {
-                                    map.overlayTilesCount++;
-                                    map.overlayTilesX.Add(tile.Xcoordinate);
-                                    map.overlayTilesY.Add(tile.Ycoordinate);
-                                    string tilePalleteName;
-                                    tilePalleteName = "roads_" + tile.objectIndex.ToString();
-                                    map.overlayTilesPrefabId.Add(map.prefabPath.FindIndex(p => p == tilePalleteName));
+                                    switch (tile.objectSet)
+                                    {
+                                        case 0:
+                                            {
+                                                map.overlayTilesCount++;
+                                                map.overlayTilesX.Add(tile.Xcoordinate);
+                                                map.overlayTilesY.Add(tile.Ycoordinate);
+                                                string tilePalleteName;
+                                                tilePalleteName = "roads_" + tile.objectIndex.ToString();
+                                                map.overlayTilesPrefabId.Add(map.prefabPath.FindIndex(p => p == tilePalleteName));
+                                                break;
+                                            }
+                                        case 1:
+                                            {
+                                                map.overlayTilesCount++;
+                                                map.overlayTilesX.Add(tile.Xcoordinate);
+                                                map.overlayTilesY.Add(tile.Ycoordinate);
+                                                string tilePalleteName;
+                                                tilePalleteName = "bridges_" + tile.objectIndex.ToString();
+                                                map.overlayTilesPrefabId.Add(map.prefabPath.FindIndex(p => p == tilePalleteName));
+                                                break;
+                                            }
+                                    }
                                     break;
                                 }
-                            case 7:
+                            case "Castles":
                                 {
-                                    map.overlayTilesCount++;
-                                    map.overlayTilesX.Add(tile.Xcoordinate);
-                                    map.overlayTilesY.Add(tile.Ycoordinate);
-                                    string tilePalleteName;
-                                    tilePalleteName = "bridges_" + tile.objectIndex.ToString();
-                                    map.overlayTilesPrefabId.Add(map.prefabPath.FindIndex(p => p == tilePalleteName));
+                                    map.castles.Add(new CastleInfo(configs.fractions[(int)tile.objectIndex].name, tile.castleName, tile.Xcoordinate, tile.Ycoordinate, (int)tile.castleOwner, false, new HashSet<string>(), " ", 0, " ", new Queue<string>()));
                                     break;
                                 }
-                            case 8:
+                            case "Ruins":
                                 {
-                                    map.castles.Add(new CastleInfo(configs.fractions[(int)tile.objectIndex].name, tile.castleName, tile.Xcoordinate, tile.Ycoordinate, (int)tile.castleOwner, false, new HashSet<string>(), " ", 0, " ", new Queue<string>() ));
-                                    break;
-                                }
-                            case 9: case 10:
-                                {
-                                    map.ruins.Add(new RuinsInfo(configs.ruinsData[(int)tile.objectSet - 9].name, tile.Xcoordinate, tile.Ycoordinate, false));
+                                    map.ruins.Add(new RuinsInfo(configs.ruinsData[(int)tile.objectSet].name, tile.Xcoordinate, tile.Ycoordinate, false));
                                     break;
                                 }
                         }
+                        
                     }
 
                     // Overlay tiles
