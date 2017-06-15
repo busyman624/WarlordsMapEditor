@@ -82,11 +82,11 @@ namespace WarlordsMapEditor
             set { _details = value; }
         }
 
-        private ObservableCollection<string> _rewards;
-        public ObservableCollection<string> rewards
+        private ObservableCollection<string> _details2;
+        public ObservableCollection<string> details2
         {
-            get { return _rewards; }
-            set { _rewards = value; }
+            get { return _details2; }
+            set { _details2 = value; }
         }
 
         private List<Sprite> sprites;
@@ -97,7 +97,7 @@ namespace WarlordsMapEditor
             this.sprites = sprites;
             this.configs = configs;
             details = new ObservableCollection<string>();
-            rewards = new ObservableCollection<string>();
+            details2 = new ObservableCollection<string>();
         }
 
         public void update()
@@ -109,10 +109,11 @@ namespace WarlordsMapEditor
                 description = sprites[(int)Board.selectedSetIndex].category + ": " + sprites[(int)Board.selectedSetIndex].setName + " - " + (int)Board.selectedItemIndex;
                 if (sprites[(int)Board.selectedSetIndex].setName == "Castle")
                 {
-                    additionalInfo = "Buildings:";
+                    additionalInfo = "Fraction: " + configs.fractions[(int)Board.selectedItemIndex].name;
+                    additionalInfo2 = "Buildings:";
                     foreach (string building in configs.fractions[(int)Board.selectedItemIndex].buildings)
                     {
-                        details.Add(building);
+                        details2.Add(building);
                     }
                 }
                 int ruinIndex = configs.ruinsData.FindIndex(r => r.name == sprites[(int)Board.selectedSetIndex].setName.ToLower());
@@ -126,7 +127,7 @@ namespace WarlordsMapEditor
                     }
                     foreach (Resource resource in configs.ruinsData[ruinIndex].resourceBonus)
                     {
-                        rewards.Add(resource.count + " " + resource.name);
+                        details2.Add(resource.count + " " + resource.name);
                     }
                 }
             }
@@ -155,7 +156,7 @@ namespace WarlordsMapEditor
         public void clear()
         {
             details.Clear();
-            rewards.Clear();
+            details2.Clear();
             additionalInfo = null;
             additionalInfo2 = null;
             description = null;

@@ -74,32 +74,40 @@
                                 <Image  Source="{Binding brushCategories.selectedBrush.image  , TargetNullValue={x:Null}}" Stretch="Fill" Height="40" Width="40"  Margin="5,5,5,5" />
                                 <TextBlock VerticalAlignment="Center" Text="{Binding brushCategories.selectedBrush.description}" FontSize="10" FontWeight="Bold" Margin="5,0,5,0"/>
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock VerticalAlignment="Center" Text="{Binding brushCategories.selectedBrush.additionalInfo}" FontSize="10" FontWeight="Bold" Margin="5,0,5,0"/>
-                                <ComboBox ItemsSource="{Binding brushCategories.selectedBrush.details}" Margin="5,0,5,0">
-                                    <ComboBox.Style>
-                                        <Style TargetType="ComboBox" >
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Path=Items.Count, RelativeSource={RelativeSource Self}}"  Value="0" >
-                                                    <Setter Property="Width" Value="0" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </ComboBox.Style>
-                                </ComboBox>
-                                <TextBlock VerticalAlignment="Center" Text="{Binding brushCategories.selectedBrush.additionalInfo2}" FontSize="10" FontWeight="Bold" Margin="5,0,5,0"/>
-                                <ComboBox ItemsSource="{Binding brushCategories.selectedBrush.rewards}" Margin="5,0,5,0">
-                                    <ComboBox.Style>
-                                        <Style TargetType="ComboBox" >
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Path=Items.Count, RelativeSource={RelativeSource Self}}"  Value="0" >
-                                                    <Setter Property="Width" Value="0" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </ComboBox.Style>
-                                </ComboBox>
-                            </StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding brushCategories.selectedBrush.additionalInfo}" FontSize="10" FontWeight="Bold" Margin="5,0,5,0"/>
+                                    <ComboBox ItemsSource="{Binding brushCategories.selectedBrush.details}" Margin="5,0,5,0">
+                                        <ComboBox.Style>
+                                            <Style TargetType="ComboBox" >
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Path=Items.Count, RelativeSource={RelativeSource Self}}"  Value="0" >
+                                                        <Setter Property="Width" Value="0" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ComboBox.Style>
+                                    </ComboBox>
+                                </StackPanel>
+                                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding brushCategories.selectedBrush.additionalInfo2}" FontSize="10" FontWeight="Bold" Margin="5,0,5,0"/>
+                                    <ComboBox ItemsSource="{Binding brushCategories.selectedBrush.details2}" Margin="5,0,5,0">
+                                        <ComboBox.Style>
+                                            <Style TargetType="ComboBox" >
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Path=Items.Count, RelativeSource={RelativeSource Self}}"  Value="0" >
+                                                        <Setter Property="Width" Value="0" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ComboBox.Style>
+                                    </ComboBox>
+                                </StackPanel>
+                            </Grid>
                         </StackPanel>
                     </StackPanel>
                 </Border>
@@ -130,59 +138,61 @@
                     <Button VerticalAlignment="Center" Command="{Binding MapNavigateRight}" FontFamily="Marlett" FontSize="20" Content="4" Margin="5,5,5,5"/>
                 </StackPanel>
             </DockPanel>
-            <Grid Grid.Row="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*" />
-                    <RowDefinition Height="3*" />
-                </Grid.RowDefinitions>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                    <StackPanel Margin="50,0,50,0">
-                        <TextBlock Text="Terrain" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"/>
-                        <Button Command="{Binding brushCategories.terrainCategory}" Height="40" Width="40" >
-                            <Image Source="{Binding brushCategories.brushCategoryImages[0]}" Stretch="Fill"></Image>
-                        </Button>
+            <Border Grid.Row="1" BorderThickness="2" BorderBrush="Black" Margin="4,4,4,4">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="3*" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                        <StackPanel Margin="50,0,50,0">
+                            <TextBlock Text="Terrain" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            <Button Command="{Binding brushCategories.terrainCategory}" Height="40" Width="40" >
+                                <Image Source="{Binding brushCategories.brushCategoryImages[0]}" Stretch="Fill"></Image>
+                            </Button>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="Road" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            <Button Command="{Binding brushCategories.roadCategory}" Height="40" Width="40" >
+                                <Image Source="{Binding brushCategories.brushCategoryImages[1]}" Stretch="Fill"></Image>
+                            </Button>
+                        </StackPanel>
+                        <StackPanel Margin="50,0,50,0">
+                            <TextBlock Text="Building" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            <Button Command="{Binding brushCategories.buildingCategory}" Height="40" Width="40" >
+                                <Image Source="{Binding brushCategories.brushCategoryImages[2]}" Stretch="Fill"></Image>
+                            </Button>
+                        </StackPanel>
                     </StackPanel>
-                    <StackPanel>
-                        <TextBlock Text="Road" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"/>
-                        <Button Command="{Binding brushCategories.roadCategory}" Height="40" Width="40" >
-                            <Image Source="{Binding brushCategories.brushCategoryImages[1]}" Stretch="Fill"></Image>
-                        </Button>
-                    </StackPanel>
-                    <StackPanel Margin="50,0,50,0">
-                        <TextBlock Text="Building" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"/>
-                        <Button Command="{Binding brushCategories.buildingCategory}" Height="40" Width="40" >
-                            <Image Source="{Binding brushCategories.brushCategoryImages[2]}" Stretch="Fill"></Image>
-                        </Button>
-                    </StackPanel>
-                </StackPanel>
-                <ListView Grid.Row="1" ItemsSource="{Binding brushCategories.visibleCarousels}" ScrollViewer.CanContentScroll="False" HorizontalAlignment="Center" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" >
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel HorizontalAlignment="Center">
-                                <TextBlock Text="{Binding setName}" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"/>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <Button Command="{Binding CarouselLeftArrowClick}" FontFamily="Marlett" FontSize="20" Content="3" VerticalAlignment="Center"/>
-                                    <ItemsControl ItemsSource="{Binding brushList}">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <Button Command="{Binding ItemClick}" Height="40" Width="40" >
-                                                    <Image Source="{Binding image}" Stretch="Fill"></Image>
-                                                </Button>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                        <ItemsControl.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <StackPanel Orientation="Horizontal" />
-                                            </ItemsPanelTemplate>
-                                        </ItemsControl.ItemsPanel>
-                                    </ItemsControl>
-                                    <Button Command="{Binding CarouselRightArrowClick}" FontFamily="Marlett" FontSize="20" Content="4" VerticalAlignment="Center"/>
+                    <ListView Grid.Row="1" ItemsSource="{Binding brushCategories.visibleCarousels}" ScrollViewer.CanContentScroll="False" HorizontalAlignment="Center" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel HorizontalAlignment="Center">
+                                    <TextBlock Text="{Binding setName}" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Button Command="{Binding CarouselLeftArrowClick}" FontFamily="Marlett" FontSize="20" Content="3" VerticalAlignment="Center"/>
+                                        <ItemsControl ItemsSource="{Binding brushList}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Button Command="{Binding ItemClick}" Height="40" Width="40" >
+                                                        <Image Source="{Binding image}" Stretch="Fill"></Image>
+                                                    </Button>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <StackPanel Orientation="Horizontal" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                        </ItemsControl>
+                                        <Button Command="{Binding CarouselRightArrowClick}" FontFamily="Marlett" FontSize="20" Content="4" VerticalAlignment="Center"/>
+                                    </StackPanel>
                                 </StackPanel>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </Border>
         </Grid>
     </Grid>
 </Window>
