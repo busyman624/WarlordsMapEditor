@@ -37,4 +37,22 @@
 			</Resource>
 		</resourceBonus>
 	</Ruins>
+	<Ruins name="dupas">
+		<sprites>
+			<string>ruin_0</string>
+			<string>ruin_1</string>
+			<string>ruin_2</string>
+		</sprites>
+		<action>UnitsBattle</action>
+		<enemyUnits>
+			<string>Axeman</string>
+		</enemyUnits>
+		<resourceBonus>
+			<Resource>
+				<name>gold</name>
+				<count>6666666666</count>
+			</Resource>
+		</resourceBonus>
+	</Ruins>
+
 </RuinsDataList>

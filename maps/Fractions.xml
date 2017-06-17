@@ -19,23 +19,5 @@
         <building>Dragon Cliffs</building>
       </buildings>
     </Fraction>
-	<Fraction name="castles_2">
-      <buildings>
-        <building>Dwarf Cottage</building>
-        <building>Enchanted Spring</building>
-        <building>Wizard Tower</building>
-        <building>Unicorn Glade</building>
-        <building>Dragon Cliffs</building>
-      </buildings>
-    </Fraction>
-		<Fraction name="castles_3">
-      <buildings>
-        <building>Dwarf Cottage</building>
-        <building>Enchanted Spring</building>
-        <building>Wizard Tower</building>
-        <building>Unicorn Glade</building>
-        <building>Dragon Cliffs</building>
-      </buildings>
-    </Fraction>
   </fractions>
 </FractionList>
