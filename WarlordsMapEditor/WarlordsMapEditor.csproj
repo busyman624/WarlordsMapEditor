@@ -57,6 +57,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddNewBrushes.xaml.cs">
+      <DependentUpon>AddNewBrushes.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Classes\BrushCategories.cs" />
     <Compile Include="Classes\Board.cs" />
     <Compile Include="Classes\FileMapProvider.cs" />
@@ -73,6 +76,10 @@
     <Compile Include="Classes\ShitClasses\UnitInfo.cs" />
     <Compile Include="Classes\Sprite.cs" />
     <Compile Include="Classes\SelectedBrush.cs" />
+    <Page Include="AddNewBrushes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CastleDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

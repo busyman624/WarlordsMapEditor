@@ -21,7 +21,13 @@ namespace WarlordsMapEditor
             ruinsData = DeserializeDefaultConfig<RuinsDataList>(Resources.Ruins).ruinsData;
         }
 
-        public void SetRuinsConfig()
+        public Configs(int? empty)
+        {
+            fractions = null;
+            ruinsData = null;
+        }
+
+        public string SetRuinsConfig()
         {
 
             Microsoft.Win32.OpenFileDialog ruinsXML = new Microsoft.Win32.OpenFileDialog();
@@ -37,11 +43,13 @@ namespace WarlordsMapEditor
             {
                 string filename = ruinsXML.FileName;
                 ruinsData = DeserializeConfig<RuinsDataList>(filename).ruinsData;
+                return ruinsXML.SafeFileName;
             }
+            else return null;
 
         }
 
-        public void SetFractionsConfig()
+        public string SetFractionsConfig()
         {
             Microsoft.Win32.OpenFileDialog fractionsXML = new Microsoft.Win32.OpenFileDialog();
 
@@ -56,7 +64,9 @@ namespace WarlordsMapEditor
             {
                 string filename = fractionsXML.FileName;
                 fractions = DeserializeConfig<FractionList>(filename).fractions;
+                return fractionsXML.SafeFileName;
             }
+            else return null;
 
         }
 

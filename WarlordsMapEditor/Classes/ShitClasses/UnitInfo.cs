@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WarlordsMapEditor.Classes.ShitClasses
 {
-    class UnitInfo
+    public class UnitInfo
     {
         public string unitName;
         public string unitDisplayName;
@@ -30,7 +30,7 @@ namespace WarlordsMapEditor.Classes.ShitClasses
         }
     }
 
-    class UnitContainerInfo
+    public class UnitContainerInfo
     {
         public int x;
         public int y;

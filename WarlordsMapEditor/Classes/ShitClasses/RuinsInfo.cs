@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WarlordsMapEditor.Classes.ShitClasses
 {
-    class RuinsInfo
+    public class RuinsInfo
     {
         public string prefabName;
         public int x;

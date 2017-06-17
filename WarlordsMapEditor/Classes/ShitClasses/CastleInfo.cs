@@ -2,7 +2,7 @@
 
 namespace WarlordsMapEditor.Classes.ShitClasses
 {
-    class CastleInfo
+    public class CastleInfo
     {
         public string prefabName;
         public string castleName;

@@ -12,6 +12,10 @@ namespace WarlordsMapEditor
 {
     public class BrushCategories
     {
+        public Map map;
+        public MapObjects mapObjects;
+        public Configs configs;
+
         private ObservableCollection<Carousel> _terrainCarousels;
         private ObservableCollection<Carousel> _roadCarousels;
         private ObservableCollection<Carousel> _buildingCarousels;
@@ -38,7 +42,7 @@ namespace WarlordsMapEditor
         }
 
 
-        public BrushCategories(MapObjects mapObjects, Configs configs)
+        public BrushCategories(Map map, MapObjects mapObjects, Configs configs)
         {
             _brushCategoryImages = new List<BitmapImage>();
             _terrainCarousels  = new ObservableCollection<Carousel>();
@@ -48,11 +52,16 @@ namespace WarlordsMapEditor
             _visibleCarousels = new ObservableCollection<Carousel>();
             selectedBrush = new SelectedBrush(mapObjects, configs);
 
-            updateCategories(mapObjects, configs);
+            this.map = map;
+            this.mapObjects = mapObjects;
+            this.configs = configs;
+
+            updateCategories(map);
         }
 
-        public void updateCategories(MapObjects mapObjects, Configs configs)
+        public void updateCategories(Map map)
         {
+            this.map = map;
             _brushCategoryImages.Clear();
             _terrainCarousels.Clear();
             _roadCarousels.Clear();
@@ -69,10 +78,7 @@ namespace WarlordsMapEditor
                 _roadCarousels.Add(new Carousel(sprite, sprite.imagesList.Count, selectedBrush));
             }
 
-            foreach(Sprite sprite in mapObjects.castles)
-            {
-                _buildingCarousels.Add(new Carousel(sprite, configs.fractions.Count, selectedBrush));
-            }
+                _buildingCarousels.Add(new Carousel(mapObjects.castles, configs.fractions.Count, selectedBrush));
 
             foreach (RuinsData ruin in configs.ruinsData)
             {
@@ -83,6 +89,8 @@ namespace WarlordsMapEditor
             _brushCategoryImages.Add(_terrainCarousels[0].brushList[0].image);
             _brushCategoryImages.Add(_roadCarousels[0].brushList[0].image);
             _brushCategoryImages.Add(_buildingCarousels[0].brushList[0].image);
+
+            if (map != null) map.UpdatePallete(mapObjects);
         }
 
         public void terrainCategoryClick()
@@ -104,9 +112,17 @@ namespace WarlordsMapEditor
                 _visibleCarousels.Add(carousel);
         }
 
+        public void addNewBrushesClick()
+        {
+            var dialog = new AddNewBrushes(mapObjects, configs);
+            dialog.showDialog();
+            updateCategories(map);
+        }
+
         private ICommand _terrainCategory;
         private ICommand _roadCategory;
         private ICommand _buildingCategory;
+        private ICommand _addNewBrushes;
 
         public ICommand terrainCategory
         {
@@ -150,6 +166,21 @@ namespace WarlordsMapEditor
                     );
                 }
                 return _buildingCategory;
+            }
+        }
+
+        public ICommand addNewBrushes
+        {
+            get
+            {
+                if (_addNewBrushes == null)
+                {
+                    _addNewBrushes = new RelayCommand(
+                        param => addNewBrushesClick(),
+                        param => true
+                    );
+                }
+                return _addNewBrushes;
             }
         }
 

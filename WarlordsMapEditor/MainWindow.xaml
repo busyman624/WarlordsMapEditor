@@ -145,7 +145,7 @@
                         <RowDefinition Height="3*" />
                     </Grid.RowDefinitions>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                        <StackPanel Margin="50,0,50,0">
+                        <StackPanel Margin="25,0,25,0">
                             <TextBlock Text="Terrain" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"/>
                             <Button Command="{Binding brushCategories.terrainCategory}" Height="40" Width="40" >
                                 <Image Source="{Binding brushCategories.brushCategoryImages[0]}" Stretch="Fill"></Image>
@@ -157,12 +157,13 @@
                                 <Image Source="{Binding brushCategories.brushCategoryImages[1]}" Stretch="Fill"></Image>
                             </Button>
                         </StackPanel>
-                        <StackPanel Margin="50,0,50,0">
+                        <StackPanel Margin="23,0,0,0">
                             <TextBlock Text="Building" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center"/>
                             <Button Command="{Binding brushCategories.buildingCategory}" Height="40" Width="40" >
                                 <Image Source="{Binding brushCategories.brushCategoryImages[2]}" Stretch="Fill"></Image>
                             </Button>
                         </StackPanel>
+                        <Button Command="{Binding brushCategories.addNewBrushes}" Content="Add" FontWeight="Bold" Height="40" Width="40" Margin="25,0,25,0" />
                     </StackPanel>
                     <ListView Grid.Row="1" ItemsSource="{Binding brushCategories.visibleCarousels}" ScrollViewer.CanContentScroll="False" HorizontalAlignment="Center" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" >
                         <ListView.ItemTemplate>

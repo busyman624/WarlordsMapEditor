@@ -172,6 +172,8 @@ namespace WarlordsMapEditor
                     palette.Add(prefabPath);
                 }
 
+                if (!map.validate(mapObjects, configs)) return null;
+
                 // Tiles
                 for (int i = 0; i < map.rows; i++)
                 {
@@ -182,57 +184,9 @@ namespace WarlordsMapEditor
                         int itemIndex=0;
                         if (prefabId < 0 || prefabId >= map.paletteSize)
                             throw new IOException("Invalid prefab ID");
-                        switch (palette[prefabId].Split('_')[0])
-                        {
-                            case "forest":
-                                {
-                                    setIndex = 0;
-                                    itemIndex = Int16.Parse(palette[prefabId].Split('_')[1]);
-                                    break;
-                                }
-                            case "grass":
-                                {
-                                    setIndex=1;
-                                    itemIndex = Int16.Parse(palette[prefabId].Split('_')[1]);
-                                    break;
-                                }
-                            case "hills":
-                                {
-                                    setIndex = 2;
-                                    itemIndex = Int16.Parse(palette[prefabId].Split('_')[1]);
-                                    break;
-                                }
-                            case "mountains":
-                                {
-                                    setIndex = 3;
-                                    itemIndex = Int16.Parse(palette[prefabId].Split('_')[1]);
-                                    break;
-                                }
-                            case "swamp":
-                                {
-                                    setIndex = 4;
-                                    itemIndex = Int16.Parse(palette[prefabId].Split('_')[1]);
-                                    break;
-                                }
-                            case "water":
-                                {
-                                    setIndex = 5;
-                                    itemIndex = Int16.Parse(palette[prefabId].Split('_')[1]);
-                                    break;
-                                }
-                            case "roads":
-                                {
-                                    setIndex = 6;
-                                    itemIndex = Int16.Parse(palette[prefabId].Split('_')[1]);
-                                    break;
-                                }
-                            case "bridges":
-                                {
-                                    setIndex = 7;
-                                    itemIndex = Int16.Parse(palette[prefabId].Split('_')[1]);
-                                    break;
-                                }
-                        }
+                        setIndex = mapObjects.terrains.FindIndex(t => t.setName.ToLower() == palette[prefabId].Split('_')[0]);
+                        itemIndex = Int16.Parse(palette[prefabId].Split('_')[1]);
+                        
                         map.tiles.Add(new MapItem(itemIndex, setIndex, mapObjects.terrains[setIndex].setName, mapObjects.terrains[setIndex].category, mapObjects, j, i, miniMap, selectedBrush, changedItems));
                     }
                 }
@@ -455,42 +409,7 @@ namespace WarlordsMapEditor
                     // Tiles
                     for (int i = 0; i < map.tiles.Count; i++) // map.tiles.Count should be equeal rows * columns
                     {
-                        // for (int j = 0; j < columns; j++)
-                        // {
-                        string tilePalleteName = "";
-                        switch(map.tiles[i].setIndex)
-                        {
-                            case 0:
-                                {
-                                    tilePalleteName += "forest_" + map.tiles[i].itemIndex.ToString();               
-                                    break;
-                                }
-                            case 1:
-                                {
-                                    tilePalleteName += "grass_" + map.tiles[i].itemIndex.ToString();
-                                    break;
-                                }
-                            case 2:
-                                {
-                                    tilePalleteName += "hills_" + map.tiles[i].itemIndex.ToString();
-                                    break;
-                                }
-                            case 3:
-                                {
-                                    tilePalleteName += "mountains_" + map.tiles[i].itemIndex.ToString();
-                                    break;
-                                }
-                            case 4:
-                                {
-                                    tilePalleteName += "swamp_" + map.tiles[i].itemIndex.ToString();
-                                    break;
-                                }
-                            case 5:
-                                {
-                                    tilePalleteName += "water_" + map.tiles[i].itemIndex.ToString();
-                                    break;
-                                }
-                        }
+                        string tilePalleteName =map.tiles[i].setName.ToLower() + "_" + map.tiles[i].itemIndex;
 
                         for (int j = 0; j < map.prefabPath.Count; j++) //find tile name in pallete
                         {

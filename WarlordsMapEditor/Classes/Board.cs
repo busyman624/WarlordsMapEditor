@@ -18,7 +18,7 @@ namespace WarlordsMapEditor
         private string _mapName;
         private string _mapDescription;
         private ObservableCollection<MapItem> _boardItems = new ObservableCollection<MapItem>();
-        private Map map;
+        public Map map;
         private MiniMap _miniMap;
         private MapObjects mapObjects;
         private BrushCategories _brushCategories;
@@ -105,7 +105,7 @@ namespace WarlordsMapEditor
             columns = 10;
             rows = 10;
 
-            brushCategories = new BrushCategories(mapObjects, configs);
+            brushCategories = new BrushCategories(map, mapObjects, configs);
             miniMap = new MiniMap();
             _brushIsClicked = false;
         }
@@ -133,7 +133,7 @@ namespace WarlordsMapEditor
                 changeConfigs();
                 string filename = dlg.FileName;
                 map = mapProvider.LoadMapFromBytes(mapObjects, filename, miniMap, brushCategories.selectedBrush, changedItems, configs);
-                refresh();
+                if (map != null) refresh();
             }
         }
 
@@ -159,7 +159,6 @@ namespace WarlordsMapEditor
         {
             configs.SetFractionsConfig();
             configs.SetRuinsConfig();
-            brushCategories.updateCategories(mapObjects, configs);
         }
 
         public void refresh()
@@ -174,6 +173,7 @@ namespace WarlordsMapEditor
             }
             mapName = map.name.Split('\\')[map.name.Split('\\').Length - 1];
             mapDescription = map.description;
+            brushCategories.updateCategories(map);
             changedItems.Clear();
             brushCategories.selectedBrush.clear();
             miniMap.calculate(map.tiles, map.columns, map.rows, columns, rows);

@@ -25,11 +25,32 @@ namespace WarlordsMapEditor
 
             imagesList = new List<BitmapImage>();
             bitmapList = new List<Bitmap>();
-            if (category == "Castles" || category == "Ruins")
+            tile = new Bitmap(bmp, new Size(bmp.Width / bmp.Height * 40, 40));
+
+            for (int i = 0; i < tile.Width / tile.Height; i++)
             {
-                tile = new Bitmap(bmp, new Size(bmp.Width / bmp.Height * 40, 40));
+                Bitmap temp_bmp = tile.Clone(new Rectangle(i * tile.Height, 0, tile.Height, tile.Height), tile.PixelFormat);
+                using (var memory = new MemoryStream())
+                {
+                    temp_bmp.Save(memory, ImageFormat.Png);
+                    memory.Position = 0;
+
+                    BitmapImage temp_img = new BitmapImage();
+                    temp_img.BeginInit();
+                    temp_img.StreamSource = memory;
+                    temp_img.CacheOption = BitmapCacheOption.OnLoad;
+                    temp_img.EndInit();
+                    imagesList.Add(temp_img);
+                }
+                bitmapList.Add(temp_bmp);
             }
-           else tile = bmp;
+        }
+
+        public void Merge(Bitmap bmp)
+        {
+            Bitmap tile;
+
+            tile = new Bitmap(bmp, new Size(bmp.Width / bmp.Height * 40, 40));
 
             for (int i = 0; i < tile.Width / tile.Height; i++)
             {

@@ -46,7 +46,7 @@ namespace WarlordsMapEditor
             this.changedItems = changedItems;
             this.Xcoordinate = Xcoordinate;
             this.Ycoordinate = Ycoordinate;
-            if (setName == "Waters") isWater = true;
+            if (setName == "Water") isWater = true;
             else isWater = false;
             image = mapObjects.terrains[setIndex].imagesList[itemIndex];
             bitmap = mapObjects.terrains[setIndex].bitmapList[itemIndex];
@@ -104,7 +104,7 @@ namespace WarlordsMapEditor
                     }
                 case "Castles":
                     {
-                        topbmp = mapObjects.castles[(int)objectSet].bitmapList[(int)objectIndex];
+                        topbmp = mapObjects.castles.bitmapList[(int)objectIndex];
                         break;
                     }
                 case "Ruins":
@@ -176,8 +176,10 @@ namespace WarlordsMapEditor
                 {
                     if (selectedBrush.category == "Terrains")
                     {
-                        itemIndex = selectedBrush.setIndex;
-                        setIndex = selectedBrush.itemIndex;
+                        itemIndex = selectedBrush.itemIndex;
+                        setIndex = selectedBrush.setIndex;
+                        setName = selectedBrush.setName;
+                        category= selectedBrush.category;
                         objectIndex = null;
                         objectSet = null;
                         castleName = null;
@@ -185,7 +187,7 @@ namespace WarlordsMapEditor
 
                         image = selectedBrush.image;
                         bitmap = selectedBrush.bitmap;
-                        if (selectedBrush.setName == "Waters") isWater = true;
+                        if (selectedBrush.setName == "Water") isWater = true;
                         else isWater = false;
                     }
                     else if (!isWater || selectedBrush.setName == "Bridges")
