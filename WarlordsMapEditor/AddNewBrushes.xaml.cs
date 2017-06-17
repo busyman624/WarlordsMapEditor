@@ -125,15 +125,15 @@ namespace WarlordsMapEditor
             else
             {
                 configStatus = tempConfigs.SetRuinsConfig();
-                if (configStatus == null || tempConfigs.ruinsData.Count != mapObjects.ruins.Count+1 || 
-                    tempConfigs.ruinsData[tempConfigs.ruinsData.Count-1].sprites.Count != bitmap.Width / bitmap.Height) configAdded = false;
-                else configAdded = true;
+                if (configStatus == null || tempConfigs.ruinsData.Count != mapObjects.ruins.Count + 1 ||
+                    tempConfigs.ruinsData[tempConfigs.ruinsData.Count - 1].sprites.Count != bitmap.Width / bitmap.Height) configAdded = false;
+                else
+                {
+                    SetName.Text = tempConfigs.ruinsData[tempConfigs.ruinsData.Count - 1].name;
+                    configAdded = true;
+                } 
             }
             if (!configAdded) configStatus= "Error, please retry";
-            else
-            {
-                SetName.Text = tempConfigs.ruinsData[tempConfigs.ruinsData.Count - 1].name;
-            }
         }
 
         private string _fileStatus;
