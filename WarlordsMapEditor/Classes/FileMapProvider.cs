@@ -27,6 +27,7 @@ namespace WarlordsMapEditor
             map.description = "";
             map.startTurn = -1;
             map.startPlayer = -1;
+            Random rnd = new Random();
 
             int players = 2; //zmienna
             for (int i = 0; i < players; i++)
@@ -43,9 +44,9 @@ namespace WarlordsMapEditor
                 map.useColor.Add(useColor);
                 if (useColor)
                 {
-                    map.r.Add(255); //zmienna
-                    map.g.Add(0); //zmienna
-                    map.b.Add(0); //zmienna
+                    map.r.Add(rnd.Next(256)); //zmienna
+                    map.g.Add(rnd.Next(256)); //zmienna
+                    map.b.Add(rnd.Next(256)); //zmienna
                 }
 
                 int resourceCount = 1; //zmienna
