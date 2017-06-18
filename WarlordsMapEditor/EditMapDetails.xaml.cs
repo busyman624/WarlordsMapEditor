@@ -22,13 +22,13 @@ namespace WarlordsMapEditor
 
         public EditMapDetails(string name, string description)
         {
+            InitializeComponent();
             if (name != "") Name.Text = name;
             if (name != "") Description.Text = description;
             DataContext = this;
         }
         public bool showDialog()
         {
-            InitializeComponent();
             ShowDialog();
             return result;
         }

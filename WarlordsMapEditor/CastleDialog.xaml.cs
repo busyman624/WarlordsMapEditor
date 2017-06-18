@@ -23,12 +23,12 @@ namespace WarlordsMapEditor
         public MapItem tile;
         public CastleDialog(MapItem tile)
         {
+            InitializeComponent();
             this.tile = tile;
             DataContext = this;
         }
         public void showDialog()
         {
-            InitializeComponent();
             ShowDialog();
         }
 
