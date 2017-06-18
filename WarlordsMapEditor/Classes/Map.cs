@@ -43,8 +43,8 @@ namespace WarlordsMapEditor
             List<UnitInfo> unitInfos = new List<UnitInfo>();
             for (int j = 0; j < unitCount; j++)
             {
-                string unitName = "Pikeman";
-                string unitDisplayName = "Pikeman";
+                string unitName = "Hero";
+                string unitDisplayName = "Hero";
                 float range = -1;
                 int experience = 0;
                 int level = 1;

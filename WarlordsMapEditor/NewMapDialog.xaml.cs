@@ -19,12 +19,12 @@ namespace WarlordsMapEditor
         public Map map;
         public NewMapDialog(Map map)
         {
+            InitializeComponent();
             this.map = map;
             DataContext = this;
         }
         public void showDialog()
         {
-            InitializeComponent();
             ShowDialog();
         }
 
