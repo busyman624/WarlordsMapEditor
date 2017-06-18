@@ -112,9 +112,18 @@ namespace WarlordsMapEditor
 
         public void CreateNewMap()
         {
-            changeConfigs();
-            map = mapProvider.CreateNewMap(mapObjects, miniMap, brushCategories.selectedBrush, changedItems, configs);
-            refresh();
+            map = new Map();
+            map.name = "";
+
+            var dialog = new NewMapDialog(map);
+            dialog.showDialog();
+
+            if (map.name != "")
+            {
+                changeConfigs();
+                mapProvider.CreateNewMap(map, mapObjects, miniMap, brushCategories.selectedBrush, changedItems, configs);
+                refresh();
+            }
         }
 
         public void MapLoad()

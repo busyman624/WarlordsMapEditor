@@ -20,18 +20,13 @@ namespace WarlordsMapEditor
 
         public const UInt32 headerMagic = 0x50414d58; // "XMAP"
 
-        public Map CreateNewMap(MapObjects mapObjects, MiniMap miniMap, SelectedBrush selectedBrush, List<MapItem> changedItems, Configs configs, MapLoadMode mode = MapLoadMode.All)
-        {
-            Map map = new Map();
-           
-            map.columns = 100;
-            map.rows = 100;
-
+        public void CreateNewMap(Map map, MapObjects mapObjects, MiniMap miniMap, SelectedBrush selectedBrush, 
+            List<MapItem> changedItems, Configs configs, MapLoadMode mode = MapLoadMode.All)
+        { 
             map.tiles = new List<MapItem>();
-            map.name = ""; //zmienna
-            map.description = ""; //zmienna
-            map.startTurn = -1; //zmienna
-            map.startPlayer = -1; //zmienna
+            map.description = "";
+            map.startTurn = -1;
+            map.startPlayer = -1;
 
             int players = 2; //zmienna
             for (int i = 0; i < players; i++)
@@ -102,8 +97,6 @@ namespace WarlordsMapEditor
 
             // Overlay tiles
             map.overlayTilesCount = 0;
-
-            return map; 
         }
 
         public Map LoadMapFromBytes(MapObjects mapObjects, string path, MiniMap miniMap, SelectedBrush selectedBrush, List<MapItem> changedItems, Configs configs, MapLoadMode mode = MapLoadMode.All)
