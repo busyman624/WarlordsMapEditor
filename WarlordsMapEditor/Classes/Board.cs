@@ -32,6 +32,7 @@ namespace WarlordsMapEditor
                 if (_mapName != value)
                 {
                     _mapName = value;
+                    map.name = "..\\Warlords\\Assets\\Resources\\Maps\\" + value;
                     RaisePropertyChaged("mapName");
                 }
             }
@@ -45,6 +46,7 @@ namespace WarlordsMapEditor
                 if (_mapDescription != value)
                 {
                     _mapDescription = value;
+                    map.description = value;
                     RaisePropertyChaged("mapDescription");
                 }
             }
