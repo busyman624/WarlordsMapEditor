@@ -15,6 +15,8 @@ namespace WarlordsMapEditor
 {
     public class SelectedBrush : Item
     {
+        public new int? setIndex;
+        public new int? itemIndex;
 
         private string _description;
 
@@ -80,6 +82,8 @@ namespace WarlordsMapEditor
 
         public SelectedBrush(MapObjects mapObjects, Configs configs)
         {
+            setIndex = null;
+            itemIndex = null;
             this.mapObjects = mapObjects;
             this.configs = configs;
             details = new ObservableCollection<string>();
@@ -105,9 +109,9 @@ namespace WarlordsMapEditor
                 description = category + ": " + setName + " - " + itemIndex;
                 if (setName == "Castles")
                 {
-                    additionalInfo = "Fraction: " + configs.fractions[itemIndex].name;
+                    additionalInfo = "Fraction: " + configs.fractions[(int)itemIndex].name;
                     additionalInfo2 = "Buildings:";
-                    foreach (string building in configs.fractions[itemIndex].buildings)
+                    foreach (string building in configs.fractions[(int)itemIndex].buildings)
                     {
                         details2.Add(building);
                     }
@@ -150,6 +154,9 @@ namespace WarlordsMapEditor
 
         public void clear()
         {
+            setIndex = null;
+            itemIndex = null;
+            category = null;
             details.Clear();
             details2.Clear();
             additionalInfo = null;

@@ -38,7 +38,10 @@ namespace WarlordsMapEditor
 
         public bool CanOK()
         {
-            return Rows.Text.Count() > 1 && Columns.Text.Count() > 1 && mapName.Text.Count() > 2;
+            int columns;
+            int rows;
+            return mapName.Text.Count() > 2 && Int32.TryParse(Rows.Text, out rows) && Int32.TryParse(Columns.Text, out columns)
+                && columns > 9 && columns < 251 && rows > 9 && rows < 351;
         }
 
         public void CancelClick()

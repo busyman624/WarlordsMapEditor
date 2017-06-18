@@ -15,7 +15,7 @@ namespace WarlordsMapEditor
     public class MiniMap : INotifyPropertyChanged
     {
         private double areaWidth = 1000 / 3 - 80;    //window size / 3 - 2* (navigate buttons + margins(buttons + border))
-        private double areaHeight = 800 * 2 / 3 - 80;     //window height * 2/3 - 2* (navigate buttons + margins(buttons + border))
+        private double areaHeight = 800 * 2 / 3 - 160;     //window height * 2/3 - 2* (navigate buttons + margins(buttons + border))
         private int multiplier;
 
         private int mapColumns;

@@ -172,46 +172,49 @@ namespace WarlordsMapEditor
 
         private void changeTile()
         {
+            if (selectedBrush.setIndex != null && selectedBrush.itemIndex != null)
+            {
                 changedItems.Add(saveInstance());
-                if (selectedBrush.setIndex != -1 && selectedBrush.itemIndex != -1)
-                {
-                    if (selectedBrush.category == "Terrains")
+                    if (selectedBrush.setIndex != -1 && selectedBrush.itemIndex != -1)
                     {
-                        itemIndex = selectedBrush.itemIndex;
-                        setIndex = selectedBrush.setIndex;
-                        setName = selectedBrush.setName;
-                        category= selectedBrush.category;
-                        objectIndex = null;
-                        objectSet = null;
-                        castleName = null;
-                        castleOwner = null;
+                        if (selectedBrush.category == "Terrains")
+                        {
+                            itemIndex = (int)selectedBrush.itemIndex;
+                            setIndex = (int)selectedBrush.setIndex;
+                            setName = selectedBrush.setName;
+                            category = selectedBrush.category;
+                            objectIndex = null;
+                            objectSet = null;
+                            castleName = null;
+                            castleOwner = null;
 
-                        image = selectedBrush.image;
-                        bitmap = selectedBrush.bitmap;
-                        if (selectedBrush.setName == "Water") isWater = true;
-                        else isWater = false;
+                            image = selectedBrush.image;
+                            bitmap = selectedBrush.bitmap;
+                            if (selectedBrush.setName == "Water") isWater = true;
+                            else isWater = false;
+                        }
+                        else if (!isWater || selectedBrush.setName == "Bridges")
+                        {
+                            objectCategory = selectedBrush.category;
+                            objectIndex = selectedBrush.itemIndex;
+                            objectSet = selectedBrush.setIndex;
+                            combineImages();
+                        }
+                        if (selectedBrush.category == "Castles")
+                        {
+                            objectCategory = selectedBrush.category;
+                            var dialog = new CastleDialog(this);
+                            dialog.showDialog();
+                            if (spawnHero == true)
+                                map.addUnit(Xcoordinate, Ycoordinate, (int)castleOwner);
+                        }
                     }
-                    else if (!isWater || selectedBrush.setName == "Bridges")
+                    else
                     {
-                        objectCategory = selectedBrush.category;
-                        objectIndex = selectedBrush.itemIndex;
-                        objectSet = selectedBrush.setIndex;
-                        combineImages();
+                        clearTile();
                     }
-                    if (selectedBrush.category == "Castles")
-                    {
-                        objectCategory = selectedBrush.category;
-                        var dialog = new CastleDialog(this);
-                        dialog.showDialog();
-                        if(spawnHero == true)
-                            map.addUnit(Xcoordinate, Ycoordinate, (int)castleOwner);
-                    }
-                }
-                else
-                {
-                    clearTile();
-                }
-                miniMap.refresh(Xcoordinate, Ycoordinate);
+                    miniMap.refresh(Xcoordinate, Ycoordinate);
+            }
         }
 
         public void clearTile()

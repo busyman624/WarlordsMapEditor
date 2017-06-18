@@ -203,10 +203,10 @@ namespace WarlordsMapEditor
 
         public void DeleteClick()
         {
+            brushCategories.selectedBrush.clear();
             brushCategories.selectedBrush.setIndex = -1;
             brushCategories.selectedBrush.itemIndex = -1;
             brushCategories.selectedBrush.category = "Delete";
-            brushCategories.selectedBrush.clear();
             brushCategories.selectedBrush.update();
         }
 
