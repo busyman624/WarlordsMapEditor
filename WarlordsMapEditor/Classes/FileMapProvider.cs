@@ -96,7 +96,7 @@ namespace WarlordsMapEditor
             {
                 for (int j = 0; j < map.columns; j++)
                 {
-                    map.tiles.Add(new MapItem(1, 1, mapObjects.terrains[1].setName, mapObjects.terrains[1].category, mapObjects , j, i, miniMap, selectedBrush, changedItems)); 
+                    map.tiles.Add(new MapItem(1, 1, mapObjects.terrains[1].setName, mapObjects.terrains[1].category, mapObjects , j, i, miniMap, selectedBrush, changedItems, map)); 
                 }
             }
 
@@ -187,7 +187,7 @@ namespace WarlordsMapEditor
                         setIndex = mapObjects.terrains.FindIndex(t => t.setName.ToLower() == palette[prefabId].Split('_')[0]);
                         itemIndex = Int16.Parse(palette[prefabId].Split('_')[1]);
                         
-                        map.tiles.Add(new MapItem(itemIndex, setIndex, mapObjects.terrains[setIndex].setName, mapObjects.terrains[setIndex].category, mapObjects, j, i, miniMap, selectedBrush, changedItems));
+                        map.tiles.Add(new MapItem(itemIndex, setIndex, mapObjects.terrains[setIndex].setName, mapObjects.terrains[setIndex].category, mapObjects, j, i, miniMap, selectedBrush, changedItems, map));
                     }
                 }
 

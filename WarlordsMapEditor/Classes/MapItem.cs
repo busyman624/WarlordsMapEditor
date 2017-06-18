@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
@@ -27,15 +22,18 @@ namespace WarlordsMapEditor
 
         public string castleName;
         public int? castleOwner;
+        public bool spawnHero;
+        private Map map;
 
         public MapItem(int itemIndex, int setIndex, string setName, string category, MapObjects mapObjects, int Xcoordinate, int Ycoordinate,
-            MiniMap miniMap, SelectedBrush selectedBrush, List<MapItem> changedItems)
+            MiniMap miniMap, SelectedBrush selectedBrush, List<MapItem> changedItems, Map map)
         {
             this.itemIndex = itemIndex;
             this.setIndex = setIndex;
             this.setName = setName;
             this.category = category;
             this.miniMap = miniMap;
+            this.map = map;
             objectIndex = null;
             objectSet = null;
             objectCategory = null;
@@ -50,6 +48,7 @@ namespace WarlordsMapEditor
             else isWater = false;
             image = mapObjects.terrains[setIndex].imagesList[itemIndex];
             bitmap = mapObjects.terrains[setIndex].bitmapList[itemIndex];
+            spawnHero = false;
         }
 
         public MapItem() { }
@@ -71,6 +70,7 @@ namespace WarlordsMapEditor
             mapItem.objectCategory = objectCategory;
             mapItem.castleName = castleName;
             mapItem.castleOwner = castleOwner;
+            mapItem.spawnHero = spawnHero;
             return mapItem;
         }
 
@@ -90,6 +90,7 @@ namespace WarlordsMapEditor
             objectCategory = mapItem.objectCategory;
             castleName = mapItem.castleName;
             castleOwner = mapItem.castleOwner;
+            spawnHero = mapItem.spawnHero;
         }
 
         public void combineImages()
@@ -202,6 +203,8 @@ namespace WarlordsMapEditor
                         objectCategory = selectedBrush.category;
                         var dialog = new CastleDialog(this);
                         dialog.showDialog();
+                        if(spawnHero == true)
+                            map.addUnit(Xcoordinate, Ycoordinate, (int)castleOwner);
                     }
                 }
                 else

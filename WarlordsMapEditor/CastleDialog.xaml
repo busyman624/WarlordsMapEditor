@@ -5,23 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WarlordsMapEditor"
         mc:Ignorable="d"
-        Title="New Castle" Height="160" Width="300"
+        Title="New Castle" Height="170" Width="300"
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
     <Grid Background="Gray">
-        <StackPanel Margin="10,10,10,10" >
+        <StackPanel Margin="10" >
             <TextBlock Text="Provide some basic informations about new castle." HorizontalAlignment="Center"/>
-            <StackPanel Orientation="Horizontal" Margin="10">
-                <TextBlock Text="Castle name: "/>
+            <StackPanel Orientation="Horizontal" Margin="10,10,0,5">
+                <TextBlock  Margin="0,0,3,0" Text="Castle name: "/>
                 <TextBox Name="CastleName" Width="100" HorizontalAlignment="Stretch"/>
             </StackPanel>
-            <StackPanel Margin="10" Orientation="Horizontal">
+            <StackPanel Margin="10,5" Orientation="Horizontal">
                 <TextBlock Text="Castle owner: "/>
                 <ComboBox Name="CastleOwner" Width="100">
                     <ComboBoxItem>Not Ownded</ComboBoxItem>
                     <ComboBoxItem>Player 1</ComboBoxItem>
                     <ComboBoxItem>Player 2</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Margin="10,5,0,10" Orientation="Horizontal">
+                <TextBlock Margin="0,0,42,0" Text="Hero: "/>
+                <ComboBox Name="SpawnUnit" Width="100" SelectedIndex="0">
+                    <ComboBoxItem>Yes</ComboBoxItem>
+                    <ComboBoxItem>No</ComboBoxItem>
                 </ComboBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal">

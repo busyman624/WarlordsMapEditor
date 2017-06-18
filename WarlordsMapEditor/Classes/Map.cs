@@ -36,6 +36,28 @@ namespace WarlordsMapEditor
         public List<RuinsInfo> ruins = new List<RuinsInfo>();
         public List<UnitContainerInfo> units = new List<UnitContainerInfo>();
 
+        public void addUnit(int x, int y, int owner)
+        {
+            //int unitCount = reader.ReadInt32();
+            int unitCount = 1;
+            List<UnitInfo> unitInfos = new List<UnitInfo>();
+            for (int j = 0; j < unitCount; j++)
+            {
+                string unitName = "Pikeman";
+                string unitDisplayName = "Pikeman";
+                float range = -1;
+                int experience = 0;
+                int level = 1;
+                bool overrideStats = false;
+                Statistics stats = new Statistics();
+
+                // Modifiers
+                StatsModifiers modifiers = new StatsModifiers();
+
+                unitInfos.Add(new UnitInfo(unitName, unitDisplayName, range, experience, level, stats, overrideStats, modifiers));
+            }
+            units.Add(new UnitContainerInfo(x, y, owner, unitInfos));
+        }
 
         public Map() { }
 

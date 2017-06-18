@@ -36,8 +36,9 @@ namespace WarlordsMapEditor
         {
             tile.castleName = CastleName.Text;
             tile.castleOwner = CastleOwner.SelectedIndex - 1;
+            if (SpawnUnit.SelectedIndex == 0)
+                tile.spawnHero = true;
             Close();
-
         }
 
         public bool CanOK()
