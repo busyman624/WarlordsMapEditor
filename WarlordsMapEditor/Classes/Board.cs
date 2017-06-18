@@ -31,7 +31,6 @@ namespace WarlordsMapEditor
             {
                 if (_mapName != value)
                 {
-
                     _mapName = value;
                     RaisePropertyChaged("mapName");
                 }
@@ -45,7 +44,6 @@ namespace WarlordsMapEditor
             {
                 if (_mapDescription != value)
                 {
-
                     _mapDescription = value;
                     RaisePropertyChaged("mapDescription");
                 }
@@ -177,6 +175,19 @@ namespace WarlordsMapEditor
             changedItems.Clear();
             brushCategories.selectedBrush.clear();
             miniMap.calculate(map.tiles, map.columns, map.rows, columns, rows);
+        }
+
+        public bool CanEditMapDetails() { return map != null; }
+
+        public void EditMapDetails()
+        {
+            var dialog = new EditMapDetails(mapName, mapDescription);
+            bool result = dialog.showDialog();
+            if (result)
+            {
+                mapName = dialog.Name.Text;
+                mapDescription = dialog.Description.Text;
+            }
         }
 
         public void DeleteClick()
@@ -348,6 +359,7 @@ namespace WarlordsMapEditor
         private ICommand _mapLoad;
         private ICommand _mapSave;
         private ICommand _newMap;
+        private ICommand _editMapDetails;
 
         private ICommand _delete;
         private ICommand _back;
@@ -372,6 +384,21 @@ namespace WarlordsMapEditor
                     );
                 }
                 return _newMap;
+            }
+        }
+
+        public ICommand editMapDetails
+        {
+            get
+            {
+                if (_editMapDetails == null)
+                {
+                    _editMapDetails = new RelayCommand(
+                        param => this.EditMapDetails(),
+                        param => this.CanEditMapDetails()
+                    );
+                }
+                return _editMapDetails;
             }
         }
 

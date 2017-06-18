@@ -9,49 +9,51 @@
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
-    <Grid Background="Gray">
-        <StackPanel Margin="10,10,10,10" >
-            <TextBlock Text="Provide some basic informations about new map objects." HorizontalAlignment="Center"/>
-            <StackPanel Margin="10" Orientation="Horizontal">
-                <TextBlock Text="Category: "/>
-                <ComboBox Name="Category" Width="100">
-                    <ComboBoxItem>Terrains</ComboBoxItem>
-                    <ComboBoxItem>Roads</ComboBoxItem>
-                    <ComboBoxItem>Castles</ComboBoxItem>
-                    <ComboBoxItem>Ruins</ComboBoxItem>
-                </ComboBox>
+    <Border BorderBrush="Black" BorderThickness="2">
+        <Grid Background="Gray">
+            <StackPanel Margin="10,10,10,10" >
+                <TextBlock Text="Provide some basic informations about new map objects." HorizontalAlignment="Center"/>
+                <StackPanel Margin="10" Orientation="Horizontal">
+                    <TextBlock Text="Category: "/>
+                    <ComboBox Name="Category" Width="100">
+                        <ComboBoxItem>Terrains</ComboBoxItem>
+                        <ComboBoxItem>Roads</ComboBoxItem>
+                        <ComboBoxItem>Castles</ComboBoxItem>
+                        <ComboBoxItem>Ruins</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="10">
+                    <TextBlock Text="Set name: "/>
+                    <TextBox Name="SetName" Width="100" >
+                        <TextBox.Style>
+                            <Style TargetType="{x:Type TextBox}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=Category, Path=SelectedIndex}" Value="2">
+                                        <Setter Property="IsReadOnly"  Value="true"/>
+                                        <Setter Property="Text" Value="Castles" />
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ElementName=Category, Path=SelectedIndex}" Value="3">
+                                        <Setter Property="IsReadOnly"  Value="true"/>
+                                        <Setter Property="Text" Value="Ruins" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="10,5,0,5">
+                    <Button VerticalAlignment="Center" Command="{Binding addFile}" Content="Add File" FontSize="10" Width="60"/>
+                    <TextBlock Text="{Binding fileStatus}" Margin="10,0,0,0" FontSize="10"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="10,5,0,5">
+                    <Button VerticalAlignment="Center" Command="{Binding addConfig}" Content="Add Config" FontSize="10" Width="60"/>
+                    <TextBlock Text="{Binding configStatus}" Margin="10,0,0,0" FontSize="10"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button VerticalAlignment="Center" Command="{Binding OK}"  Content="OK" FontSize="15" Margin="50,5,0,5" Width="60"/>
+                    <Button VerticalAlignment="Center" Command="{Binding Cancel}"  Content="Cancel" FontSize="15" Margin="50,5,0,5" Width="60"/>
+                </StackPanel>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="10">
-                <TextBlock Text="Set name: "/>
-                <TextBox Name="SetName" Width="100" >
-                    <TextBox.Style>
-                        <Style TargetType="{x:Type TextBox}">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding ElementName=Category, Path=SelectedIndex}" Value="2">
-                                    <Setter Property="IsReadOnly"  Value="true"/>
-                                    <Setter Property="Text" Value="Castles" />
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding ElementName=Category, Path=SelectedIndex}" Value="3">
-                                    <Setter Property="IsReadOnly"  Value="true"/>
-                                    <Setter Property="Text" Value="Ruins" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBox.Style>
-                </TextBox>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="10,5,0,5">
-                <Button VerticalAlignment="Center" Command="{Binding addFile}" Content="Add File" FontSize="10" Width="60"/>
-                <TextBlock Text="{Binding fileStatus}" Margin="10,0,0,0" FontSize="10"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="10,5,0,5">
-                <Button VerticalAlignment="Center" Command="{Binding addConfig}" Content="Add Config" FontSize="10" Width="60"/>
-                <TextBlock Text="{Binding configStatus}" Margin="10,0,0,0" FontSize="10"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button VerticalAlignment="Center" Command="{Binding OK}"  Content="OK" FontSize="15" Margin="50,5,0,5" Width="60"/>
-                <Button VerticalAlignment="Center" Command="{Binding Cancel}"  Content="Cancel" FontSize="15" Margin="50,5,0,5" Width="60"/>
-            </StackPanel>
-        </StackPanel>
-    </Grid>
+        </Grid>
+    </Border>
 </Window>
