@@ -44,9 +44,9 @@ namespace WarlordsMapEditor
                 map.useColor.Add(useColor);
                 if (useColor)
                 {
-                    map.r.Add(rnd.Next(256)); //zmienna
-                    map.g.Add(rnd.Next(256)); //zmienna
-                    map.b.Add(rnd.Next(256)); //zmienna
+                    map.r.Add((float)rnd.NextDouble()); //zmienna
+                    map.g.Add((float)rnd.NextDouble()); //zmienna
+                    map.b.Add((float)rnd.NextDouble()); //zmienna
                 }
 
                 int resourceCount = 1; //zmienna
