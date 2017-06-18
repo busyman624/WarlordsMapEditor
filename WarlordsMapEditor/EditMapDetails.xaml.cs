@@ -15,40 +15,39 @@ using System.Windows.Shapes;
 
 namespace WarlordsMapEditor
 {
-    /// <summary>
-    /// Interaction logic for Dialog.xaml
-    /// </summary>
-    public partial class CastleDialog : Window
+
+    public partial class EditMapDetails : Window
     {
-        public MapItem tile;
-        public CastleDialog(MapItem tile)
+        private bool result;
+
+        public EditMapDetails(string name, string description)
         {
             InitializeComponent();
-            this.tile = tile;
+            if (name != "") Name.Text = name;
+            if (name != "") Description.Text = description;
             DataContext = this;
         }
-        public void showDialog()
+        public bool showDialog()
         {
             ShowDialog();
+            return result;
         }
 
         public void OKClick()
         {
-            tile.castleName = CastleName.Text;
-            tile.castleOwner = CastleOwner.SelectedIndex - 1;
-            if (SpawnUnit.SelectedIndex == 0)
-                tile.spawnHero = true;
+            result = true;
             Close();
+
         }
 
         public bool CanOK()
         {
-            return CastleName.Text.Count()>1 && CastleName.Text.Count() <8 && CastleOwner.SelectedIndex > -1;
+            return Name.Text.Count() > 1 && Description.Text.Count() > 1;
         }
 
         public void CancelClick()
         {
-            tile.clearTile();
+            result = false;
             Close();
         }
 

@@ -28,6 +28,7 @@ namespace WarlordsMapEditor
         private bool configAdded;
         public AddNewBrushes(MapObjects mapObjects, Configs configs)
         {
+            InitializeComponent();
             this.mapObjects = mapObjects;
             this.configs = configs;
             DataContext = this;
@@ -35,7 +36,6 @@ namespace WarlordsMapEditor
 
         public void showDialog()
         {
-            InitializeComponent();
             ShowDialog();
         }
 
