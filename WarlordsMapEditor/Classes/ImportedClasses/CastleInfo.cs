@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WarlordsMapEditor.Classes.ShitClasses
+namespace WarlordsMapEditor.Classes.ImportedClasses
 {
     public class CastleInfo
     {

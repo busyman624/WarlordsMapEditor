@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WarlordsMapEditor.Classes.ShitClasses
+namespace WarlordsMapEditor.Classes.ImportedClasses
 {
     public struct Statistics
     {

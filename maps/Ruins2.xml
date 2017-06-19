@@ -37,7 +37,7 @@
 			</Resource>
 		</resourceBonus>
 	</Ruins>
-	<Ruins name="dupas">
+	<Ruins name="ruins2">
 		<sprites>
 			<string>ruin_0</string>
 			<string>ruin_1</string>

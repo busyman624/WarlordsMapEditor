@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using System.Text.RegularExpressions;
-using WarlordsMapEditor.Classes.ShitClasses;
+using WarlordsMapEditor.Classes.ImportedClasses;
 
 namespace WarlordsMapEditor
 {

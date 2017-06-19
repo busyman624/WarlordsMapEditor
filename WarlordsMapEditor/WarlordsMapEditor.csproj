@@ -69,11 +69,11 @@
     <Compile Include="Classes\MouseBehaviour.cs" />
     <Compile Include="Classes\RelayCommand.cs" />
     <Compile Include="Classes\Brush.cs" />
-    <Compile Include="Classes\ShitClasses\CastleInfo.cs" />
-    <Compile Include="Classes\ShitClasses\Resource.cs" />
-    <Compile Include="Classes\ShitClasses\RuinsInfo.cs" />
-    <Compile Include="Classes\ShitClasses\Statistics.cs" />
-    <Compile Include="Classes\ShitClasses\UnitInfo.cs" />
+    <Compile Include="Classes\ImportedClasses\CastleInfo.cs" />
+    <Compile Include="Classes\ImportedClasses\Resource.cs" />
+    <Compile Include="Classes\ImportedClasses\RuinsInfo.cs" />
+    <Compile Include="Classes\ImportedClasses\Statistics.cs" />
+    <Compile Include="Classes\ImportedClasses\UnitInfo.cs" />
     <Compile Include="Classes\Sprite.cs" />
     <Compile Include="Classes\SelectedBrush.cs" />
     <Page Include="AddNewBrushes.xaml">
