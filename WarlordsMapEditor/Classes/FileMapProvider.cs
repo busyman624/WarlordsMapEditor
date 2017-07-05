@@ -193,6 +193,8 @@ namespace WarlordsMapEditor
                     map.overlayTilesY.Add(reader.ReadInt32());
                     map.overlayTilesPrefabId.Add(reader.ReadInt32());
 
+                    //TODO refactor to enable external roads
+
                     int tileID = map.tiles.FindIndex(t => (t.Xcoordinate == map.overlayTilesX[i]) && (t.Ycoordinate == map.overlayTilesY[i]));
                     switch (palette[map.overlayTilesPrefabId[i]].Split('_')[0])
                     {

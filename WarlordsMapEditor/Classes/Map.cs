@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using WarlordsMapEditor.Classes.ImportedClasses;
+using System.Windows.Forms;
+using System.IO;
+using System.Drawing;
 
 namespace WarlordsMapEditor
 {
@@ -64,21 +66,49 @@ namespace WarlordsMapEditor
         public bool validate(MapObjects mapObjects, Configs configs)
         {
             bool status;
+            string[] resources=null;
+            List<MapResource> neededResources = new List<MapResource>();
             foreach(string prefab in prefabPath)
             {
                 string setName = prefab.Split('_')[0];
                 int itemIndex = Int16.Parse(prefab.Split('_')[1]);
-                //status = setName == mapObjects.castles.setName.ToLower() && mapObjects.castles.imagesList.Count > itemIndex;
-                //if (status) continue;
-                //status = mapObjects.ruins.Exists(p => p.setName.ToLower() == setName && p.imagesList.Count > itemIndex);
-                //if (status) continue;
                 status = mapObjects.roads.Exists(p => p.setName.ToLower() == setName && p.imagesList.Count > itemIndex);
                 if (status) continue;
                 status = mapObjects.terrains.Exists(p => p.setName.ToLower() == setName && p.imagesList.Count > itemIndex);
+                if (!status) status = neededResources.Any(nr => nr.setName == setName);
                 if (!status)
                 {
-                    MessageBox.Show(prefab+" does not exist in current editor configuration. Update map objects before loading custom map", "Error");
-                    return false;
+                    if (resources == null) resources = LoadResources();
+                    if (resources == null)
+                    {
+                        MessageBox.Show("Please choose valid resources directory", "Error");
+                        return false;
+                    }
+                    foreach (string r in resources)
+                    {
+                        string resourceName=r.Split('\\').Last().Split('.').First();
+                        if (resourceName == setName && !neededResources.Any(nr => nr.setName == setName))
+                        {
+                            int category = 0;
+                            foreach (int id in overlayTilesPrefabId)
+                            {
+                                if (prefabPath[id].Split('_')[0] == setName)
+                                {
+                                    category = 1;
+                                    break;
+                                }
+                            }
+                            neededResources.Add(new MapResource(r, setName, category));
+                            status = true;
+                            break;
+                        }
+                    }
+                    if (!status)
+                    {
+                        MessageBox.Show(setName + " does not exist in choosen resources directory.", "Error");
+                        return false;
+                    }
+
                 }
             }
             if (configs.fractions.Count > mapObjects.castles.imagesList.Count)
@@ -102,8 +132,55 @@ namespace WarlordsMapEditor
                     }
                 }
             }
+            if (neededResources.Count > 0) AddResources(mapObjects, neededResources);
 
             return true;
+        }
+
+        public string[] LoadResources()
+        {
+            FolderBrowserDialog dlg = new FolderBrowserDialog();
+            DialogResult result = dlg.ShowDialog();
+
+            if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(dlg.SelectedPath))
+            {
+                return Directory.GetFiles(dlg.SelectedPath);
+            }
+            else return null;
+        }
+
+        public void AddResources(MapObjects mapObjects, List<MapResource> resources)
+        {
+            foreach(MapResource resource in resources)
+            {
+                    Bitmap rawBitmap = new Bitmap(resource.path);
+                    Bitmap bitmap = new Bitmap(rawBitmap, new Size(rawBitmap.Width / rawBitmap.Height * 40, 40));
+                    switch (resource.category)
+                    {
+                        case 0:
+                            {
+                                mapObjects.terrains.Add(new Sprite(bitmap, resource.setName, mapObjects.terrains.Count, "Terrains"));
+                                break;
+                            }
+                        case 1:
+                            {
+                                mapObjects.roads.Add(new Sprite(bitmap, resource.setName, mapObjects.roads.Count, "Roads"));
+                                break;
+                            }
+                        //case 2:
+                        //    {
+                        //        mapObjects.castles.Merge(bitmap);
+                        //        configs.fractions = tempConfigs.fractions;
+                        //        break;
+                        //    }
+                        //case 3:
+                        //    {
+                        //        mapObjects.ruins.Add(new Sprite(bitmap, SetName.Text, mapObjects.ruins.Count, "Ruins"));
+                        //        configs.ruinsData = tempConfigs.ruinsData;
+                        //        break;
+                        //    }
+                    }
+            }
         }
 
         public void UpdatePallete(MapObjects mapObjects)
@@ -126,6 +203,20 @@ namespace WarlordsMapEditor
                 }
             }
             paletteSize = prefabPath.Count;
+        }
+    }
+
+    public class MapResource
+    {
+        public string path;
+        public string setName;
+        public int category;
+
+        public MapResource(string path, string setName, int category)
+        {
+            this.path = path;
+            this.setName = setName;
+            this.category = category;
         }
     }
 }
