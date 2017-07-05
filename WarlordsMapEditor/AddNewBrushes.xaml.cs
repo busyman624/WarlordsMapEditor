@@ -104,6 +104,7 @@ namespace WarlordsMapEditor
                 {
                     bitmap = new Bitmap(rawBitmap, new System.Drawing.Size(rawBitmap.Width / rawBitmap.Height * 40, 40));
                     fileStatus = bitmap.Width/bitmap.Height + " items selected";
+                    SetName.Text = dlg.SafeFileName.Split('.').First();
                 }
                 else
                 {

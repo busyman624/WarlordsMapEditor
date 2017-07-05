@@ -194,25 +194,11 @@ namespace WarlordsMapEditor
                     map.overlayTilesPrefabId.Add(reader.ReadInt32());
 
                     int tileID = map.tiles.FindIndex(t => (t.Xcoordinate == map.overlayTilesX[i]) && (t.Ycoordinate == map.overlayTilesY[i]));
-                    switch (palette[map.overlayTilesPrefabId[i]].Split('_')[0])
-                    {
-                        case "roads":
-                            {
-                                map.tiles[tileID].objectCategory = "Roads";
-                                map.tiles[tileID].objectSet = 0;
-                                map.tiles[tileID].objectIndex = Int16.Parse(palette[map.overlayTilesPrefabId[i]].Split('_')[1]);
-                                map.tiles[tileID].combineImages();
-                                break;
-                            }
-                        case "bridges":
-                            {
-                                map.tiles[tileID].objectCategory = "Roads";
-                                map.tiles[tileID].objectSet = 1;
-                                map.tiles[tileID].objectIndex = Int16.Parse(palette[map.overlayTilesPrefabId[i]].Split('_')[1]);
-                                map.tiles[tileID].combineImages();
-                                break;
-                            }
-                    }
+                    map.tiles[tileID].objectCategory = "Roads";
+                    map.tiles[tileID].objectSet = mapObjects.roads.FindIndex(t => t.setName.ToLower() == palette[map.overlayTilesPrefabId[i]].Split('_')[0]);
+                    map.tiles[tileID].objectName = palette[map.overlayTilesPrefabId[i]].Split('_')[0];
+                    map.tiles[tileID].objectIndex = Int16.Parse(palette[map.overlayTilesPrefabId[i]].Split('_')[1]);
+                    map.tiles[tileID].combineImages();
                 }
 
                 // Castles
@@ -430,29 +416,12 @@ namespace WarlordsMapEditor
                         {
                             case "Roads":
                                 {
-                                    switch (tile.objectSet)
-                                    {
-                                        case 0:
-                                            {
-                                                map.overlayTilesCount++;
-                                                map.overlayTilesX.Add(tile.Xcoordinate);
-                                                map.overlayTilesY.Add(tile.Ycoordinate);
-                                                string tilePalleteName;
-                                                tilePalleteName = "roads_" + tile.objectIndex.ToString();
-                                                map.overlayTilesPrefabId.Add(map.prefabPath.FindIndex(p => p == tilePalleteName));
-                                                break;
-                                            }
-                                        case 1:
-                                            {
-                                                map.overlayTilesCount++;
-                                                map.overlayTilesX.Add(tile.Xcoordinate);
-                                                map.overlayTilesY.Add(tile.Ycoordinate);
-                                                string tilePalleteName;
-                                                tilePalleteName = "bridges_" + tile.objectIndex.ToString();
-                                                map.overlayTilesPrefabId.Add(map.prefabPath.FindIndex(p => p == tilePalleteName));
-                                                break;
-                                            }
-                                    }
+                                    map.overlayTilesCount++;
+                                    map.overlayTilesX.Add(tile.Xcoordinate);
+                                    map.overlayTilesY.Add(tile.Ycoordinate);
+                                    string tilePalleteName;
+                                    tilePalleteName = tile.objectName+ "_" + tile.objectIndex.ToString();
+                                    map.overlayTilesPrefabId.Add(map.prefabPath.FindIndex(p => p == tilePalleteName));
                                     break;
                                 }
                             case "Castles":

@@ -24,22 +24,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="10">
                     <TextBlock Text="Set name: "/>
-                    <TextBox Name="SetName" Width="100" >
-                        <TextBox.Style>
-                            <Style TargetType="{x:Type TextBox}">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=Category, Path=SelectedIndex}" Value="2">
-                                        <Setter Property="IsReadOnly"  Value="true"/>
-                                        <Setter Property="Text" Value="Castles" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding ElementName=Category, Path=SelectedIndex}" Value="3">
-                                        <Setter Property="IsReadOnly"  Value="true"/>
-                                        <Setter Property="Text" Value="Ruins" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBox.Style>
-                    </TextBox>
+                    <TextBlock Name="SetName" Width="100" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="10,5,0,5">
                     <Button VerticalAlignment="Center" Command="{Binding addFile}" Content="Add File" FontSize="10" Width="60"/>

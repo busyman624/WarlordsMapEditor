@@ -17,6 +17,7 @@ namespace WarlordsMapEditor
         public bool isWater;
         public int? objectIndex;
         public int? objectSet;
+        public string objectName;
         public string objectCategory;
         public MiniMap miniMap;
 
@@ -36,6 +37,7 @@ namespace WarlordsMapEditor
             this.map = map;
             objectIndex = null;
             objectSet = null;
+            objectName = null;
             objectCategory = null;
             castleName = null;
             castleOwner = null;
@@ -67,6 +69,7 @@ namespace WarlordsMapEditor
             mapItem.isWater = isWater;
             mapItem.objectIndex = objectIndex;
             mapItem.objectSet = objectSet;
+            mapItem.objectName = objectName;
             mapItem.objectCategory = objectCategory;
             mapItem.castleName = castleName;
             mapItem.castleOwner = castleOwner;
@@ -87,6 +90,7 @@ namespace WarlordsMapEditor
             isWater = mapItem.isWater;
             objectIndex = mapItem.objectIndex;
             objectSet = mapItem.objectSet;
+            objectName = mapItem.objectName;
             objectCategory = mapItem.objectCategory;
             castleName = mapItem.castleName;
             castleOwner = mapItem.castleOwner;
@@ -185,6 +189,7 @@ namespace WarlordsMapEditor
                             category = selectedBrush.category;
                             objectIndex = null;
                             objectSet = null;
+                            objectName = null;
                             castleName = null;
                             castleOwner = null;
 
@@ -198,6 +203,7 @@ namespace WarlordsMapEditor
                             objectCategory = selectedBrush.category;
                             objectIndex = selectedBrush.itemIndex;
                             objectSet = selectedBrush.setIndex;
+                            objectName = selectedBrush.setName;
                             combineImages();
                         }
                         if (selectedBrush.category == "Castles")
@@ -221,6 +227,7 @@ namespace WarlordsMapEditor
         {
             objectIndex = null;
             objectSet = null;
+            objectName = null;
             castleName = null;
             castleOwner = null;
 
