@@ -19,7 +19,7 @@
         <building>Dragon Cliffs</building>
       </buildings>
     </Fraction>
-	    <Fraction name="Dudzikos">
+	<Fraction name="Dudzikos">
       <buildings>
         <building>Dwarf Cottage</building>
         <building>Enchanted Spring</building>
