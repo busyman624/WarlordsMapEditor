@@ -24,7 +24,6 @@ namespace WarlordsMapEditor
             List<MapItem> changedItems, Configs configs, MapLoadMode mode = MapLoadMode.All)
         { 
             map.tiles = new List<MapItem>();
-            map.description = "";
             map.startTurn = -1;
             map.startPlayer = -1;
             Random rnd = new Random();

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WarlordsMapEditor"
         mc:Ignorable="d"
-        Title="Edit Map Details" Height="160" Width="300"
+        Title="Edit Map Details" Height="200" Width="300"
         WindowStyle="None"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
@@ -27,7 +27,7 @@
                         <ColumnDefinition Width="2*" />
                     </Grid.ColumnDefinitions>
                     <TextBlock HorizontalAlignment="Right" Text="Description: "/>
-                    <TextBox Grid.Column="1" Name="Description" Text="{Binding tempDescription}" HorizontalAlignment="Stretch"/>
+                    <TextBox Grid.Column="1" Name="Description" Height="50" MaxLength="255" TextWrapping="Wrap" Text="{Binding tempDescription}" HorizontalAlignment="Stretch"/>
                 </Grid>
                 <StackPanel Orientation="Horizontal">
                     <Button VerticalAlignment="Center" Command="{Binding OK}"  Content="OK" FontSize="15" Margin="50,5,0,5" Width="60"/>

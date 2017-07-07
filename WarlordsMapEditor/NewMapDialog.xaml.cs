@@ -33,6 +33,7 @@ namespace WarlordsMapEditor
             map.rows = Int32.Parse(Rows.Text);
             map.columns = Int32.Parse(Columns.Text); 
             map.name = mapName.Text;
+            map.description = Description.Text;
             Close();
         }
 

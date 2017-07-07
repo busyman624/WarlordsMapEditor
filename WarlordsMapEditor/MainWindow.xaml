@@ -48,7 +48,7 @@
                             </StackPanel>
                             <StackPanel>
                                 <TextBlock Text="{Binding mapName}" FontSize="15" FontWeight="Bold" Margin="5,0,5,0"/>
-                                <TextBlock Text="{Binding mapDescription}" Height="45" Margin="5,0,0,0"/>
+                                <TextBlock TextWrapping="Wrap" Text="{Binding mapDescription}" Height="45" FontSize="8" Margin="5,0,0,0"/>
                                 <Button VerticalAlignment="Top"  HorizontalAlignment="Right" Command="{Binding editMapDetails}" Content="Edit map details" FontSize="10" Width="100" Margin="0,0,10,5"/>
                         </StackPanel>
                     </StackPanel>
