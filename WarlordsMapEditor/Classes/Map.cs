@@ -89,16 +89,7 @@ namespace WarlordsMapEditor
                         string resourceName=r.Split('\\').Last().Split('.').First();
                         if (resourceName == setName && !neededResources.Any(nr => nr.setName == setName))
                         {
-                            int category = 0;
-                            foreach (int id in overlayTilesPrefabId)
-                            {
-                                if (prefabPath[id].Split('_')[0] == setName)
-                                {
-                                    category = 1;
-                                    break;
-                                }
-                            }
-                            neededResources.Add(new MapResource(r, setName, category));
+                            neededResources.Add(new MapResource(r, setName, 0));
                             status = true;
                             break;
                         }
@@ -113,13 +104,60 @@ namespace WarlordsMapEditor
             }
             if (configs.fractions.Count > mapObjects.castles.imagesList.Count)
             {
-                MessageBox.Show("Fractions configuration of the map does not match current editor configuration. Update map objects before loading custom map", "Error");
-                return false;
+                int castleCounter = mapObjects.castles.imagesList.Count;
+                if (resources == null) resources = LoadResources();
+                if (resources == null)
+                {
+                    MessageBox.Show("Please choose valid resources directory", "Error");
+                    return false;
+                }
+                foreach (string r in resources)
+                {
+                    string resourceName = r.Split('\\').Last().Split('.').First();
+                    if (resourceName.ToLower().Contains("castle"))
+                    {
+                        using (Bitmap rawBitmap = new Bitmap(r), bitmap = new Bitmap(rawBitmap, new Size(rawBitmap.Width / rawBitmap.Height * 40, 40)))
+                        {
+                            castleCounter = castleCounter + bitmap.Width / 40;
+                        }
+                        neededResources.Add(new MapResource(r, "Castles", 2));
+                    }
+                }
+                if (castleCounter != configs.fractions.Count)
+                {
+                    MessageBox.Show("Number of fractions in configuration does not match number of provided castle objects.", "Error");
+                    return false;
+                }
+
             } 
             if (configs.ruinsData.Count > mapObjects.ruins.Count)
             {
-                MessageBox.Show("Ruins configuration of the map does not match current editor configuration. Update map objects before loading custom map", "Error");
-                return false;
+                if (resources == null) resources = LoadResources();
+                if (resources == null)
+                {
+                    MessageBox.Show("Please choose valid resources directory", "Error");
+                    return false;
+                }
+                int ruinCounter = mapObjects.ruins.Count;
+                foreach (string r in resources)
+                {
+                    for (int i = mapObjects.ruins.Count; i < configs.ruinsData.Count; i++)
+                    {
+                        string resourceName = r.Split('\\').Last().Split('.').First();
+                        if (resourceName == configs.ruinsData[i].name)
+                        {
+                            neededResources.Add(new MapResource(r, configs.ruinsData[i].name, 3));
+                            ruinCounter++;
+                            break;
+                        }
+                    }
+
+                }
+                if (ruinCounter != configs.ruinsData.Count)
+                {
+                    MessageBox.Show("Number of ruins in configuration does not match number of provided ruin objects.", "Error");
+                    return false;
+                }
             }
             else
             {
@@ -167,19 +205,17 @@ namespace WarlordsMapEditor
                                 mapObjects.roads.Add(new Sprite(bitmap, resource.setName, mapObjects.roads.Count, "Roads"));
                                 break;
                             }
-                        //case 2:
-                        //    {
-                        //        mapObjects.castles.Merge(bitmap);
-                        //        configs.fractions = tempConfigs.fractions;
-                        //        break;
-                        //    }
-                        //case 3:
-                        //    {
-                        //        mapObjects.ruins.Add(new Sprite(bitmap, SetName.Text, mapObjects.ruins.Count, "Ruins"));
-                        //        configs.ruinsData = tempConfigs.ruinsData;
-                        //        break;
-                        //    }
-                    }
+                        case 2:
+                            {
+                                mapObjects.castles.Merge(bitmap);
+                                break;
+                            }
+                        case 3:
+                            {
+                                mapObjects.ruins.Add(new Sprite(bitmap, resource.setName, mapObjects.ruins.Count, "Ruins"));
+                                break;
+                            }
+                }
             }
         }
 
