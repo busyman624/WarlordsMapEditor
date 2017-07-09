@@ -86,6 +86,7 @@ namespace WarlordsMapEditor
             }
             map.paletteSize = palletteSize;
 
+
             // Tiles
             for (int i = 0; i < map.rows; i++)
             {

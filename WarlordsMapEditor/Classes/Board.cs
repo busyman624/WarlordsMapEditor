@@ -122,7 +122,8 @@ namespace WarlordsMapEditor
             {
                 changeConfigs();
                 mapProvider.CreateNewMap(map, mapObjects, miniMap, brushCategories.selectedBrush, changedItems, configs);
-                refresh();
+                if (map.validate(mapObjects, configs)) refresh();
+                else map = null;
             }
         }
 
